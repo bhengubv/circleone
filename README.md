@@ -56,17 +56,11 @@ The geometric shapes are directional: triangles pointing forward or back, circle
 
 ## Supported Languages
 
-| Language    | ISO 639 | Speakers (approx.) |
-|-------------|---------|---------------------|
-| isiZulu     | zu      | 12 million          |
-| isiXhosa    | xh      | 8 million           |
-| Sesotho     | st      | 6 million           |
-| Setswana    | tn      | 5 million           |
-| SiSwati     | ss      | 2.5 million         |
-| Tshivenda   | ve      | 1.3 million         |
-| Xitsonga    | ts      | 4 million           |
+**All of them.**
 
-Because isiBheqe soHlamvu is featural, extending support to additional siNtu languages requires only mapping phonemes to existing character components -- not inventing new symbols.
+isiBheqe soHlamvu encodes articulatory features -- how sounds are physically produced by the human vocal apparatus. It does not encode language-specific orthography. Any language whose phonology includes the consonant and vowel features represented in the script can be written with it. This includes siNtu (Bantu) languages, Slavic languages, Sinitic languages, Semitic languages, and any other human language.
+
+The script is universal because human speech is universal.
 
 ---
 
