@@ -10,7 +10,7 @@ set -euo pipefail
 # Configuration
 ###############################################################################
 HELIBOARD_REPO="https://github.com/Helium314/HeliBoard.git"
-HELIBOARD_TAG="2.2"
+HELIBOARD_TAG="v3.8"
 WORK_DIR="$(cd "$(dirname "$0")" && pwd)"
 BUILD_DIR="${WORK_DIR}/_build/HeliBoard"
 OUTPUT_DIR="${WORK_DIR}/output"
@@ -59,10 +59,9 @@ git clone --depth 1 --branch "$HELIBOARD_TAG" "$HELIBOARD_REPO" "$BUILD_DIR"
 ###############################################################################
 echo "[3/7] Patching application ID and display name..."
 
-# -- build.gradle / build.gradle.kts (applicationId)
+# -- build.gradle / build.gradle.kts (applicationId ONLY -- do NOT rename source packages)
 find "$BUILD_DIR/app" -maxdepth 1 -name "build.gradle*" | while read -r gf; do
     sed -i "s/applicationId\s*=\?\s*[\"']helium314\.keyboard[\"']/applicationId = \"${NEW_APP_ID}\"/" "$gf"
-    sed -i "s/helium314\.keyboard/${NEW_APP_ID}/g" "$gf"
 done
 
 # -- strings.xml (app_name)
@@ -70,12 +69,6 @@ STRINGS_FILE="${BUILD_DIR}/app/src/main/res/values/strings.xml"
 if [[ -f "$STRINGS_FILE" ]]; then
     sed -i "s|<string name=\"english_ime_name\">.*</string>|<string name=\"english_ime_name\">${NEW_APP_NAME}</string>|" "$STRINGS_FILE"
     sed -i "s|<string name=\"app_name\">.*</string>|<string name=\"app_name\">${NEW_APP_NAME}</string>|" "$STRINGS_FILE"
-fi
-
-# -- AndroidManifest package fallback
-MANIFEST="${BUILD_DIR}/app/src/main/AndroidManifest.xml"
-if [[ -f "$MANIFEST" ]]; then
-    sed -i "s/helium314\.keyboard/${NEW_APP_ID}/g" "$MANIFEST"
 fi
 
 ###############################################################################
