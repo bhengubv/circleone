@@ -4,7 +4,7 @@ c
 c Input is Latin transliteration (consonant+vowel, e.g. 'ba')
 c Rendering shows vowel-first (isiBheqe glyph has vowel as outer shape)
 c
-c PUA codepoints: U+E000-U+E1B2
+c PUA codepoints: U+E000-U+E344
 c Layout: each consonant group at 0x08 or 0x10 boundaries
 c         with 5 vowel variants (a=+0, e=+1, i=+2, o=+3, u=+4)
 c
@@ -49,189 +49,147 @@ c SINGLE-CONSONANT CV SYLLABLES
 c Pattern: 'C' + 'V' > U+XXXX
 c ============================================================
 
-c ------------------------------------------------------------
-c B SYLLABLES: U+E010 - U+E014
-c ------------------------------------------------------------
+c --- B: U+E010-E014 ---
 'b' + 'a' > U+E010  c ba
 'b' + 'e' > U+E011  c be
 'b' + 'i' > U+E012  c bi
 'b' + 'o' > U+E013  c bo
 'b' + 'u' > U+E014  c bu
 
-c ------------------------------------------------------------
-c P SYLLABLES: U+E018 - U+E01C
-c ------------------------------------------------------------
+c --- P: U+E018-E01C ---
 'p' + 'a' > U+E018  c pa
 'p' + 'e' > U+E019  c pe
 'p' + 'i' > U+E01A  c pi
 'p' + 'o' > U+E01B  c po
 'p' + 'u' > U+E01C  c pu
 
-c ------------------------------------------------------------
-c D SYLLABLES: U+E028 - U+E02C
-c ------------------------------------------------------------
+c --- D: U+E028-E02C ---
 'd' + 'a' > U+E028  c da
 'd' + 'e' > U+E029  c de
 'd' + 'i' > U+E02A  c di
 'd' + 'o' > U+E02B  c do
 'd' + 'u' > U+E02C  c du
 
-c ------------------------------------------------------------
-c T SYLLABLES: U+E030 - U+E034
-c ------------------------------------------------------------
+c --- T: U+E030-E034 ---
 't' + 'a' > U+E030  c ta
 't' + 'e' > U+E031  c te
 't' + 'i' > U+E032  c ti
 't' + 'o' > U+E033  c to
 't' + 'u' > U+E034  c tu
 
-c ------------------------------------------------------------
-c G SYLLABLES: U+E040 - U+E044
-c ------------------------------------------------------------
+c --- G: U+E040-E044 ---
 'g' + 'a' > U+E040  c ga
 'g' + 'e' > U+E041  c ge
 'g' + 'i' > U+E042  c gi
 'g' + 'o' > U+E043  c go
 'g' + 'u' > U+E044  c gu
 
-c ------------------------------------------------------------
-c K SYLLABLES: U+E048 - U+E04C
-c ------------------------------------------------------------
+c --- K: U+E048-E04C ---
 'k' + 'a' > U+E048  c ka
 'k' + 'e' > U+E049  c ke
 'k' + 'i' > U+E04A  c ki
 'k' + 'o' > U+E04B  c ko
 'k' + 'u' > U+E04C  c ku
 
-c ------------------------------------------------------------
-c F SYLLABLES: U+E060 - U+E064
-c ------------------------------------------------------------
+c --- F: U+E060-E064 ---
 'f' + 'a' > U+E060  c fa
 'f' + 'e' > U+E061  c fe
 'f' + 'i' > U+E062  c fi
 'f' + 'o' > U+E063  c fo
 'f' + 'u' > U+E064  c fu
 
-c ------------------------------------------------------------
-c V SYLLABLES: U+E068 - U+E06C
-c ------------------------------------------------------------
+c --- V: U+E068-E06C ---
 'v' + 'a' > U+E068  c va
 'v' + 'e' > U+E069  c ve
 'v' + 'i' > U+E06A  c vi
 'v' + 'o' > U+E06B  c vo
 'v' + 'u' > U+E06C  c vu
 
-c ------------------------------------------------------------
-c S SYLLABLES: U+E070 - U+E074
-c ------------------------------------------------------------
+c --- S: U+E070-E074 ---
 's' + 'a' > U+E070  c sa
 's' + 'e' > U+E071  c se
 's' + 'i' > U+E072  c si
 's' + 'o' > U+E073  c so
 's' + 'u' > U+E074  c su
 
-c ------------------------------------------------------------
-c Z SYLLABLES: U+E078 - U+E07C
-c ------------------------------------------------------------
+c --- Z: U+E078-E07C ---
 'z' + 'a' > U+E078  c za
 'z' + 'e' > U+E079  c ze
 'z' + 'i' > U+E07A  c zi
 'z' + 'o' > U+E07B  c zo
 'z' + 'u' > U+E07C  c zu
 
-c ------------------------------------------------------------
-c H SYLLABLES: U+E088 - U+E08C
-c ------------------------------------------------------------
+c --- H: U+E088-E08C ---
 'h' + 'a' > U+E088  c ha
 'h' + 'e' > U+E089  c he
 'h' + 'i' > U+E08A  c hi
 'h' + 'o' > U+E08B  c ho
 'h' + 'u' > U+E08C  c hu
 
-c ------------------------------------------------------------
-c M SYLLABLES: U+E0A0 - U+E0A4
-c ------------------------------------------------------------
+c --- M: U+E0A0-E0A4 ---
 'm' + 'a' > U+E0A0  c ma
 'm' + 'e' > U+E0A1  c me
 'm' + 'i' > U+E0A2  c mi
 'm' + 'o' > U+E0A3  c mo
 'm' + 'u' > U+E0A4  c mu
 
-c ------------------------------------------------------------
-c N SYLLABLES: U+E0A8 - U+E0AC
-c ------------------------------------------------------------
+c --- N: U+E0A8-E0AC ---
 'n' + 'a' > U+E0A8  c na
 'n' + 'e' > U+E0A9  c ne
 'n' + 'i' > U+E0AA  c ni
 'n' + 'o' > U+E0AB  c no
 'n' + 'u' > U+E0AC  c nu
 
-c ------------------------------------------------------------
-c L SYLLABLES: U+E0C0 - U+E0C4
-c ------------------------------------------------------------
+c --- L: U+E0C0-E0C4 ---
 'l' + 'a' > U+E0C0  c la
 'l' + 'e' > U+E0C1  c le
 'l' + 'i' > U+E0C2  c li
 'l' + 'o' > U+E0C3  c lo
 'l' + 'u' > U+E0C4  c lu
 
-c ------------------------------------------------------------
-c R SYLLABLES: U+E0C8 - U+E0CC
-c ------------------------------------------------------------
+c --- R: U+E0C8-E0CC ---
 'r' + 'a' > U+E0C8  c ra
 'r' + 'e' > U+E0C9  c re
 'r' + 'i' > U+E0CA  c ri
 'r' + 'o' > U+E0CB  c ro
 'r' + 'u' > U+E0CC  c ru
 
-c ------------------------------------------------------------
-c W SYLLABLES: U+E0D0 - U+E0D4
-c ------------------------------------------------------------
+c --- W: U+E0D0-E0D4 ---
 'w' + 'a' > U+E0D0  c wa
 'w' + 'e' > U+E0D1  c we
 'w' + 'i' > U+E0D2  c wi
 'w' + 'o' > U+E0D3  c wo
 'w' + 'u' > U+E0D4  c wu
 
-c ------------------------------------------------------------
-c Y SYLLABLES: U+E0D8 - U+E0DC
-c ------------------------------------------------------------
+c --- Y: U+E0D8-E0DC ---
 'y' + 'a' > U+E0D8  c ya
 'y' + 'e' > U+E0D9  c ye
 'y' + 'i' > U+E0DA  c yi
 'y' + 'o' > U+E0DB  c yo
 'y' + 'u' > U+E0DC  c yu
 
-c ------------------------------------------------------------
-c J SYLLABLES: U+E120 - U+E124
-c ------------------------------------------------------------
+c --- J: U+E120-E124 ---
 'j' + 'a' > U+E120  c ja
 'j' + 'e' > U+E121  c je
 'j' + 'i' > U+E122  c ji
 'j' + 'o' > U+E123  c jo
 'j' + 'u' > U+E124  c ju
 
-c ------------------------------------------------------------
-c C SYLLABLES (dental click): U+E140 - U+E144
-c ------------------------------------------------------------
+c --- C (dental click): U+E140-E144 ---
 'c' + 'a' > U+E140  c ca
 'c' + 'e' > U+E141  c ce
 'c' + 'i' > U+E142  c ci
 'c' + 'o' > U+E143  c co
 'c' + 'u' > U+E144  c cu
 
-c ------------------------------------------------------------
-c Q SYLLABLES (palatal click): U+E160 - U+E164
-c ------------------------------------------------------------
+c --- Q (palatal click): U+E160-E164 ---
 'q' + 'a' > U+E160  c qa
 'q' + 'e' > U+E161  c qe
 'q' + 'i' > U+E162  c qi
 'q' + 'o' > U+E163  c qo
 'q' + 'u' > U+E164  c qu
 
-c ------------------------------------------------------------
-c X SYLLABLES (lateral click): U+E180 - U+E184
-c ------------------------------------------------------------
+c --- X (lateral click): U+E180-E184 ---
 'x' + 'a' > U+E180  c xa
 'x' + 'e' > U+E181  c xe
 'x' + 'i' > U+E182  c xi
@@ -244,9 +202,7 @@ c First char + second char produces a deadkey,
 c then deadkey + vowel produces the glyph.
 c ============================================================
 
-c ------------------------------------------------------------
-c PH: U+E020 - U+E024
-c ------------------------------------------------------------
+c --- PH: U+E020-E024 ---
 'p' + 'h' > dk(ph)
 dk(ph) + 'a' > U+E020  c pha
 dk(ph) + 'e' > U+E021  c phe
@@ -254,9 +210,7 @@ dk(ph) + 'i' > U+E022  c phi
 dk(ph) + 'o' > U+E023  c pho
 dk(ph) + 'u' > U+E024  c phu
 
-c ------------------------------------------------------------
-c TH: U+E038 - U+E03C
-c ------------------------------------------------------------
+c --- TH: U+E038-E03C ---
 't' + 'h' > dk(th)
 dk(th) + 'a' > U+E038  c tha
 dk(th) + 'e' > U+E039  c the
@@ -264,9 +218,7 @@ dk(th) + 'i' > U+E03A  c thi
 dk(th) + 'o' > U+E03B  c tho
 dk(th) + 'u' > U+E03C  c thu
 
-c ------------------------------------------------------------
-c KH: U+E050 - U+E054
-c ------------------------------------------------------------
+c --- KH: U+E050-E054 ---
 'k' + 'h' > dk(kh)
 dk(kh) + 'a' > U+E050  c kha
 dk(kh) + 'e' > U+E051  c khe
@@ -274,9 +226,7 @@ dk(kh) + 'i' > U+E052  c khi
 dk(kh) + 'o' > U+E053  c kho
 dk(kh) + 'u' > U+E054  c khu
 
-c ------------------------------------------------------------
-c SH: U+E080 - U+E084
-c ------------------------------------------------------------
+c --- SH: U+E080-E084 ---
 's' + 'h' > dk(sh)
 dk(sh) + 'a' > U+E080  c sha
 dk(sh) + 'e' > U+E081  c she
@@ -284,9 +234,7 @@ dk(sh) + 'i' > U+E082  c shi
 dk(sh) + 'o' > U+E083  c sho
 dk(sh) + 'u' > U+E084  c shu
 
-c ------------------------------------------------------------
-c HL: U+E090 - U+E094
-c ------------------------------------------------------------
+c --- HL: U+E090-E094 ---
 'h' + 'l' > dk(hl)
 dk(hl) + 'a' > U+E090  c hla
 dk(hl) + 'e' > U+E091  c hle
@@ -294,9 +242,7 @@ dk(hl) + 'i' > U+E092  c hli
 dk(hl) + 'o' > U+E093  c hlo
 dk(hl) + 'u' > U+E094  c hlu
 
-c ------------------------------------------------------------
-c DL: U+E098 - U+E09C
-c ------------------------------------------------------------
+c --- DL: U+E098-E09C ---
 'd' + 'l' > dk(dl)
 dk(dl) + 'a' > U+E098  c dla
 dk(dl) + 'e' > U+E099  c dle
@@ -304,9 +250,7 @@ dk(dl) + 'i' > U+E09A  c dli
 dk(dl) + 'o' > U+E09B  c dlo
 dk(dl) + 'u' > U+E09C  c dlu
 
-c ------------------------------------------------------------
-c NG: U+E0B0 - U+E0B4
-c ------------------------------------------------------------
+c --- NG: U+E0B0-E0B4 ---
 'n' + 'g' > dk(ng)
 dk(ng) + 'a' > U+E0B0  c nga
 dk(ng) + 'e' > U+E0B1  c nge
@@ -314,9 +258,7 @@ dk(ng) + 'i' > U+E0B2  c ngi
 dk(ng) + 'o' > U+E0B3  c ngo
 dk(ng) + 'u' > U+E0B4  c ngu
 
-c ------------------------------------------------------------
-c NY: U+E0B8 - U+E0BC
-c ------------------------------------------------------------
+c --- NY: U+E0B8-E0BC ---
 'n' + 'y' > dk(ny)
 dk(ny) + 'a' > U+E0B8  c nya
 dk(ny) + 'e' > U+E0B9  c nye
@@ -324,9 +266,7 @@ dk(ny) + 'i' > U+E0BA  c nyi
 dk(ny) + 'o' > U+E0BB  c nyo
 dk(ny) + 'u' > U+E0BC  c nyu
 
-c ------------------------------------------------------------
-c BH: U+E0E0 - U+E0E4
-c ------------------------------------------------------------
+c --- BH: U+E0E0-E0E4 ---
 'b' + 'h' > dk(bh)
 dk(bh) + 'a' > U+E0E0  c bha
 dk(bh) + 'e' > U+E0E1  c bhe
@@ -334,9 +274,7 @@ dk(bh) + 'i' > U+E0E2  c bhi
 dk(bh) + 'o' > U+E0E3  c bho
 dk(bh) + 'u' > U+E0E4  c bhu
 
-c ------------------------------------------------------------
-c MB: U+E0E8 - U+E0EC
-c ------------------------------------------------------------
+c --- MB: U+E0E8-E0EC ---
 'm' + 'b' > dk(mb)
 dk(mb) + 'a' > U+E0E8  c mba
 dk(mb) + 'e' > U+E0E9  c mbe
@@ -344,9 +282,26 @@ dk(mb) + 'i' > U+E0EA  c mbi
 dk(mb) + 'o' > U+E0EB  c mbo
 dk(mb) + 'u' > U+E0EC  c mbu
 
-c ------------------------------------------------------------
-c ND: U+E0F0 - U+E0F4
-c ------------------------------------------------------------
+c --- MF: U+E1C8-E1CC ---
+'m' + 'f' > dk(mf)
+dk(mf) + 'a' > U+E1C8  c mfa
+dk(mf) + 'e' > U+E1C9  c mfe
+dk(mf) + 'i' > U+E1CA  c mfi
+dk(mf) + 'o' > U+E1CB  c mfo
+dk(mf) + 'u' > U+E1CC  c mfu
+
+c --- MV: U+E1D0-E1D4 ---
+'m' + 'v' > dk(mv)
+dk(mv) + 'a' > U+E1D0  c mva
+dk(mv) + 'e' > U+E1D1  c mve
+dk(mv) + 'i' > U+E1D2  c mvi
+dk(mv) + 'o' > U+E1D3  c mvo
+dk(mv) + 'u' > U+E1D4  c mvu
+
+c --- MP: U+E1D8 (transition to mph) ---
+'m' + 'p' > dk(mp)
+
+c --- ND: U+E0F0-E0F4 ---
 'n' + 'd' > dk(nd)
 dk(nd) + 'a' > U+E0F0  c nda
 dk(nd) + 'e' > U+E0F1  c nde
@@ -354,9 +309,7 @@ dk(nd) + 'i' > U+E0F2  c ndi
 dk(nd) + 'o' > U+E0F3  c ndo
 dk(nd) + 'u' > U+E0F4  c ndu
 
-c ------------------------------------------------------------
-c NT: U+E0F8 - U+E0FC
-c ------------------------------------------------------------
+c --- NT: U+E0F8-E0FC ---
 'n' + 't' > dk(nt)
 dk(nt) + 'a' > U+E0F8  c nta
 dk(nt) + 'e' > U+E0F9  c nte
@@ -364,9 +317,7 @@ dk(nt) + 'i' > U+E0FA  c nti
 dk(nt) + 'o' > U+E0FB  c nto
 dk(nt) + 'u' > U+E0FC  c ntu
 
-c ------------------------------------------------------------
-c NK: U+E100 - U+E104
-c ------------------------------------------------------------
+c --- NK: U+E100-E104 ---
 'n' + 'k' > dk(nk)
 dk(nk) + 'a' > U+E100  c nka
 dk(nk) + 'e' > U+E101  c nke
@@ -374,9 +325,7 @@ dk(nk) + 'i' > U+E102  c nki
 dk(nk) + 'o' > U+E103  c nko
 dk(nk) + 'u' > U+E104  c nku
 
-c ------------------------------------------------------------
-c NJ: U+E108 - U+E10C
-c ------------------------------------------------------------
+c --- NJ: U+E108-E10C ---
 'n' + 'j' > dk(nj)
 dk(nj) + 'a' > U+E108  c nja
 dk(nj) + 'e' > U+E109  c nje
@@ -384,29 +333,23 @@ dk(nj) + 'i' > U+E10A  c nji
 dk(nj) + 'o' > U+E10B  c njo
 dk(nj) + 'u' > U+E10C  c nju
 
-c ------------------------------------------------------------
-c CH: U+E148 - U+E14C
-c ------------------------------------------------------------
-'c' + 'h' > dk(ch)
-dk(ch) + 'a' > U+E148  c cha
-dk(ch) + 'e' > U+E149  c che
-dk(ch) + 'i' > U+E14A  c chi
-dk(ch) + 'o' > U+E14B  c cho
-dk(ch) + 'u' > U+E14C  c chu
+c --- NZ: U+E1C0-E1C4 ---
+'n' + 'z' > dk(nz)
+dk(nz) + 'a' > U+E1C0  c nza
+dk(nz) + 'e' > U+E1C1  c nze
+dk(nz) + 'i' > U+E1C2  c nzi
+dk(nz) + 'o' > U+E1C3  c nzo
+dk(nz) + 'u' > U+E1C4  c nzu
 
-c ------------------------------------------------------------
-c GC: U+E150 - U+E154
-c ------------------------------------------------------------
-'g' + 'c' > dk(gc)
-dk(gc) + 'a' > U+E150  c gca
-dk(gc) + 'e' > U+E151  c gce
-dk(gc) + 'i' > U+E152  c gci
-dk(gc) + 'o' > U+E153  c gco
-dk(gc) + 'u' > U+E154  c gcu
+c --- NS: U+E1F8-E1FC ---
+'n' + 's' > dk(ns)
+dk(ns) + 'a' > U+E1F8  c nsa
+dk(ns) + 'e' > U+E1F9  c nse
+dk(ns) + 'i' > U+E1FA  c nsi
+dk(ns) + 'o' > U+E1FB  c nso
+dk(ns) + 'u' > U+E1FC  c nsu
 
-c ------------------------------------------------------------
-c NC: U+E158 - U+E15C
-c ------------------------------------------------------------
+c --- NC: U+E158-E15C ---
 'n' + 'c' > dk(nc)
 dk(nc) + 'a' > U+E158  c nca
 dk(nc) + 'e' > U+E159  c nce
@@ -414,29 +357,7 @@ dk(nc) + 'i' > U+E15A  c nci
 dk(nc) + 'o' > U+E15B  c nco
 dk(nc) + 'u' > U+E15C  c ncu
 
-c ------------------------------------------------------------
-c QH: U+E168 - U+E16C
-c ------------------------------------------------------------
-'q' + 'h' > dk(qh)
-dk(qh) + 'a' > U+E168  c qha
-dk(qh) + 'e' > U+E169  c qhe
-dk(qh) + 'i' > U+E16A  c qhi
-dk(qh) + 'o' > U+E16B  c qho
-dk(qh) + 'u' > U+E16C  c qhu
-
-c ------------------------------------------------------------
-c GQ: U+E170 - U+E174
-c ------------------------------------------------------------
-'g' + 'q' > dk(gq)
-dk(gq) + 'a' > U+E170  c gqa
-dk(gq) + 'e' > U+E171  c gqe
-dk(gq) + 'i' > U+E172  c gqi
-dk(gq) + 'o' > U+E173  c gqo
-dk(gq) + 'u' > U+E174  c gqu
-
-c ------------------------------------------------------------
-c NQ: U+E178 - U+E17C
-c ------------------------------------------------------------
+c --- NQ: U+E178-E17C ---
 'n' + 'q' > dk(nq)
 dk(nq) + 'a' > U+E178  c nqa
 dk(nq) + 'e' > U+E179  c nqe
@@ -444,29 +365,7 @@ dk(nq) + 'i' > U+E17A  c nqi
 dk(nq) + 'o' > U+E17B  c nqo
 dk(nq) + 'u' > U+E17C  c nqu
 
-c ------------------------------------------------------------
-c XH: U+E188 - U+E18C
-c ------------------------------------------------------------
-'x' + 'h' > dk(xh)
-dk(xh) + 'a' > U+E188  c xha
-dk(xh) + 'e' > U+E189  c xhe
-dk(xh) + 'i' > U+E18A  c xhi
-dk(xh) + 'o' > U+E18B  c xho
-dk(xh) + 'u' > U+E18C  c xhu
-
-c ------------------------------------------------------------
-c GX: U+E190 - U+E194
-c ------------------------------------------------------------
-'g' + 'x' > dk(gx)
-dk(gx) + 'a' > U+E190  c gxa
-dk(gx) + 'e' > U+E191  c gxe
-dk(gx) + 'i' > U+E192  c gxi
-dk(gx) + 'o' > U+E193  c gxo
-dk(gx) + 'u' > U+E194  c gxu
-
-c ------------------------------------------------------------
-c NX: U+E198 - U+E19C
-c ------------------------------------------------------------
+c --- NX: U+E198-E19C ---
 'n' + 'x' > dk(nx)
 dk(nx) + 'a' > U+E198  c nxa
 dk(nx) + 'e' > U+E199  c nxe
@@ -474,12 +373,207 @@ dk(nx) + 'i' > U+E19A  c nxi
 dk(nx) + 'o' > U+E19B  c nxo
 dk(nx) + 'u' > U+E19C  c nxu
 
-c ============================================================
-c THREE-CHAR CONSONANT: TSH (chained deadkeys)
-c t -> s produces dk(ts), dk(ts) + h produces dk(tsh)
-c U+E128 - U+E12C
-c ============================================================
+c --- CH: U+E148-E14C ---
+'c' + 'h' > dk(ch)
+dk(ch) + 'a' > U+E148  c cha
+dk(ch) + 'e' > U+E149  c che
+dk(ch) + 'i' > U+E14A  c chi
+dk(ch) + 'o' > U+E14B  c cho
+dk(ch) + 'u' > U+E14C  c chu
+
+c --- GC: U+E150-E154 ---
+'g' + 'c' > dk(gc)
+dk(gc) + 'a' > U+E150  c gca
+dk(gc) + 'e' > U+E151  c gce
+dk(gc) + 'i' > U+E152  c gci
+dk(gc) + 'o' > U+E153  c gco
+dk(gc) + 'u' > U+E154  c gcu
+
+c --- GQ: U+E170-E174 ---
+'g' + 'q' > dk(gq)
+dk(gq) + 'a' > U+E170  c gqa
+dk(gq) + 'e' > U+E171  c gqe
+dk(gq) + 'i' > U+E172  c gqi
+dk(gq) + 'o' > U+E173  c gqo
+dk(gq) + 'u' > U+E174  c gqu
+
+c --- GX: U+E190-E194 ---
+'g' + 'x' > dk(gx)
+dk(gx) + 'a' > U+E190  c gxa
+dk(gx) + 'e' > U+E191  c gxe
+dk(gx) + 'i' > U+E192  c gxi
+dk(gx) + 'o' > U+E193  c gxo
+dk(gx) + 'u' > U+E194  c gxu
+
+c --- QH: U+E168-E16C ---
+'q' + 'h' > dk(qh)
+dk(qh) + 'a' > U+E168  c qha
+dk(qh) + 'e' > U+E169  c qhe
+dk(qh) + 'i' > U+E16A  c qhi
+dk(qh) + 'o' > U+E16B  c qho
+dk(qh) + 'u' > U+E16C  c qhu
+
+c --- XH: U+E188-E18C ---
+'x' + 'h' > dk(xh)
+dk(xh) + 'a' > U+E188  c xha
+dk(xh) + 'e' > U+E189  c xhe
+dk(xh) + 'i' > U+E18A  c xhi
+dk(xh) + 'o' > U+E18B  c xho
+dk(xh) + 'u' > U+E18C  c xhu
+
+c --- TS (intermediate for tsh): ---
 't' + 's' > dk(ts)
+
+c --- BW: U+E200-E204 ---
+'b' + 'w' > dk(bw)
+dk(bw) + 'a' > U+E200  c bwa
+dk(bw) + 'e' > U+E201  c bwe
+dk(bw) + 'i' > U+E202  c bwi
+dk(bw) + 'o' > U+E203  c bwo
+dk(bw) + 'u' > U+E204  c bwu
+
+c --- PW: U+E208-E20C ---
+'p' + 'w' > dk(pw)
+dk(pw) + 'a' > U+E208  c pwa
+dk(pw) + 'e' > U+E209  c pwe
+dk(pw) + 'i' > U+E20A  c pwi
+dk(pw) + 'o' > U+E20B  c pwo
+dk(pw) + 'u' > U+E20C  c pwu
+
+c --- DW: U+E218-E21C ---
+'d' + 'w' > dk(dw)
+dk(dw) + 'a' > U+E218  c dwa
+dk(dw) + 'e' > U+E219  c dwe
+dk(dw) + 'i' > U+E21A  c dwi
+dk(dw) + 'o' > U+E21B  c dwo
+dk(dw) + 'u' > U+E21C  c dwu
+
+c --- TW: U+E220-E224 ---
+'t' + 'w' > dk(tw)
+dk(tw) + 'a' > U+E220  c twa
+dk(tw) + 'e' > U+E221  c twe
+dk(tw) + 'i' > U+E222  c twi
+dk(tw) + 'o' > U+E223  c two
+dk(tw) + 'u' > U+E224  c twu
+
+c --- GW: U+E230-E234 ---
+'g' + 'w' > dk(gw)
+dk(gw) + 'a' > U+E230  c gwa
+dk(gw) + 'e' > U+E231  c gwe
+dk(gw) + 'i' > U+E232  c gwi
+dk(gw) + 'o' > U+E233  c gwo
+dk(gw) + 'u' > U+E234  c gwu
+
+c --- KW: U+E238-E23C ---
+'k' + 'w' > dk(kw)
+dk(kw) + 'a' > U+E238  c kwa
+dk(kw) + 'e' > U+E239  c kwe
+dk(kw) + 'i' > U+E23A  c kwi
+dk(kw) + 'o' > U+E23B  c kwo
+dk(kw) + 'u' > U+E23C  c kwu
+
+c --- FW: U+E248-E24C ---
+'f' + 'w' > dk(fw)
+dk(fw) + 'a' > U+E248  c fwa
+dk(fw) + 'e' > U+E249  c fwe
+dk(fw) + 'i' > U+E24A  c fwi
+dk(fw) + 'o' > U+E24B  c fwo
+dk(fw) + 'u' > U+E24C  c fwu
+
+c --- VW: U+E250-E254 ---
+'v' + 'w' > dk(vw)
+dk(vw) + 'a' > U+E250  c vwa
+dk(vw) + 'e' > U+E251  c vwe
+dk(vw) + 'i' > U+E252  c vwi
+dk(vw) + 'o' > U+E253  c vwo
+dk(vw) + 'u' > U+E254  c vwu
+
+c --- SW: U+E258-E25C ---
+'s' + 'w' > dk(sw)
+dk(sw) + 'a' > U+E258  c swa
+dk(sw) + 'e' > U+E259  c swe
+dk(sw) + 'i' > U+E25A  c swi
+dk(sw) + 'o' > U+E25B  c swo
+dk(sw) + 'u' > U+E25C  c swu
+
+c --- ZW: U+E260-E264 ---
+'z' + 'w' > dk(zw)
+dk(zw) + 'a' > U+E260  c zwa
+dk(zw) + 'e' > U+E261  c zwe
+dk(zw) + 'i' > U+E262  c zwi
+dk(zw) + 'o' > U+E263  c zwo
+dk(zw) + 'u' > U+E264  c zwu
+
+c --- HW: U+E270-E274 ---
+'h' + 'w' > dk(hw)
+dk(hw) + 'a' > U+E270  c hwa
+dk(hw) + 'e' > U+E271  c hwe
+dk(hw) + 'i' > U+E272  c hwi
+dk(hw) + 'o' > U+E273  c hwo
+dk(hw) + 'u' > U+E274  c hwu
+
+c --- MW: U+E288-E28C ---
+'m' + 'w' > dk(mw)
+dk(mw) + 'a' > U+E288  c mwa
+dk(mw) + 'e' > U+E289  c mwe
+dk(mw) + 'i' > U+E28A  c mwi
+dk(mw) + 'o' > U+E28B  c mwo
+dk(mw) + 'u' > U+E28C  c mwu
+
+c --- NW: U+E290-E294 ---
+'n' + 'w' > dk(nw)
+dk(nw) + 'a' > U+E290  c nwa
+dk(nw) + 'e' > U+E291  c nwe
+dk(nw) + 'i' > U+E292  c nwi
+dk(nw) + 'o' > U+E293  c nwo
+dk(nw) + 'u' > U+E294  c nwu
+
+c --- LW: U+E2A8-E2AC ---
+'l' + 'w' > dk(lw)
+dk(lw) + 'a' > U+E2A8  c lwa
+dk(lw) + 'e' > U+E2A9  c lwe
+dk(lw) + 'i' > U+E2AA  c lwi
+dk(lw) + 'o' > U+E2AB  c lwo
+dk(lw) + 'u' > U+E2AC  c lwu
+
+c --- RW: U+E2B0-E2B4 ---
+'r' + 'w' > dk(rw)
+dk(rw) + 'a' > U+E2B0  c rwa
+dk(rw) + 'e' > U+E2B1  c rwe
+dk(rw) + 'i' > U+E2B2  c rwi
+dk(rw) + 'o' > U+E2B3  c rwo
+dk(rw) + 'u' > U+E2B4  c rwu
+
+c --- CW: U+E300-E304 ---
+'c' + 'w' > dk(cw)
+dk(cw) + 'a' > U+E300  c cwa
+dk(cw) + 'e' > U+E301  c cwe
+dk(cw) + 'i' > U+E302  c cwi
+dk(cw) + 'o' > U+E303  c cwo
+dk(cw) + 'u' > U+E304  c cwu
+
+c --- QW: U+E308-E30C ---
+'q' + 'w' > dk(qw)
+dk(qw) + 'a' > U+E308  c qwa
+dk(qw) + 'e' > U+E309  c qwe
+dk(qw) + 'i' > U+E30A  c qwi
+dk(qw) + 'o' > U+E30B  c qwo
+dk(qw) + 'u' > U+E30C  c qwu
+
+c --- XW: U+E310-E314 ---
+'x' + 'w' > dk(xw)
+dk(xw) + 'a' > U+E310  c xwa
+dk(xw) + 'e' > U+E311  c xwe
+dk(xw) + 'i' > U+E312  c xwi
+dk(xw) + 'o' > U+E313  c xwo
+dk(xw) + 'u' > U+E314  c xwu
+
+c ============================================================
+c THREE-CHAR CONSONANT CV SYLLABLES (chained deadkeys)
+c ============================================================
+
+c --- TSH: U+E128-E12C ---
+c ts deadkey defined above: 't' + 's' > dk(ts)
 dk(ts) + 'h' > dk(tsh)
 dk(tsh) + 'a' > U+E128  c tsha
 dk(tsh) + 'e' > U+E129  c tshe
@@ -487,12 +581,208 @@ dk(tsh) + 'i' > U+E12A  c tshi
 dk(tsh) + 'o' > U+E12B  c tsho
 dk(tsh) + 'u' > U+E12C  c tshu
 
+c --- PHW: U+E210-E214 ---
+dk(ph) + 'w' > dk(phw)
+dk(phw) + 'a' > U+E210  c phwa
+dk(phw) + 'e' > U+E211  c phwe
+dk(phw) + 'i' > U+E212  c phwi
+dk(phw) + 'o' > U+E213  c phwo
+dk(phw) + 'u' > U+E214  c phwu
+
+c --- THW: U+E228-E22C ---
+dk(th) + 'w' > dk(thw)
+dk(thw) + 'a' > U+E228  c thwa
+dk(thw) + 'e' > U+E229  c thwe
+dk(thw) + 'i' > U+E22A  c thwi
+dk(thw) + 'o' > U+E22B  c thwo
+dk(thw) + 'u' > U+E22C  c thwu
+
+c --- KHW: U+E240-E244 ---
+dk(kh) + 'w' > dk(khw)
+dk(khw) + 'a' > U+E240  c khwa
+dk(khw) + 'e' > U+E241  c khwe
+dk(khw) + 'i' > U+E242  c khwi
+dk(khw) + 'o' > U+E243  c khwo
+dk(khw) + 'u' > U+E244  c khwu
+
+c --- SHW: U+E268-E26C ---
+dk(sh) + 'w' > dk(shw)
+dk(shw) + 'a' > U+E268  c shwa
+dk(shw) + 'e' > U+E269  c shwe
+dk(shw) + 'i' > U+E26A  c shwi
+dk(shw) + 'o' > U+E26B  c shwo
+dk(shw) + 'u' > U+E26C  c shwu
+
+c --- HLW: U+E278-E27C ---
+dk(hl) + 'w' > dk(hlw)
+dk(hlw) + 'a' > U+E278  c hlwa
+dk(hlw) + 'e' > U+E279  c hlwe
+dk(hlw) + 'i' > U+E27A  c hlwi
+dk(hlw) + 'o' > U+E27B  c hlwo
+dk(hlw) + 'u' > U+E27C  c hlwu
+
+c --- DLW: U+E280-E284 ---
+dk(dl) + 'w' > dk(dlw)
+dk(dlw) + 'a' > U+E280  c dlwa
+dk(dlw) + 'e' > U+E281  c dlwe
+dk(dlw) + 'i' > U+E282  c dlwi
+dk(dlw) + 'o' > U+E283  c dlwo
+dk(dlw) + 'u' > U+E284  c dlwu
+
+c --- NGW: U+E298-E29C ---
+dk(ng) + 'w' > dk(ngw)
+dk(ngw) + 'a' > U+E298  c ngwa
+dk(ngw) + 'e' > U+E299  c ngwe
+dk(ngw) + 'i' > U+E29A  c ngwi
+dk(ngw) + 'o' > U+E29B  c ngwo
+dk(ngw) + 'u' > U+E29C  c ngwu
+
+c --- NYW: U+E2A0-E2A4 ---
+dk(ny) + 'w' > dk(nyw)
+dk(nyw) + 'a' > U+E2A0  c nywa
+dk(nyw) + 'e' > U+E2A1  c nywe
+dk(nyw) + 'i' > U+E2A2  c nywi
+dk(nyw) + 'o' > U+E2A3  c nywo
+dk(nyw) + 'u' > U+E2A4  c nywu
+
+c --- MBW: U+E2B8-E2BC ---
+dk(mb) + 'w' > dk(mbw)
+dk(mbw) + 'a' > U+E2B8  c mbwa
+dk(mbw) + 'e' > U+E2B9  c mbwe
+dk(mbw) + 'i' > U+E2BA  c mbwi
+dk(mbw) + 'o' > U+E2BB  c mbwo
+dk(mbw) + 'u' > U+E2BC  c mbwu
+
+c --- NDW: U+E2C0-E2C4 ---
+dk(nd) + 'w' > dk(ndw)
+dk(ndw) + 'a' > U+E2C0  c ndwa
+dk(ndw) + 'e' > U+E2C1  c ndwe
+dk(ndw) + 'i' > U+E2C2  c ndwi
+dk(ndw) + 'o' > U+E2C3  c ndwo
+dk(ndw) + 'u' > U+E2C4  c ndwu
+
+c --- NTW: U+E2C8-E2CC ---
+dk(nt) + 'w' > dk(ntw)
+dk(ntw) + 'a' > U+E2C8  c ntwa
+dk(ntw) + 'e' > U+E2C9  c ntwe
+dk(ntw) + 'i' > U+E2CA  c ntwi
+dk(ntw) + 'o' > U+E2CB  c ntwo
+dk(ntw) + 'u' > U+E2CC  c ntwu
+
+c --- NKW: U+E2D0-E2D4 ---
+dk(nk) + 'w' > dk(nkw)
+dk(nkw) + 'a' > U+E2D0  c nkwa
+dk(nkw) + 'e' > U+E2D1  c nkwe
+dk(nkw) + 'i' > U+E2D2  c nkwi
+dk(nkw) + 'o' > U+E2D3  c nkwo
+dk(nkw) + 'u' > U+E2D4  c nkwu
+
+c --- NJW: U+E2D8-E2DC ---
+dk(nj) + 'w' > dk(njw)
+dk(njw) + 'a' > U+E2D8  c njwa
+dk(njw) + 'e' > U+E2D9  c njwe
+dk(njw) + 'i' > U+E2DA  c njwi
+dk(njw) + 'o' > U+E2DB  c njwo
+dk(njw) + 'u' > U+E2DC  c njwu
+
+c --- NZW: U+E2E0-E2E4 ---
+dk(nz) + 'w' > dk(nzw)
+dk(nzw) + 'a' > U+E2E0  c nzwa
+dk(nzw) + 'e' > U+E2E1  c nzwe
+dk(nzw) + 'i' > U+E2E2  c nzwi
+dk(nzw) + 'o' > U+E2E3  c nzwo
+dk(nzw) + 'u' > U+E2E4  c nzwu
+
+c --- NDL: U+E1E0-E1E4 ---
+dk(nd) + 'l' > dk(ndl)
+dk(ndl) + 'a' > U+E1E0  c ndla
+dk(ndl) + 'e' > U+E1E1  c ndle
+dk(ndl) + 'i' > U+E1E2  c ndli
+dk(ndl) + 'o' > U+E1E3  c ndlo
+dk(ndl) + 'u' > U+E1E4  c ndlu
+
+c --- NHL: U+E1E8-E1EC ---
+'n' + 'h' > dk(nh)
+dk(nh) + 'l' > dk(nhl)
+dk(nhl) + 'a' > U+E1E8  c nhla
+dk(nhl) + 'e' > U+E1E9  c nhle
+dk(nhl) + 'i' > U+E1EA  c nhli
+dk(nhl) + 'o' > U+E1EB  c nhlo
+dk(nhl) + 'u' > U+E1EC  c nhlu
+
+c --- NTL: U+E1F0-E1F4 ---
+dk(nt) + 'l' > dk(ntl)
+dk(ntl) + 'a' > U+E1F0  c ntla
+dk(ntl) + 'e' > U+E1F1  c ntle
+dk(ntl) + 'i' > U+E1F2  c ntli
+dk(ntl) + 'o' > U+E1F3  c ntlo
+dk(ntl) + 'u' > U+E1F4  c ntlu
+
+c --- MPH: U+E1D8-E1DC ---
+c mp deadkey defined above: 'm' + 'p' > dk(mp)
+dk(mp) + 'h' > dk(mph)
+dk(mph) + 'a' > U+E1D8  c mpha
+dk(mph) + 'e' > U+E1D9  c mphe
+dk(mph) + 'i' > U+E1DA  c mphi
+dk(mph) + 'o' > U+E1DB  c mpho
+dk(mph) + 'u' > U+E1DC  c mphu
+
+c --- GCW: U+E318-E31C ---
+dk(gc) + 'w' > dk(gcw)
+dk(gcw) + 'a' > U+E318  c gcwa
+dk(gcw) + 'e' > U+E319  c gcwe
+dk(gcw) + 'i' > U+E31A  c gcwi
+dk(gcw) + 'o' > U+E31B  c gcwo
+dk(gcw) + 'u' > U+E31C  c gcwu
+
+c --- GQW: U+E320-E324 ---
+dk(gq) + 'w' > dk(gqw)
+dk(gqw) + 'a' > U+E320  c gqwa
+dk(gqw) + 'e' > U+E321  c gqwe
+dk(gqw) + 'i' > U+E322  c gqwi
+dk(gqw) + 'o' > U+E323  c gqwo
+dk(gqw) + 'u' > U+E324  c gqwu
+
+c --- GXW: U+E328-E32C ---
+dk(gx) + 'w' > dk(gxw)
+dk(gxw) + 'a' > U+E328  c gxwa
+dk(gxw) + 'e' > U+E329  c gxwe
+dk(gxw) + 'i' > U+E32A  c gxwi
+dk(gxw) + 'o' > U+E32B  c gxwo
+dk(gxw) + 'u' > U+E32C  c gxwu
+
+c --- NCW: U+E330-E334 ---
+dk(nc) + 'w' > dk(ncw)
+dk(ncw) + 'a' > U+E330  c ncwa
+dk(ncw) + 'e' > U+E331  c ncwe
+dk(ncw) + 'i' > U+E332  c ncwi
+dk(ncw) + 'o' > U+E333  c ncwo
+dk(ncw) + 'u' > U+E334  c ncwu
+
+c --- NQW: U+E338-E33C ---
+dk(nq) + 'w' > dk(nqw)
+dk(nqw) + 'a' > U+E338  c nqwa
+dk(nqw) + 'e' > U+E339  c nqwe
+dk(nqw) + 'i' > U+E33A  c nqwi
+dk(nqw) + 'o' > U+E33B  c nqwo
+dk(nqw) + 'u' > U+E33C  c nqwu
+
+c --- NXW: U+E340-E344 ---
+dk(nx) + 'w' > dk(nxw)
+dk(nxw) + 'a' > U+E340  c nxwa
+dk(nxw) + 'e' > U+E341  c nxwe
+dk(nxw) + 'i' > U+E342  c nxwi
+dk(nxw) + 'o' > U+E343  c nxwo
+dk(nxw) + 'u' > U+E344  c nxwu
+
+c --- XHW (not in CSV but xw uses dk(xw) directly) ---
+
 c ============================================================
-c FOUR-CHAR CONSONANT: NTSH (chained deadkeys)
-c n -> t produces dk(nt), dk(nt) + s produces dk(nts),
-c dk(nts) + h produces dk(ntsh)
-c U+E110 - U+E114
+c FOUR-CHAR CONSONANT CV SYLLABLES (chained deadkeys)
 c ============================================================
+
+c --- NTSH: U+E110-E114 ---
+c nt deadkey defined above: 'n' + 't' > dk(nt)
 dk(nt) + 's' > dk(nts)
 dk(nts) + 'h' > dk(ntsh)
 dk(ntsh) + 'a' > U+E110  c ntsha
@@ -510,52 +800,60 @@ c
 c   U+E000-E004  Pure vowels (a, e, i, o, u)
 c   U+E005-E007  Long vowels (aa, ee, ii)
 c
-c   U+E010-E014  b + vowels
-c   U+E018-E01C  p + vowels
-c   U+E020-E024  ph + vowels
-c   U+E028-E02C  d + vowels
-c   U+E030-E034  t + vowels
-c   U+E038-E03C  th + vowels
-c   U+E040-E044  g + vowels
-c   U+E048-E04C  k + vowels
-c   U+E050-E054  kh + vowels
-c   U+E060-E064  f + vowels
-c   U+E068-E06C  v + vowels
-c   U+E070-E074  s + vowels
-c   U+E078-E07C  z + vowels
-c   U+E080-E084  sh + vowels
-c   U+E088-E08C  h + vowels
-c   U+E090-E094  hl + vowels
-c   U+E098-E09C  dl + vowels
-c   U+E0A0-E0A4  m + vowels
-c   U+E0A8-E0AC  n + vowels
-c   U+E0B0-E0B4  ng + vowels
-c   U+E0B8-E0BC  ny + vowels
-c   U+E0C0-E0C4  l + vowels
-c   U+E0C8-E0CC  r + vowels
-c   U+E0D0-E0D4  w + vowels
-c   U+E0D8-E0DC  y + vowels
-c   U+E0E0-E0E4  bh + vowels
-c   U+E0E8-E0EC  mb + vowels
-c   U+E0F0-E0F4  nd + vowels
-c   U+E0F8-E0FC  nt + vowels
-c   U+E100-E104  nk + vowels
-c   U+E108-E10C  nj + vowels
-c   U+E110-E114  ntsh + vowels
-c   U+E120-E124  j + vowels
-c   U+E128-E12C  tsh + vowels
-c   U+E140-E144  c (dental click) + vowels
-c   U+E148-E14C  ch + vowels
-c   U+E150-E154  gc + vowels
-c   U+E158-E15C  nc + vowels
-c   U+E160-E164  q (palatal click) + vowels
-c   U+E168-E16C  qh + vowels
-c   U+E170-E174  gq + vowels
-c   U+E178-E17C  nq + vowels
-c   U+E180-E184  x (lateral click) + vowels
-c   U+E188-E18C  xh + vowels
-c   U+E190-E194  gx + vowels
-c   U+E198-E19C  nx + vowels
+c   U+E010-E014  b      U+E200-E204  bw
+c   U+E018-E01C  p      U+E208-E20C  pw
+c   U+E020-E024  ph     U+E210-E214  phw
+c   U+E028-E02C  d      U+E218-E21C  dw
+c   U+E030-E034  t      U+E220-E224  tw
+c   U+E038-E03C  th     U+E228-E22C  thw
+c   U+E040-E044  g      U+E230-E234  gw
+c   U+E048-E04C  k      U+E238-E23C  kw
+c   U+E050-E054  kh     U+E240-E244  khw
+c   U+E060-E064  f      U+E248-E24C  fw
+c   U+E068-E06C  v      U+E250-E254  vw
+c   U+E070-E074  s      U+E258-E25C  sw
+c   U+E078-E07C  z      U+E260-E264  zw
+c   U+E080-E084  sh     U+E268-E26C  shw
+c   U+E088-E08C  h      U+E270-E274  hw
+c   U+E090-E094  hl     U+E278-E27C  hlw
+c   U+E098-E09C  dl     U+E280-E284  dlw
+c   U+E0A0-E0A4  m      U+E288-E28C  mw
+c   U+E0A8-E0AC  n      U+E290-E294  nw
+c   U+E0B0-E0B4  ng     U+E298-E29C  ngw
+c   U+E0B8-E0BC  ny     U+E2A0-E2A4  nyw
+c   U+E0C0-E0C4  l      U+E2A8-E2AC  lw
+c   U+E0C8-E0CC  r      U+E2B0-E2B4  rw
+c   U+E0D0-E0D4  w
+c   U+E0D8-E0DC  y
+c   U+E0E0-E0E4  bh
+c   U+E0E8-E0EC  mb     U+E2B8-E2BC  mbw
+c   U+E0F0-E0F4  nd     U+E2C0-E2C4  ndw
+c   U+E0F8-E0FC  nt     U+E2C8-E2CC  ntw
+c   U+E100-E104  nk     U+E2D0-E2D4  nkw
+c   U+E108-E10C  nj     U+E2D8-E2DC  njw
+c   U+E110-E114  ntsh
+c   U+E120-E124  j
+c   U+E128-E12C  tsh
+c   U+E140-E144  c      U+E300-E304  cw
+c   U+E148-E14C  ch
+c   U+E150-E154  gc     U+E318-E31C  gcw
+c   U+E158-E15C  nc     U+E330-E334  ncw
+c   U+E160-E164  q      U+E308-E30C  qw
+c   U+E168-E16C  qh
+c   U+E170-E174  gq     U+E320-E324  gqw
+c   U+E178-E17C  nq     U+E338-E33C  nqw
+c   U+E180-E184  x      U+E310-E314  xw
+c   U+E188-E18C  xh
+c   U+E190-E194  gx     U+E328-E32C  gxw
+c   U+E198-E19C  nx     U+E340-E344  nxw
 c   U+E1B0-E1B2  Syllabic nasals (m, n, ng)
+c   U+E1C0-E1C4  nz     U+E2E0-E2E4  nzw
+c   U+E1C8-E1CC  mf
+c   U+E1D0-E1D4  mv
+c   U+E1D8-E1DC  mph
+c   U+E1E0-E1E4  ndl
+c   U+E1E8-E1EC  nhl
+c   U+E1F0-E1F4  ntl
+c   U+E1F8-E1FC  ns
 c
 c ============================================================
