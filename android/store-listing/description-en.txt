@@ -1,0 +1,58 @@
+CircleOne -- Type in Your Mother Tongue
+
+CircleOne is a free, open-source keyboard built for the languages of Southern Africa. It is the first mobile keyboard designed from the ground up to support click consonants, tonal markers, and the full orthographic range of Nguni, Sotho, and Venda language families.
+
+The name CircleOne is written as a symbol: a triangle pointing right, a circle, and a triangle pointing left. In isiBheqe soHlamvu -- the indigenous Southern African syllabary -- this symbol represents the foundational vowel /a/. Every word begins with a sound. Every journey begins with a single step. CircleOne is that first step toward digital language equality.
+
+
+SUPPORTED LANGUAGES
+
+- isiZulu
+- isiXhosa
+- isiNdebele
+- siSwati
+- Sesotho
+- Setswana
+- Sepedi (Northern Sotho)
+- Tshivenda
+- Xitsonga
+- Afrikaans
+- South African English
+
+
+KEY FEATURES
+
+Vowel-First Input
+CircleOne recognises that vowels are the backbone of Bantu syllable structure. The prediction engine prioritises vowel-consonant patterns to offer faster, more accurate word suggestions for agglutinative languages.
+
+Click Consonant Support
+Long-press c, q, or x to access a full popup of click variants: aspirated (ch, qh, xh), voiced (gc, gq, gx), nasalised (nc, nq, nx), and nasal-aspirated combinations. No more hunting through symbol menus.
+
+Word Prediction and Autocorrect
+Built-in dictionaries for all eleven official South African languages plus Afrikaans. The prediction engine understands noun class prefixes, verb extensions, and common agglutinative patterns.
+
+isiBheqe soHlamvu Awareness
+Future releases will include an optional isiBheqe syllabary input mode, allowing users to type using the indigenous script alongside Latin orthography.
+
+Open Source and Transparent
+CircleOne is built on HeliBoard, itself a fork of the respected OpenBoard project. The full source code is available for inspection, contribution, and community improvement.
+
+
+PRIVACY -- YOUR WORDS STAY ON YOUR DEVICE
+
+CircleOne does not transmit your keystrokes anywhere. There is no analytics SDK, no telemetry, no usage tracking, and no advertising framework embedded in the app. Your typing data never leaves your device. Period.
+
+- No keystroke logging or transmission
+- No analytics or crash reporting that includes user content
+- No advertising of any kind
+- No network requests from the keyboard itself
+- No account required
+
+
+BUILT IN SOUTH AFRICA
+
+CircleOne is part of The Geek Network, a South African technology ecosystem focused on economic empowerment, safety, and opportunity. It exists because nine of the eleven official languages of South Africa have been underserved by mainstream keyboard apps for decades.
+
+If you speak an African language, this keyboard was built for you.
+
+Package: africa.one.keyboard

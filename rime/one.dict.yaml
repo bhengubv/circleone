@@ -1,0 +1,347 @@
+# Rime dictionary for isiBheqe soHlamvu -- the CircleOne keyboard
+#
+# FORMAT: [character] TAB [input sequence] TAB [weight]
+#
+# INPUT ORDER: Vowel FIRST, then consonant(s).
+#   e.g. "ab" means vowel /a/ + consonant /b/ => the syllable "ba"
+#
+# NOTE ON PUA CODEPOINTS:
+#   isiBheqe soHlamvu characters are not yet encoded in Unicode.
+#   The final implementation will use Private Use Area (PUA) codepoints
+#   in the range U+F0000--U+F00FF (Supplementary PUA-A) or a range
+#   assigned after formal Unicode acceptance.
+#
+#   In this file, placeholder symbols from existing Unicode blocks are
+#   used for development and testing. Each entry includes a comment
+#   noting the intended PUA assignment. Replace these placeholders
+#   with actual PUA codepoints once the font and codepoint mapping
+#   are finalised.
+
+---
+name: one
+version: "0.1.0"
+sort: by_weight
+use_preset_vocabulary: false
+...
+
+# =============================================================================
+# PURE VOWELS (standalone vowel characters)
+# =============================================================================
+# Each vowel can appear alone as a syllable nucleus.
+
+a	a	100	# PUA: U+F0001 -- vowel /a/ (down-pointing triangle)
+e	e	100	# PUA: U+F0002 -- vowel /e/ (left-pointing chevron)
+i	i	100	# PUA: U+F0003 -- vowel /i/ (up-pointing triangle)
+o	o	100	# PUA: U+F0004 -- vowel /o/ (right-pointing chevron)
+u	u	100	# PUA: U+F0005 -- vowel /u/ (upward chevron / caret)
+
+# =============================================================================
+# CONSONANT + VOWEL SYLLABLES
+# =============================================================================
+# Grouped by consonant. Input is vowel-first: "ab" => /ba/, "eb" => /be/, etc.
+
+# --- b (voiced bilabial plosive) ---
+ba	ab	90	# PUA: U+F0010
+be	eb	90	# PUA: U+F0011
+bi	ib	90	# PUA: U+F0012
+bo	ob	90	# PUA: U+F0013
+bu	ub	90	# PUA: U+F0014
+
+# --- bh (aspirated/breathy bilabial) ---
+bha	abh	85	# PUA: U+F0015
+bhe	ebh	85	# PUA: U+F0016
+bhi	ibh	85	# PUA: U+F0017
+bho	obh	85	# PUA: U+F0018
+bhu	ubh	85	# PUA: U+F0019
+
+# --- d (voiced alveolar plosive) ---
+da	ad	90	# PUA: U+F0020
+de	ed	90	# PUA: U+F0021
+di	id	90	# PUA: U+F0022
+do	od	90	# PUA: U+F0023
+du	ud	90	# PUA: U+F0024
+
+# --- dl (voiced lateral affricate) ---
+dla	adl	85	# PUA: U+F0025
+dle	edl	85	# PUA: U+F0026
+dli	idl	85	# PUA: U+F0027
+dlo	odl	85	# PUA: U+F0028
+dlu	udl	85	# PUA: U+F0029
+
+# --- f (voiceless labiodental fricative) ---
+fa	af	90	# PUA: U+F0030
+fe	ef	90	# PUA: U+F0031
+fi	if	90	# PUA: U+F0032
+fo	of	90	# PUA: U+F0033
+fu	uf	90	# PUA: U+F0034
+
+# --- g (voiced velar plosive) ---
+ga	ag	90	# PUA: U+F0040
+ge	eg	90	# PUA: U+F0041
+gi	ig	90	# PUA: U+F0042
+go	og	90	# PUA: U+F0043
+gu	ug	90	# PUA: U+F0044
+
+# --- h (voiceless glottal fricative) ---
+ha	ah	90	# PUA: U+F0050
+he	eh	90	# PUA: U+F0051
+hi	ih	90	# PUA: U+F0052
+ho	oh	90	# PUA: U+F0053
+hu	uh	90	# PUA: U+F0054
+
+# --- hl (voiceless lateral fricative) ---
+hla	ahl	85	# PUA: U+F0055
+hle	ehl	85	# PUA: U+F0056
+hli	ihl	85	# PUA: U+F0057
+hlo	ohl	85	# PUA: U+F0058
+hlu	uhl	85	# PUA: U+F0059
+
+# --- j (voiced palatal affricate) ---
+ja	aj	90	# PUA: U+F0060
+je	ej	90	# PUA: U+F0061
+ji	ij	90	# PUA: U+F0062
+jo	oj	90	# PUA: U+F0063
+ju	uj	90	# PUA: U+F0064
+
+# --- k (voiceless velar plosive) ---
+ka	ak	90	# PUA: U+F0070
+ke	ek	90	# PUA: U+F0071
+ki	ik	90	# PUA: U+F0072
+ko	ok	90	# PUA: U+F0073
+ku	uk	90	# PUA: U+F0074
+
+# --- kh (aspirated velar plosive) ---
+kha	akh	85	# PUA: U+F0075
+khe	ekh	85	# PUA: U+F0076
+khi	ikh	85	# PUA: U+F0077
+kho	okh	85	# PUA: U+F0078
+khu	ukh	85	# PUA: U+F0079
+
+# --- l (voiced alveolar lateral) ---
+la	al	90	# PUA: U+F0080
+le	el	90	# PUA: U+F0081
+li	il	90	# PUA: U+F0082
+lo	ol	90	# PUA: U+F0083
+lu	ul	90	# PUA: U+F0084
+
+# --- m (voiced bilabial nasal) ---
+ma	am	90	# PUA: U+F0090
+me	em	90	# PUA: U+F0091
+mi	im	90	# PUA: U+F0092
+mo	om	90	# PUA: U+F0093
+mu	um	90	# PUA: U+F0094
+
+# --- mb (prenasalised bilabial plosive) ---
+mba	amb	85	# PUA: U+F0095
+mbe	emb	85	# PUA: U+F0096
+mbi	imb	85	# PUA: U+F0097
+mbo	omb	85	# PUA: U+F0098
+mbu	umb	85	# PUA: U+F0099
+
+# --- n (voiced alveolar nasal) ---
+na	an	90	# PUA: U+F00A0
+ne	en	90	# PUA: U+F00A1
+ni	in	90	# PUA: U+F00A2
+no	on	90	# PUA: U+F00A3
+nu	un	90	# PUA: U+F00A4
+
+# --- nd (prenasalised alveolar plosive) ---
+nda	and	85	# PUA: U+F00A5
+nde	end	85	# PUA: U+F00A6
+ndi	ind	85	# PUA: U+F00A7
+ndo	ond	85	# PUA: U+F00A8
+ndu	und	85	# PUA: U+F00A9
+
+# --- ng (prenasalised velar plosive) ---
+nga	ang	85	# PUA: U+F00B0
+nge	eng	85	# PUA: U+F00B1
+ngi	ing	85	# PUA: U+F00B2
+ngo	ong	85	# PUA: U+F00B3
+ngu	ung	85	# PUA: U+F00B4
+
+# --- nj (prenasalised palatal affricate) ---
+nja	anj	85	# PUA: U+F00B5
+nje	enj	85	# PUA: U+F00B6
+nji	inj	85	# PUA: U+F00B7
+njo	onj	85	# PUA: U+F00B8
+nju	unj	85	# PUA: U+F00B9
+
+# --- nk (prenasalised velar plosive) ---
+nka	ank	85	# PUA: U+F00C0
+nke	enk	85	# PUA: U+F00C1
+nki	ink	85	# PUA: U+F00C2
+nko	onk	85	# PUA: U+F00C3
+nku	unk	85	# PUA: U+F00C4
+
+# --- nt (prenasalised alveolar plosive) ---
+nta	ant	85	# PUA: U+F00C5
+nte	ent	85	# PUA: U+F00C6
+nti	int	85	# PUA: U+F00C7
+nto	ont	85	# PUA: U+F00C8
+ntu	unt	85	# PUA: U+F00C9
+
+# --- ny (palatal nasal) ---
+nya	any	85	# PUA: U+F00D0
+nye	eny	85	# PUA: U+F00D1
+nyi	iny	85	# PUA: U+F00D2
+nyo	ony	85	# PUA: U+F00D3
+nyu	uny	85	# PUA: U+F00D4
+
+# --- p (voiceless bilabial plosive) ---
+pa	ap	90	# PUA: U+F00E0
+pe	ep	90	# PUA: U+F00E1
+pi	ip	90	# PUA: U+F00E2
+po	op	90	# PUA: U+F00E3
+pu	up	90	# PUA: U+F00E4
+
+# --- ph (aspirated bilabial plosive) ---
+pha	aph	85	# PUA: U+F00E5
+phe	eph	85	# PUA: U+F00E6
+phi	iph	85	# PUA: U+F00E7
+pho	oph	85	# PUA: U+F00E8
+phu	uph	85	# PUA: U+F00E9
+
+# --- r (voiced alveolar trill/tap) ---
+ra	ar	90	# PUA: U+F00F0
+re	er	90	# PUA: U+F00F1
+ri	ir	90	# PUA: U+F00F2
+ro	or	90	# PUA: U+F00F3
+ru	ur	90	# PUA: U+F00F4
+
+# --- s (voiceless alveolar fricative) ---
+sa	as	90	# PUA: U+F0100
+se	es	90	# PUA: U+F0101
+si	is	90	# PUA: U+F0102
+so	os	90	# PUA: U+F0103
+su	us	90	# PUA: U+F0104
+
+# --- sh (voiceless postalveolar fricative) ---
+sha	ash	85	# PUA: U+F0105
+she	esh	85	# PUA: U+F0106
+shi	ish	85	# PUA: U+F0107
+sho	osh	85	# PUA: U+F0108
+shu	ush	85	# PUA: U+F0109
+
+# --- t (voiceless alveolar plosive) ---
+ta	at	90	# PUA: U+F0110
+te	et	90	# PUA: U+F0111
+ti	it	90	# PUA: U+F0112
+to	ot	90	# PUA: U+F0113
+tu	ut	90	# PUA: U+F0114
+
+# --- th (aspirated alveolar plosive) ---
+tha	ath	85	# PUA: U+F0115
+the	eth	85	# PUA: U+F0116
+thi	ith	85	# PUA: U+F0117
+tho	oth	85	# PUA: U+F0118
+thu	uth	85	# PUA: U+F0119
+
+# --- tl (voiceless lateral affricate) ---
+tla	atl	85	# PUA: U+F011A
+tle	etl	85	# PUA: U+F011B
+tli	itl	85	# PUA: U+F011C
+tlo	otl	85	# PUA: U+F011D
+tlu	utl	85	# PUA: U+F011E
+
+# --- v (voiced labiodental fricative) ---
+va	av	90	# PUA: U+F0120
+ve	ev	90	# PUA: U+F0121
+vi	iv	90	# PUA: U+F0122
+vo	ov	90	# PUA: U+F0123
+vu	uv	90	# PUA: U+F0124
+
+# --- w (voiced labial-velar approximant) ---
+wa	aw	90	# PUA: U+F0130
+we	ew	90	# PUA: U+F0131
+wi	iw	90	# PUA: U+F0132
+wo	ow	90	# PUA: U+F0133
+wu	uw	90	# PUA: U+F0134
+
+# --- y (voiced palatal approximant) ---
+ya	ay	90	# PUA: U+F0140
+ye	ey	90	# PUA: U+F0141
+yi	iy	90	# PUA: U+F0142
+yo	oy	90	# PUA: U+F0143
+yu	uy	90	# PUA: U+F0144
+
+# --- z (voiced alveolar fricative) ---
+za	az	90	# PUA: U+F0150
+ze	ez	90	# PUA: U+F0151
+zi	iz	90	# PUA: U+F0152
+zo	oz	90	# PUA: U+F0153
+zu	uz	90	# PUA: U+F0154
+
+# =============================================================================
+# CLICK CONSONANTS
+# =============================================================================
+
+# --- c (voiceless dental click) ---
+ca	ac	88	# PUA: U+F0160
+ce	ec	88	# PUA: U+F0161
+ci	ic	88	# PUA: U+F0162
+co	oc	88	# PUA: U+F0163
+cu	uc	88	# PUA: U+F0164
+
+# --- q (voiceless palatal click) ---
+qa	aq	88	# PUA: U+F0170
+qe	eq	88	# PUA: U+F0171
+qi	iq	88	# PUA: U+F0172
+qo	oq	88	# PUA: U+F0173
+qu	uq	88	# PUA: U+F0174
+
+# --- x (voiceless lateral click) ---
+xa	ax	88	# PUA: U+F0180
+xe	ex	88	# PUA: U+F0181
+xi	ix	88	# PUA: U+F0182
+xo	ox	88	# PUA: U+F0183
+xu	ux	88	# PUA: U+F0184
+
+# --- nc (prenasalised dental click) ---
+nca	anc	83	# PUA: U+F0190
+nce	enc	83	# PUA: U+F0191
+nci	inc	83	# PUA: U+F0192
+nco	onc	83	# PUA: U+F0193
+ncu	unc	83	# PUA: U+F0194
+
+# --- nq (prenasalised palatal click) ---
+nqa	anq	83	# PUA: U+F01A0
+nqe	enq	83	# PUA: U+F01A1
+nqi	inq	83	# PUA: U+F01A2
+nqo	onq	83	# PUA: U+F01A3
+nqu	unq	83	# PUA: U+F01A4
+
+# --- nx (prenasalised lateral click) ---
+nxa	anx	83	# PUA: U+F01B0
+nxe	enx	83	# PUA: U+F01B1
+nxi	inx	83	# PUA: U+F01B2
+nxo	onx	83	# PUA: U+F01B3
+nxu	unx	83	# PUA: U+F01B4
+
+# --- gc (voiced dental click) ---
+gca	agc	83	# PUA: U+F01C0
+gce	egc	83	# PUA: U+F01C1
+gci	igc	83	# PUA: U+F01C2
+gco	ogc	83	# PUA: U+F01C3
+gcu	ugc	83	# PUA: U+F01C4
+
+# --- gq (voiced palatal click) ---
+gqa	agq	83	# PUA: U+F01D0
+gqe	egq	83	# PUA: U+F01D1
+gqi	igq	83	# PUA: U+F01D2
+gqo	ogq	83	# PUA: U+F01D3
+gqu	ugq	83	# PUA: U+F01D4
+
+# --- gx (voiced lateral click) ---
+gxa	agx	83	# PUA: U+F01E0
+gxe	egx	83	# PUA: U+F01E1
+gxi	igx	83	# PUA: U+F01E2
+gxo	ogx	83	# PUA: U+F01E3
+gxu	ugx	83	# PUA: U+F01E4
+
+# =============================================================================
+# SYLLABIC NASALS (standalone, no vowel)
+# =============================================================================
+
+m	m	80	# PUA: U+F01F0 -- syllabic bilabial nasal
+n	n	80	# PUA: U+F01F1 -- syllabic alveolar nasal
+ng	ng	80	# PUA: U+F01F2 -- syllabic velar nasal (as in "ng'" prefix)

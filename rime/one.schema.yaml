@@ -1,0 +1,114 @@
+# Rime schema for isiBheqe soHlamvu -- the CircleOne keyboard
+# Input order: VOWEL FIRST, then consonant(s)
+# Example: to write "ba", type "ab" (vowel 'a' first, then consonant 'b')
+
+schema:
+  schema_id: one
+  name: "\u25B7\u25EF\u25C1 isiBheqe"
+  version: "0.1.0"
+  author:
+    - "The Geek Network <dev@thegeeknetwork.co.za>"
+  description: |
+    isiBheqe soHlamvu input method for siNtu (Bantu) languages.
+    Uses vowel-first input order: type the vowel, then the consonant.
+    Learn more at https://isibheqe.org.za
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+  filters:
+    - uniquifier
+
+speller:
+  alphabet: 'abcdefghijklmnopqrstuvwxyzAEIOUHLNR'
+  delimiter: " '"
+  algebra:
+    # Vowel keys (lowercase = vowel typed first in input sequence)
+    - "xlit/aeiou/aeiou/"
+
+    # Prenasalised consonant shortcuts
+    # Typing 'N' before a stop yields the nasal+stop cluster
+    - "derive/^(a|e|i|o|u)mb/$1Nb/"
+    - "derive/^(a|e|i|o|u)nd/$1Nd/"
+    - "derive/^(a|e|i|o|u)ng/$1Ng/"
+    - "derive/^(a|e|i|o|u)nj/$1Nj/"
+    - "derive/^(a|e|i|o|u)nk/$1Nk/"
+    - "derive/^(a|e|i|o|u)nt/$1Nt/"
+    - "derive/^(a|e|i|o|u)nc/$1Nc/"
+    - "derive/^(a|e|i|o|u)nq/$1Nq/"
+    - "derive/^(a|e|i|o|u)nx/$1Nx/"
+    - "derive/^(a|e|i|o|u)ny/$1Ny/"
+
+    # Click consonant shortcuts
+    # c = dental click, q = palatal click, x = lateral click
+    - "derive/^(a|e|i|o|u)gc/$1Gc/"
+    - "derive/^(a|e|i|o|u)gq/$1Gq/"
+    - "derive/^(a|e|i|o|u)gx/$1Gx/"
+
+    # Aspiration shortcut: H after consonant
+    - "derive/^(a|e|i|o|u)kh/$1kH/"
+    - "derive/^(a|e|i|o|u)ph/$1pH/"
+    - "derive/^(a|e|i|o|u)th/$1tH/"
+    - "derive/^(a|e|i|o|u)bh/$1bH/"
+
+    # Lateral fricative / affricate shortcuts
+    - "derive/^(a|e|i|o|u)hl/$1Hl/"
+    - "derive/^(a|e|i|o|u)dl/$1Dl/"
+    - "derive/^(a|e|i|o|u)tl/$1Tl/"
+
+    # Abbreviation: allow uppercase vowel as alternative trigger
+    - "derive/^a/A/"
+    - "derive/^e/E/"
+    - "derive/^i/I/"
+    - "derive/^o/O/"
+    - "derive/^u/U/"
+
+translator:
+  dictionary: one
+  enable_completion: true
+  enable_sentence: false
+  preedit_format:
+    # Transform vowel letters in the preedit display to their
+    # isiBheqe soHlamvu directional symbols
+    - "xform/a/\u25BC/"
+    - "xform/e/\u25C1/"
+    - "xform/i/\u25B2/"
+    - "xform/o/\u25B7/"
+    - "xform/u/\u22C0/"
+    - "xform/A/\u25BC/"
+    - "xform/E/\u25C1/"
+    - "xform/I/\u25B2/"
+    - "xform/O/\u25B7/"
+    - "xform/U/\u22C0/"
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: ["isiBheqe", "ASCII"]
+  - name: full_shape
+    states: ["half", "full"]
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
