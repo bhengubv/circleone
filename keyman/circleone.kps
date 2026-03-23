@@ -48,14 +48,7 @@
       <Version>0.1.0</Version>
       <DisplayFont>..\font\one.ttf</DisplayFont>
       <Languages>
-        <Language ID="zu">isiZulu</Language>
-        <Language ID="xh">isiXhosa</Language>
-        <Language ID="nr">isiNdebele</Language>
-        <Language ID="ss">siSwati</Language>
-        <Language ID="st">Sesotho</Language>
-        <Language ID="tn">Setswana</Language>
-        <Language ID="ts">Xitsonga</Language>
-        <Language ID="ve">Tshivenda</Language>
+        <Language ID="und-Qaaa">Undetermined (Private Use Script)</Language>
       </Languages>
     </Keyboard>
   </Keyboards>
