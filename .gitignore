@@ -201,6 +201,17 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Android signing
+android/keystore.properties
+android/keystore.jks
+*.keystore
+*.jks
+
+# Android build output
+android/_build/
+android/output/
+font/samples/page_*.png
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
