@@ -1,6 +1,6 @@
 # CircleOne isiBheqe soHlamvu -- Keyman Keyboard
 
-A Keyman keyboard for typing the isiBheqe soHlamvu featural syllabary, used to write Nguni languages (isiZulu, isiXhosa, isiNdebele, siSwati).
+A Keyman keyboard for typing the isiBheqe soHlamvu featural syllabary. The script encodes articulatory features and can be used to write any human language.
 
 ## Overview
 
@@ -121,10 +121,7 @@ This keyboard uses Unicode Private Use Area codepoints U+E000 through U+E2A4. Th
 
 ## Languages Supported
 
-- isiZulu (zu)
-- isiXhosa (xh)
-- isiNdebele (nr)
-- siSwati (ss)
+All of them. isiBheqe soHlamvu encodes articulatory features, not language-specific orthography. Any human language can be written with it.
 
 ## License
 
