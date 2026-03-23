@@ -4,13 +4,17 @@ Name=CircleOne isiBheqe soHlamvu
 Copyright=(c) 2026 The Geek Network
 Author=The Geek Network
 AuthorEmail=dev@thegeeknetwork.co.za
-WebSite=https://thegeeknetwork.co.za
-Description=Keyman keyboard for the isiBheqe soHlamvu featural syllabary. Enables typing of Nguni language syllables using Latin transliteration input mapped to Private Use Area (PUA) codepoints rendered by the CircleOne (one.ttf) font.
+WebSite=https://github.com/bhengubv/circleone
+Description=Keyman keyboard for the isiBheqe soHlamvu (Ditema tsa Dinoko) featural syllabary. Enables typing of siNtu language syllables using Latin transliteration input mapped to Private Use Area (PUA) codepoints rendered by the bundled CircleOne font (one.ttf).
 
 [Files]
 0=circleone.kmn
-1=one.ttf
-2=README.md
+1=../font/one.ttf
+2=welcome.htm
+3=readme.htm
+4=circleone.keyman-touch-layout
+5=HISTORY.md
+6=LICENSE.md
 
 [Keyboards]
 0=circleone
@@ -19,16 +23,20 @@ Description=Keyman keyboard for the isiBheqe soHlamvu featural syllabary. Enable
 Name=CircleOne isiBheqe
 ID=circleone
 Version=0.1.0
-Languages=zu,xh,nr,ss
+Languages=zu,xh,nr,ss,st,tn,ts,ve
 OSK=0
 DisplayFont=one.ttf
 
 [Info]
 Description=File0
-Readme=File2
+Readme=File3
+Welcome=File2
 
 [File0]
-Description=CircleOne isiBheqe soHlamvu keyboard for Nguni languages (isiZulu, isiXhosa, isiNdebele, siSwati). Maps Latin transliteration input to isiBheqe syllable glyphs in the Private Use Area.
+Description=CircleOne isiBheqe soHlamvu keyboard for siNtu languages (isiZulu, isiXhosa, isiNdebele, siSwati, Sesotho, Setswana, Xitsonga, Tshivenda). Maps Latin transliteration input to isiBheqe syllable glyphs in the Private Use Area.
 
 [File2]
-Description=Installation and usage instructions.
+Description=Welcome page displayed after installation.
+
+[File3]
+Description=Readme displayed before installation.
