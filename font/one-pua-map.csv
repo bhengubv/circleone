@@ -1,5 +1,4 @@
 codepoint,input,ipa,glyph_name
-# === Pure Vowels (E000-E007) ===
 0xe000,a,a,vowel_isoka
 0xe001,e,e,vowel_iphambili
 0xe002,i,i,vowel_intombi
@@ -8,283 +7,236 @@ codepoint,input,ipa,glyph_name
 0xe005,aa,a:,vowel_isoka_long
 0xe006,ee,e:,vowel_iphambili_long
 0xe007,ii,i:,vowel_intombi_long
-# === Plosives: b (E010-E014) ===
 0xe010,ba,ba,cv_b_a
 0xe011,be,be,cv_b_e
 0xe012,bi,bi,cv_b_i
 0xe013,bo,bo,cv_b_o
 0xe014,bu,bu,cv_b_u
-# === Plosives: p (E018-E01C) ===
 0xe018,pa,pa,cv_p_a
 0xe019,pe,pe,cv_p_e
 0xe01a,pi,pi,cv_p_i
 0xe01b,po,po,cv_p_o
 0xe01c,pu,pu,cv_p_u
-# === Plosives: ph (E020-E024) ===
 0xe020,pha,pha,cv_ph_a
 0xe021,phe,phe,cv_ph_e
 0xe022,phi,phi,cv_ph_i
 0xe023,pho,pho,cv_ph_o
 0xe024,phu,phu,cv_ph_u
-# === Plosives: d (E028-E02C) ===
 0xe028,da,da,cv_d_a
 0xe029,de,de,cv_d_e
 0xe02a,di,di,cv_d_i
 0xe02b,do,do,cv_d_o
 0xe02c,du,du,cv_d_u
-# === Plosives: t (E030-E034) ===
 0xe030,ta,ta,cv_t_a
 0xe031,te,te,cv_t_e
 0xe032,ti,ti,cv_t_i
 0xe033,to,to,cv_t_o
 0xe034,tu,tu,cv_t_u
-# === Plosives: th (E038-E03C) ===
 0xe038,tha,tha,cv_th_a
 0xe039,the,the,cv_th_e
 0xe03a,thi,thi,cv_th_i
 0xe03b,tho,tho,cv_th_o
 0xe03c,thu,thu,cv_th_u
-# === Plosives: g (E040-E044) ===
 0xe040,ga,ga,cv_g_a
 0xe041,ge,ge,cv_g_e
 0xe042,gi,gi,cv_g_i
 0xe043,go,go,cv_g_o
 0xe044,gu,gu,cv_g_u
-# === Plosives: k (E048-E04C) ===
 0xe048,ka,ka,cv_k_a
 0xe049,ke,ke,cv_k_e
 0xe04a,ki,ki,cv_k_i
 0xe04b,ko,ko,cv_k_o
 0xe04c,ku,ku,cv_k_u
-# === Plosives: kh (E050-E054) ===
 0xe050,kha,kha,cv_kh_a
 0xe051,khe,khe,cv_kh_e
 0xe052,khi,khi,cv_kh_i
 0xe053,kho,kho,cv_kh_o
 0xe054,khu,khu,cv_kh_u
-# === Fricatives: f (E060-E064) ===
 0xe060,fa,fa,cv_f_a
 0xe061,fe,fe,cv_f_e
 0xe062,fi,fi,cv_f_i
 0xe063,fo,fo,cv_f_o
 0xe064,fu,fu,cv_f_u
-# === Fricatives: v (E068-E06C) ===
 0xe068,va,va,cv_v_a
 0xe069,ve,ve,cv_v_e
 0xe06a,vi,vi,cv_v_i
 0xe06b,vo,vo,cv_v_o
 0xe06c,vu,vu,cv_v_u
-# === Fricatives: s (E070-E074) ===
 0xe070,sa,sa,cv_s_a
 0xe071,se,se,cv_s_e
 0xe072,si,si,cv_s_i
 0xe073,so,so,cv_s_o
 0xe074,su,su,cv_s_u
-# === Fricatives: z (E078-E07C) ===
 0xe078,za,za,cv_z_a
 0xe079,ze,ze,cv_z_e
 0xe07a,zi,zi,cv_z_i
 0xe07b,zo,zo,cv_z_o
 0xe07c,zu,zu,cv_z_u
-# === Fricatives: sh (E080-E084) ===
 0xe080,sha,sha,cv_sh_a
 0xe081,she,she,cv_sh_e
 0xe082,shi,shi,cv_sh_i
 0xe083,sho,sho,cv_sh_o
 0xe084,shu,shu,cv_sh_u
-# === Fricatives: h (E088-E08C) ===
 0xe088,ha,ha,cv_h_a
 0xe089,he,he,cv_h_e
 0xe08a,hi,hi,cv_h_i
 0xe08b,ho,ho,cv_h_o
 0xe08c,hu,hu,cv_h_u
-# === Fricatives: hl (E090-E094) ===
 0xe090,hla,hla,cv_hl_a
 0xe091,hle,hle,cv_hl_e
 0xe092,hli,hli,cv_hl_i
 0xe093,hlo,hlo,cv_hl_o
 0xe094,hlu,hlu,cv_hl_u
-# === Fricatives: dl (E098-E09C) ===
 0xe098,dla,dla,cv_dl_a
 0xe099,dle,dle,cv_dl_e
 0xe09a,dli,dli,cv_dl_i
 0xe09b,dlo,dlo,cv_dl_o
 0xe09c,dlu,dlu,cv_dl_u
-# === Nasals: m (E0A0-E0A4) ===
 0xe0a0,ma,ma,cv_m_a
 0xe0a1,me,me,cv_m_e
 0xe0a2,mi,mi,cv_m_i
 0xe0a3,mo,mo,cv_m_o
 0xe0a4,mu,mu,cv_m_u
-# === Nasals: n (E0A8-E0AC) ===
 0xe0a8,na,na,cv_n_a
 0xe0a9,ne,ne,cv_n_e
 0xe0aa,ni,ni,cv_n_i
 0xe0ab,no,no,cv_n_o
 0xe0ac,nu,nu,cv_n_u
-# === Nasals: ng (E0B0-E0B4) ===
 0xe0b0,nga,nga,cv_ng_a
 0xe0b1,nge,nge,cv_ng_e
 0xe0b2,ngi,ngi,cv_ng_i
 0xe0b3,ngo,ngo,cv_ng_o
 0xe0b4,ngu,ngu,cv_ng_u
-# === Nasals: ny (E0B8-E0BC) ===
 0xe0b8,nya,nya,cv_ny_a
 0xe0b9,nye,nye,cv_ny_e
 0xe0ba,nyi,nyi,cv_ny_i
 0xe0bb,nyo,nyo,cv_ny_o
 0xe0bc,nyu,nyu,cv_ny_u
-# === Liquids: l (E0C0-E0C4) ===
 0xe0c0,la,la,cv_l_a
 0xe0c1,le,le,cv_l_e
 0xe0c2,li,li,cv_l_i
 0xe0c3,lo,lo,cv_l_o
 0xe0c4,lu,lu,cv_l_u
-# === Liquids: r (E0C8-E0CC) ===
 0xe0c8,ra,ra,cv_r_a
 0xe0c9,re,re,cv_r_e
 0xe0ca,ri,ri,cv_r_i
 0xe0cb,ro,ro,cv_r_o
 0xe0cc,ru,ru,cv_r_u
-# === Approximants: w (E0D0-E0D4) ===
 0xe0d0,wa,wa,cv_w_a
 0xe0d1,we,we,cv_w_e
 0xe0d2,wi,wi,cv_w_i
 0xe0d3,wo,wo,cv_w_o
 0xe0d4,wu,wu,cv_w_u
-# === Approximants: y (E0D8-E0DC) ===
 0xe0d8,ya,ja,cv_y_a
 0xe0d9,ye,je,cv_y_e
 0xe0da,yi,ji,cv_y_i
 0xe0db,yo,jo,cv_y_o
 0xe0dc,yu,ju,cv_y_u
-# === Implosive: bh (E0E0-E0E4) ===
 0xe0e0,bha,bha,cv_bh_a
 0xe0e1,bhe,bhe,cv_bh_e
 0xe0e2,bhi,bhi,cv_bh_i
 0xe0e3,bho,bho,cv_bh_o
 0xe0e4,bhu,bhu,cv_bh_u
-# === Prenasalized: mb (E0E8-E0EC) ===
 0xe0e8,mba,mba,cv_mb_a
 0xe0e9,mbe,mbe,cv_mb_e
 0xe0ea,mbi,mbi,cv_mb_i
 0xe0eb,mbo,mbo,cv_mb_o
 0xe0ec,mbu,mbu,cv_mb_u
-# === Prenasalized: nd (E0F0-E0F4) ===
 0xe0f0,nda,nda,cv_nd_a
 0xe0f1,nde,nde,cv_nd_e
 0xe0f2,ndi,ndi,cv_nd_i
 0xe0f3,ndo,ndo,cv_nd_o
 0xe0f4,ndu,ndu,cv_nd_u
-# === Prenasalized: nt (E0F8-E0FC) ===
 0xe0f8,nta,nta,cv_nt_a
 0xe0f9,nte,nte,cv_nt_e
 0xe0fa,nti,nti,cv_nt_i
 0xe0fb,nto,nto,cv_nt_o
 0xe0fc,ntu,ntu,cv_nt_u
-# === Prenasalized: nk (E100-E104) ===
 0xe100,nka,nka,cv_nk_a
 0xe101,nke,nke,cv_nk_e
 0xe102,nki,nki,cv_nk_i
 0xe103,nko,nko,cv_nk_o
 0xe104,nku,nku,cv_nk_u
-# === Prenasalized: nj (E108-E10C) ===
 0xe108,nja,ndza,cv_nj_a
 0xe109,nje,ndze,cv_nj_e
 0xe10a,nji,ndzi,cv_nj_i
 0xe10b,njo,ndzo,cv_nj_o
 0xe10c,nju,ndzu,cv_nj_u
-# === Prenasalized: ntsh (E110-E114) ===
 0xe110,ntsha,ntsha,cv_ntsh_a
 0xe111,ntshe,ntshe,cv_ntsh_e
 0xe112,ntshi,ntshi,cv_ntsh_i
 0xe113,ntsho,ntsho,cv_ntsh_o
 0xe114,ntshu,ntshu,cv_ntsh_u
-# === Affricates: j (E120-E124) ===
 0xe120,ja,dza,cv_j_a
 0xe121,je,dze,cv_j_e
 0xe122,ji,dzi,cv_j_i
 0xe123,jo,dzo,cv_j_o
 0xe124,ju,dzu,cv_j_u
-# === Affricates: tsh (E128-E12C) ===
 0xe128,tsha,tsha,cv_tsh_a
 0xe129,tshe,tshe,cv_tsh_e
 0xe12a,tshi,tshi,cv_tsh_i
 0xe12b,tsho,tsho,cv_tsh_o
 0xe12c,tshu,tshu,cv_tsh_u
-# === Click: c (dental) (E140-E144) ===
 0xe140,ca,!a,cv_c_a
 0xe141,ce,!e,cv_c_e
 0xe142,ci,!i,cv_c_i
 0xe143,co,!o,cv_c_o
 0xe144,cu,!u,cv_c_u
-# === Click: ch (aspirated dental) (E148-E14C) ===
 0xe148,cha,!ha,cv_ch_a
 0xe149,che,!he,cv_ch_e
 0xe14a,chi,!hi,cv_ch_i
 0xe14b,cho,!ho,cv_ch_o
 0xe14c,chu,!hu,cv_ch_u
-# === Click: gc (voiced dental) (E150-E154) ===
 0xe150,gca,g!a,cv_gc_a
 0xe151,gce,g!e,cv_gc_e
 0xe152,gci,g!i,cv_gc_i
 0xe153,gco,g!o,cv_gc_o
 0xe154,gcu,g!u,cv_gc_u
-# === Click: nc (nasal dental) (E158-E15C) ===
 0xe158,nca,n!a,cv_nc_a
 0xe159,nce,n!e,cv_nc_e
 0xe15a,nci,n!i,cv_nc_i
 0xe15b,nco,n!o,cv_nc_o
 0xe15c,ncu,n!u,cv_nc_u
-# === Click: q (palatal) (E160-E164) ===
 0xe160,qa,||a,cv_q_a
 0xe161,qe,||e,cv_q_e
 0xe162,qi,||i,cv_q_i
 0xe163,qo,||o,cv_q_o
 0xe164,qu,||u,cv_q_u
-# === Click: qh (aspirated palatal) (E168-E16C) ===
 0xe168,qha,||ha,cv_qh_a
 0xe169,qhe,||he,cv_qh_e
 0xe16a,qhi,||hi,cv_qh_i
 0xe16b,qho,||ho,cv_qh_o
 0xe16c,qhu,||hu,cv_qh_u
-# === Click: gq (voiced palatal) (E170-E174) ===
 0xe170,gqa,g||a,cv_gq_a
 0xe171,gqe,g||e,cv_gq_e
 0xe172,gqi,g||i,cv_gq_i
 0xe173,gqo,g||o,cv_gq_o
 0xe174,gqu,g||u,cv_gq_u
-# === Click: nq (nasal palatal) (E178-E17C) ===
 0xe178,nqa,n||a,cv_nq_a
 0xe179,nqe,n||e,cv_nq_e
 0xe17a,nqi,n||i,cv_nq_i
 0xe17b,nqo,n||o,cv_nq_o
 0xe17c,nqu,n||u,cv_nq_u
-# === Click: x (lateral) (E180-E184) ===
 0xe180,xa,||xa,cv_x_a
 0xe181,xe,||xe,cv_x_e
 0xe182,xi,||xi,cv_x_i
 0xe183,xo,||xo,cv_x_o
 0xe184,xu,||xu,cv_x_u
-# === Click: xh (aspirated lateral) (E188-E18C) ===
 0xe188,xha,||xha,cv_xh_a
 0xe189,xhe,||xhe,cv_xh_e
 0xe18a,xhi,||xhi,cv_xh_i
 0xe18b,xho,||xho,cv_xh_o
 0xe18c,xhu,||xhu,cv_xh_u
-# === Click: gx (voiced lateral) (E190-E194) ===
 0xe190,gxa,g||xa,cv_gx_a
 0xe191,gxe,g||xe,cv_gx_e
 0xe192,gxi,g||xi,cv_gx_i
 0xe193,gxo,g||xo,cv_gx_o
 0xe194,gxu,g||xu,cv_gx_u
-# === Click: nx (nasal lateral) (E198-E19C) ===
 0xe198,nxa,n||xa,cv_nx_a
 0xe199,nxe,n||xe,cv_nx_e
 0xe19a,nxi,n||xi,cv_nx_i
 0xe19b,nxo,n||xo,cv_nx_o
 0xe19c,nxu,n||xu,cv_nx_u
-# === Syllabic Nasals / amaQanda (E1B0-E1B2) ===
 0xe1b0,m_syl,m,nasal_m_syllabic
 0xe1b1,n_syl,n,nasal_n_syllabic
 0xe1b2,ng_syl,ng,nasal_ng_syllabic
