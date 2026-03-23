@@ -22,7 +22,7 @@ Output:
 Requirements:
     FontForge with Python scripting support (20230101+)
 
-Author: The Other Bhengu (Pty) Ltd t/a The Geek and Bhengu B.V.
+Author: The Other Bhengu (Pty) Ltd t/a The Geek.
 License: See repository LICENSE
 """
 
@@ -41,7 +41,7 @@ FONT_NAME = "CircleOne"
 FONT_FAMILY = "CircleOne"
 FONT_FULLNAME = "CircleOne isiBheqe"
 FONT_VERSION = "1.0.0"
-FONT_COPYRIGHT = "Copyright (c) 2026 The Other Bhengu (Pty) Ltd t/a The Geek and Bhengu B.V. isiBheqe SoNtu script."
+FONT_COPYRIGHT = "Copyright (c) 2026 The Other Bhengu (Pty) Ltd t/a The Geek. isiBheqe SoNtu script."
 
 EM_SIZE = 1000          # Units per em
 ASCENT = 800

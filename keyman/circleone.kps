@@ -9,8 +9,8 @@
   </Options>
   <Info>
     <Name URL="">CircleOne isiBheqe soHlamvu</Name>
-    <Copyright URL="">(c) 2026 The Other Bhengu (Pty) Ltd t/a The Geek and Bhengu B.V.</Copyright>
-    <Author URL="mailto:dev@thegeeknetwork.co.za">The Other Bhengu (Pty) Ltd t/a The Geek and Bhengu B.V.</Author>
+    <Copyright URL="">(c) 2026 The Other Bhengu (Pty) Ltd t/a The Geek.</Copyright>
+    <Author URL="mailto:dev@thegeeknetwork.co.za">The Other Bhengu (Pty) Ltd t/a The Geek.</Author>
     <WebSite URL="https://isibheqe.org.za">https://isibheqe.org.za</WebSite>
     <Version URL="">0.1.0</Version>
     <Description URL="">Keyman keyboard for the isiBheqe soHlamvu (Ditema tsa Dinoko) featural syllabary. Enables typing of siNtu language syllables using Latin transliteration input mapped to Private Use Area (PUA) codepoints rendered by the bundled CircleOne font (one.ttf).</Description>
