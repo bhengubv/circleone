@@ -1,0 +1,107 @@
+name: Build and Release APK
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Build and sign APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Generate dictionary from CSV
+        run: python scripts/generate_dict.py
+
+      - name: Validate schema and dictionary
+        run: |
+          python scripts/validate_schema.py
+          python scripts/validate_dict.py
+
+      - name: Build APK
+        run: |
+          chmod +x scripts/build-apk.sh
+          ./scripts/build-apk.sh
+
+      - name: Sign APK
+        if: env.KEYSTORE_BASE64 != ''
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
+          UNSIGNED_APK=$(find . -name "*.apk" -path "*/build/*" | head -1)
+          if [ -z "$UNSIGNED_APK" ]; then
+            echo "Error: No APK found to sign"
+            exit 1
+          fi
+          SIGNED_APK="${UNSIGNED_APK%.apk}-signed.apk"
+          apksigner sign \
+            --ks keystore.jks \
+            --ks-pass "pass:$KEYSTORE_PASSWORD" \
+            --ks-key-alias "$KEY_ALIAS" \
+            --key-pass "pass:$KEY_PASSWORD" \
+            --out "$SIGNED_APK" \
+            "$UNSIGNED_APK"
+          echo "SIGNED_APK=$SIGNED_APK" >> "$GITHUB_ENV"
+          rm keystore.jks
+
+      - name: Extract release notes
+        id: release_notes
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          NOTES="CircleOne $TAG
+
+          isiBheqe soHlamvu keyboard for siNtu languages.
+
+          Changes in this release:
+          $(git log --oneline --no-decorate $(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo HEAD~10)..HEAD -- . ':!.github' 2>/dev/null || echo "- Initial release")
+
+          Install:
+          1. Download the APK file below
+          2. Enable installation from unknown sources in Android settings
+          3. Open the APK to install
+          4. Enable CircleOne in Settings > System > Languages & input > On-screen keyboard"
+          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$NOTES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "CircleOne ${{ github.ref_name }}"
+          body: ${{ steps.release_notes.outputs.notes }}
+          draft: false
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+          files: |
+            ${{ env.SIGNED_APK }}
+            font/one-pua-map.csv
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

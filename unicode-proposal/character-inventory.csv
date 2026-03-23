@@ -1,0 +1,290 @@
+proposed_codepoint,character_name,ipa,description,category
+# Vowels
+U+E000,ISIBHEQE VOWEL A,a,Open central vowel - ikhaya (home),vowel
+U+E001,ISIBHEQE VOWEL E,e,Close-mid front unrounded vowel - iphambili (front),vowel
+U+E002,ISIBHEQE VOWEL I,i,Close front unrounded vowel - intombi (maiden),vowel
+U+E003,ISIBHEQE VOWEL O,o,Close-mid back rounded vowel - imuva (back),vowel
+U+E004,ISIBHEQE VOWEL U,u,Close back rounded vowel - ubuso (face),vowel
+U+E005,ISIBHEQE VOWEL LONG A,a:,Long open central vowel,vowel
+U+E006,ISIBHEQE VOWEL LONG E,e:,Long close-mid front unrounded vowel,vowel
+U+E007,ISIBHEQE VOWEL LONG I,i:,Long close front unrounded vowel,vowel
+# Plosives - b
+U+E010,ISIBHEQE SYLLABLE BA,ba,Voiced bilabial plosive + a,consonant
+U+E011,ISIBHEQE SYLLABLE BE,be,Voiced bilabial plosive + e,consonant
+U+E012,ISIBHEQE SYLLABLE BI,bi,Voiced bilabial plosive + i,consonant
+U+E013,ISIBHEQE SYLLABLE BO,bo,Voiced bilabial plosive + o,consonant
+U+E014,ISIBHEQE SYLLABLE BU,bu,Voiced bilabial plosive + u,consonant
+# Plosives - p
+U+E018,ISIBHEQE SYLLABLE PA,pa,Voiceless bilabial plosive + a,consonant
+U+E019,ISIBHEQE SYLLABLE PE,pe,Voiceless bilabial plosive + e,consonant
+U+E01A,ISIBHEQE SYLLABLE PI,pi,Voiceless bilabial plosive + i,consonant
+U+E01B,ISIBHEQE SYLLABLE PO,po,Voiceless bilabial plosive + o,consonant
+U+E01C,ISIBHEQE SYLLABLE PU,pu,Voiceless bilabial plosive + u,consonant
+# Plosives - ph
+U+E020,ISIBHEQE SYLLABLE PHA,pha,Aspirated bilabial plosive + a,consonant
+U+E021,ISIBHEQE SYLLABLE PHE,phe,Aspirated bilabial plosive + e,consonant
+U+E022,ISIBHEQE SYLLABLE PHI,phi,Aspirated bilabial plosive + i,consonant
+U+E023,ISIBHEQE SYLLABLE PHO,pho,Aspirated bilabial plosive + o,consonant
+U+E024,ISIBHEQE SYLLABLE PHU,phu,Aspirated bilabial plosive + u,consonant
+# Plosives - d
+U+E028,ISIBHEQE SYLLABLE DA,da,Voiced alveolar plosive + a,consonant
+U+E029,ISIBHEQE SYLLABLE DE,de,Voiced alveolar plosive + e,consonant
+U+E02A,ISIBHEQE SYLLABLE DI,di,Voiced alveolar plosive + i,consonant
+U+E02B,ISIBHEQE SYLLABLE DO,do,Voiced alveolar plosive + o,consonant
+U+E02C,ISIBHEQE SYLLABLE DU,du,Voiced alveolar plosive + u,consonant
+# Plosives - t
+U+E030,ISIBHEQE SYLLABLE TA,ta,Voiceless alveolar plosive + a,consonant
+U+E031,ISIBHEQE SYLLABLE TE,te,Voiceless alveolar plosive + e,consonant
+U+E032,ISIBHEQE SYLLABLE TI,ti,Voiceless alveolar plosive + i,consonant
+U+E033,ISIBHEQE SYLLABLE TO,to,Voiceless alveolar plosive + o,consonant
+U+E034,ISIBHEQE SYLLABLE TU,tu,Voiceless alveolar plosive + u,consonant
+# Plosives - th
+U+E038,ISIBHEQE SYLLABLE THA,tha,Aspirated alveolar plosive + a,consonant
+U+E039,ISIBHEQE SYLLABLE THE,the,Aspirated alveolar plosive + e,consonant
+U+E03A,ISIBHEQE SYLLABLE THI,thi,Aspirated alveolar plosive + i,consonant
+U+E03B,ISIBHEQE SYLLABLE THO,tho,Aspirated alveolar plosive + o,consonant
+U+E03C,ISIBHEQE SYLLABLE THU,thu,Aspirated alveolar plosive + u,consonant
+# Plosives - g
+U+E040,ISIBHEQE SYLLABLE GA,ga,Voiced velar plosive + a,consonant
+U+E041,ISIBHEQE SYLLABLE GE,ge,Voiced velar plosive + e,consonant
+U+E042,ISIBHEQE SYLLABLE GI,gi,Voiced velar plosive + i,consonant
+U+E043,ISIBHEQE SYLLABLE GO,go,Voiced velar plosive + o,consonant
+U+E044,ISIBHEQE SYLLABLE GU,gu,Voiced velar plosive + u,consonant
+# Plosives - k
+U+E048,ISIBHEQE SYLLABLE KA,ka,Voiceless velar plosive + a,consonant
+U+E049,ISIBHEQE SYLLABLE KE,ke,Voiceless velar plosive + e,consonant
+U+E04A,ISIBHEQE SYLLABLE KI,ki,Voiceless velar plosive + i,consonant
+U+E04B,ISIBHEQE SYLLABLE KO,ko,Voiceless velar plosive + o,consonant
+U+E04C,ISIBHEQE SYLLABLE KU,ku,Voiceless velar plosive + u,consonant
+# Plosives - kh
+U+E050,ISIBHEQE SYLLABLE KHA,kha,Aspirated velar plosive + a,consonant
+U+E051,ISIBHEQE SYLLABLE KHE,khe,Aspirated velar plosive + e,consonant
+U+E052,ISIBHEQE SYLLABLE KHI,khi,Aspirated velar plosive + i,consonant
+U+E053,ISIBHEQE SYLLABLE KHO,kho,Aspirated velar plosive + o,consonant
+U+E054,ISIBHEQE SYLLABLE KHU,khu,Aspirated velar plosive + u,consonant
+# Fricatives - f
+U+E060,ISIBHEQE SYLLABLE FA,fa,Voiceless labiodental fricative + a,consonant
+U+E061,ISIBHEQE SYLLABLE FE,fe,Voiceless labiodental fricative + e,consonant
+U+E062,ISIBHEQE SYLLABLE FI,fi,Voiceless labiodental fricative + i,consonant
+U+E063,ISIBHEQE SYLLABLE FO,fo,Voiceless labiodental fricative + o,consonant
+U+E064,ISIBHEQE SYLLABLE FU,fu,Voiceless labiodental fricative + u,consonant
+# Fricatives - v
+U+E068,ISIBHEQE SYLLABLE VA,va,Voiced labiodental fricative + a,consonant
+U+E069,ISIBHEQE SYLLABLE VE,ve,Voiced labiodental fricative + e,consonant
+U+E06A,ISIBHEQE SYLLABLE VI,vi,Voiced labiodental fricative + i,consonant
+U+E06B,ISIBHEQE SYLLABLE VO,vo,Voiced labiodental fricative + o,consonant
+U+E06C,ISIBHEQE SYLLABLE VU,vu,Voiced labiodental fricative + u,consonant
+# Fricatives - s
+U+E070,ISIBHEQE SYLLABLE SA,sa,Voiceless alveolar fricative + a,consonant
+U+E071,ISIBHEQE SYLLABLE SE,se,Voiceless alveolar fricative + e,consonant
+U+E072,ISIBHEQE SYLLABLE SI,si,Voiceless alveolar fricative + i,consonant
+U+E073,ISIBHEQE SYLLABLE SO,so,Voiceless alveolar fricative + o,consonant
+U+E074,ISIBHEQE SYLLABLE SU,su,Voiceless alveolar fricative + u,consonant
+# Fricatives - z
+U+E078,ISIBHEQE SYLLABLE ZA,za,Voiced alveolar fricative + a,consonant
+U+E079,ISIBHEQE SYLLABLE ZE,ze,Voiced alveolar fricative + e,consonant
+U+E07A,ISIBHEQE SYLLABLE ZI,zi,Voiced alveolar fricative + i,consonant
+U+E07B,ISIBHEQE SYLLABLE ZO,zo,Voiced alveolar fricative + o,consonant
+U+E07C,ISIBHEQE SYLLABLE ZU,zu,Voiced alveolar fricative + u,consonant
+# Fricatives - sh
+U+E080,ISIBHEQE SYLLABLE SHA,sha,Voiceless postalveolar fricative + a,consonant
+U+E081,ISIBHEQE SYLLABLE SHE,she,Voiceless postalveolar fricative + e,consonant
+U+E082,ISIBHEQE SYLLABLE SHI,shi,Voiceless postalveolar fricative + i,consonant
+U+E083,ISIBHEQE SYLLABLE SHO,sho,Voiceless postalveolar fricative + o,consonant
+U+E084,ISIBHEQE SYLLABLE SHU,shu,Voiceless postalveolar fricative + u,consonant
+# Fricatives - h
+U+E088,ISIBHEQE SYLLABLE HA,ha,Voiceless glottal fricative + a,consonant
+U+E089,ISIBHEQE SYLLABLE HE,he,Voiceless glottal fricative + e,consonant
+U+E08A,ISIBHEQE SYLLABLE HI,hi,Voiceless glottal fricative + i,consonant
+U+E08B,ISIBHEQE SYLLABLE HO,ho,Voiceless glottal fricative + o,consonant
+U+E08C,ISIBHEQE SYLLABLE HU,hu,Voiceless glottal fricative + u,consonant
+# Lateral fricatives - hl
+U+E090,ISIBHEQE SYLLABLE HLA,hla,Voiceless lateral fricative + a,consonant
+U+E091,ISIBHEQE SYLLABLE HLE,hle,Voiceless lateral fricative + e,consonant
+U+E092,ISIBHEQE SYLLABLE HLI,hli,Voiceless lateral fricative + i,consonant
+U+E093,ISIBHEQE SYLLABLE HLO,hlo,Voiceless lateral fricative + o,consonant
+U+E094,ISIBHEQE SYLLABLE HLU,hlu,Voiceless lateral fricative + u,consonant
+# Lateral fricatives - dl
+U+E098,ISIBHEQE SYLLABLE DLA,dla,Voiced lateral affricate + a,consonant
+U+E099,ISIBHEQE SYLLABLE DLE,dle,Voiced lateral affricate + e,consonant
+U+E09A,ISIBHEQE SYLLABLE DLI,dli,Voiced lateral affricate + i,consonant
+U+E09B,ISIBHEQE SYLLABLE DLO,dlo,Voiced lateral affricate + o,consonant
+U+E09C,ISIBHEQE SYLLABLE DLU,dlu,Voiced lateral affricate + u,consonant
+# Nasals - m
+U+E0A0,ISIBHEQE SYLLABLE MA,ma,Bilabial nasal + a,consonant
+U+E0A1,ISIBHEQE SYLLABLE ME,me,Bilabial nasal + e,consonant
+U+E0A2,ISIBHEQE SYLLABLE MI,mi,Bilabial nasal + i,consonant
+U+E0A3,ISIBHEQE SYLLABLE MO,mo,Bilabial nasal + o,consonant
+U+E0A4,ISIBHEQE SYLLABLE MU,mu,Bilabial nasal + u,consonant
+# Nasals - n
+U+E0A8,ISIBHEQE SYLLABLE NA,na,Alveolar nasal + a,consonant
+U+E0A9,ISIBHEQE SYLLABLE NE,ne,Alveolar nasal + e,consonant
+U+E0AA,ISIBHEQE SYLLABLE NI,ni,Alveolar nasal + i,consonant
+U+E0AB,ISIBHEQE SYLLABLE NO,no,Alveolar nasal + o,consonant
+U+E0AC,ISIBHEQE SYLLABLE NU,nu,Alveolar nasal + u,consonant
+# Nasals - ng
+U+E0B0,ISIBHEQE SYLLABLE NGA,nga,Velar nasal + a,consonant
+U+E0B1,ISIBHEQE SYLLABLE NGE,nge,Velar nasal + e,consonant
+U+E0B2,ISIBHEQE SYLLABLE NGI,ngi,Velar nasal + i,consonant
+U+E0B3,ISIBHEQE SYLLABLE NGO,ngo,Velar nasal + o,consonant
+U+E0B4,ISIBHEQE SYLLABLE NGU,ngu,Velar nasal + u,consonant
+# Nasals - ny
+U+E0B8,ISIBHEQE SYLLABLE NYA,nya,Palatal nasal + a,consonant
+U+E0B9,ISIBHEQE SYLLABLE NYE,nye,Palatal nasal + e,consonant
+U+E0BA,ISIBHEQE SYLLABLE NYI,nyi,Palatal nasal + i,consonant
+U+E0BB,ISIBHEQE SYLLABLE NYO,nyo,Palatal nasal + o,consonant
+U+E0BC,ISIBHEQE SYLLABLE NYU,nyu,Palatal nasal + u,consonant
+# Liquids - l
+U+E0C0,ISIBHEQE SYLLABLE LA,la,Alveolar lateral approximant + a,consonant
+U+E0C1,ISIBHEQE SYLLABLE LE,le,Alveolar lateral approximant + e,consonant
+U+E0C2,ISIBHEQE SYLLABLE LI,li,Alveolar lateral approximant + i,consonant
+U+E0C3,ISIBHEQE SYLLABLE LO,lo,Alveolar lateral approximant + o,consonant
+U+E0C4,ISIBHEQE SYLLABLE LU,lu,Alveolar lateral approximant + u,consonant
+# Liquids - r
+U+E0C8,ISIBHEQE SYLLABLE RA,ra,Alveolar trill + a,consonant
+U+E0C9,ISIBHEQE SYLLABLE RE,re,Alveolar trill + e,consonant
+U+E0CA,ISIBHEQE SYLLABLE RI,ri,Alveolar trill + i,consonant
+U+E0CB,ISIBHEQE SYLLABLE RO,ro,Alveolar trill + o,consonant
+U+E0CC,ISIBHEQE SYLLABLE RU,ru,Alveolar trill + u,consonant
+# Approximants - w
+U+E0D0,ISIBHEQE SYLLABLE WA,wa,Labio-velar approximant + a,consonant
+U+E0D1,ISIBHEQE SYLLABLE WE,we,Labio-velar approximant + e,consonant
+U+E0D2,ISIBHEQE SYLLABLE WI,wi,Labio-velar approximant + i,consonant
+U+E0D3,ISIBHEQE SYLLABLE WO,wo,Labio-velar approximant + o,consonant
+U+E0D4,ISIBHEQE SYLLABLE WU,wu,Labio-velar approximant + u,consonant
+# Approximants - y
+U+E0D8,ISIBHEQE SYLLABLE YA,ja,Palatal approximant + a,consonant
+U+E0D9,ISIBHEQE SYLLABLE YE,je,Palatal approximant + e,consonant
+U+E0DA,ISIBHEQE SYLLABLE YI,ji,Palatal approximant + i,consonant
+U+E0DB,ISIBHEQE SYLLABLE YO,jo,Palatal approximant + o,consonant
+U+E0DC,ISIBHEQE SYLLABLE YU,ju,Palatal approximant + u,consonant
+# Implosive - bh
+U+E0E0,ISIBHEQE SYLLABLE BHA,bha,Voiced bilabial implosive + a,consonant
+U+E0E1,ISIBHEQE SYLLABLE BHE,bhe,Voiced bilabial implosive + e,consonant
+U+E0E2,ISIBHEQE SYLLABLE BHI,bhi,Voiced bilabial implosive + i,consonant
+U+E0E3,ISIBHEQE SYLLABLE BHO,bho,Voiced bilabial implosive + o,consonant
+U+E0E4,ISIBHEQE SYLLABLE BHU,bhu,Voiced bilabial implosive + u,consonant
+# Prenasalised - mb
+U+E0E8,ISIBHEQE SYLLABLE MBA,mba,Prenasalised voiced bilabial plosive + a,consonant
+U+E0E9,ISIBHEQE SYLLABLE MBE,mbe,Prenasalised voiced bilabial plosive + e,consonant
+U+E0EA,ISIBHEQE SYLLABLE MBI,mbi,Prenasalised voiced bilabial plosive + i,consonant
+U+E0EB,ISIBHEQE SYLLABLE MBO,mbo,Prenasalised voiced bilabial plosive + o,consonant
+U+E0EC,ISIBHEQE SYLLABLE MBU,mbu,Prenasalised voiced bilabial plosive + u,consonant
+# Prenasalised - nd
+U+E0F0,ISIBHEQE SYLLABLE NDA,nda,Prenasalised voiced alveolar plosive + a,consonant
+U+E0F1,ISIBHEQE SYLLABLE NDE,nde,Prenasalised voiced alveolar plosive + e,consonant
+U+E0F2,ISIBHEQE SYLLABLE NDI,ndi,Prenasalised voiced alveolar plosive + i,consonant
+U+E0F3,ISIBHEQE SYLLABLE NDO,ndo,Prenasalised voiced alveolar plosive + o,consonant
+U+E0F4,ISIBHEQE SYLLABLE NDU,ndu,Prenasalised voiced alveolar plosive + u,consonant
+# Prenasalised - nt
+U+E0F8,ISIBHEQE SYLLABLE NTA,nta,Prenasalised voiceless alveolar plosive + a,consonant
+U+E0F9,ISIBHEQE SYLLABLE NTE,nte,Prenasalised voiceless alveolar plosive + e,consonant
+U+E0FA,ISIBHEQE SYLLABLE NTI,nti,Prenasalised voiceless alveolar plosive + i,consonant
+U+E0FB,ISIBHEQE SYLLABLE NTO,nto,Prenasalised voiceless alveolar plosive + o,consonant
+U+E0FC,ISIBHEQE SYLLABLE NTU,ntu,Prenasalised voiceless alveolar plosive + u,consonant
+# Prenasalised - nk
+U+E100,ISIBHEQE SYLLABLE NKA,nka,Prenasalised voiceless velar plosive + a,consonant
+U+E101,ISIBHEQE SYLLABLE NKE,nke,Prenasalised voiceless velar plosive + e,consonant
+U+E102,ISIBHEQE SYLLABLE NKI,nki,Prenasalised voiceless velar plosive + i,consonant
+U+E103,ISIBHEQE SYLLABLE NKO,nko,Prenasalised voiceless velar plosive + o,consonant
+U+E104,ISIBHEQE SYLLABLE NKU,nku,Prenasalised voiceless velar plosive + u,consonant
+# Prenasalised - nj
+U+E108,ISIBHEQE SYLLABLE NJA,ndza,Prenasalised voiced postalveolar affricate + a,consonant
+U+E109,ISIBHEQE SYLLABLE NJE,ndze,Prenasalised voiced postalveolar affricate + e,consonant
+U+E10A,ISIBHEQE SYLLABLE NJI,ndzi,Prenasalised voiced postalveolar affricate + i,consonant
+U+E10B,ISIBHEQE SYLLABLE NJO,ndzo,Prenasalised voiced postalveolar affricate + o,consonant
+U+E10C,ISIBHEQE SYLLABLE NJU,ndzu,Prenasalised voiced postalveolar affricate + u,consonant
+# Prenasalised - ntsh
+U+E110,ISIBHEQE SYLLABLE NTSHA,ntsha,Prenasalised voiceless postalveolar affricate + a,consonant
+U+E111,ISIBHEQE SYLLABLE NTSHE,ntshe,Prenasalised voiceless postalveolar affricate + e,consonant
+U+E112,ISIBHEQE SYLLABLE NTSHI,ntshi,Prenasalised voiceless postalveolar affricate + i,consonant
+U+E113,ISIBHEQE SYLLABLE NTSHO,ntsho,Prenasalised voiceless postalveolar affricate + o,consonant
+U+E114,ISIBHEQE SYLLABLE NTSHU,ntshu,Prenasalised voiceless postalveolar affricate + u,consonant
+# Affricates - j
+U+E120,ISIBHEQE SYLLABLE JA,dza,Voiced postalveolar affricate + a,consonant
+U+E121,ISIBHEQE SYLLABLE JE,dze,Voiced postalveolar affricate + e,consonant
+U+E122,ISIBHEQE SYLLABLE JI,dzi,Voiced postalveolar affricate + i,consonant
+U+E123,ISIBHEQE SYLLABLE JO,dzo,Voiced postalveolar affricate + o,consonant
+U+E124,ISIBHEQE SYLLABLE JU,dzu,Voiced postalveolar affricate + u,consonant
+# Affricates - tsh
+U+E128,ISIBHEQE SYLLABLE TSHA,tsha,Voiceless postalveolar affricate + a,consonant
+U+E129,ISIBHEQE SYLLABLE TSHE,tshe,Voiceless postalveolar affricate + e,consonant
+U+E12A,ISIBHEQE SYLLABLE TSHI,tshi,Voiceless postalveolar affricate + i,consonant
+U+E12B,ISIBHEQE SYLLABLE TSHO,tsho,Voiceless postalveolar affricate + o,consonant
+U+E12C,ISIBHEQE SYLLABLE TSHU,tshu,Voiceless postalveolar affricate + u,consonant
+# Click - dental c
+U+E140,ISIBHEQE SYLLABLE CA,!a,Dental click + a,consonant
+U+E141,ISIBHEQE SYLLABLE CE,!e,Dental click + e,consonant
+U+E142,ISIBHEQE SYLLABLE CI,!i,Dental click + i,consonant
+U+E143,ISIBHEQE SYLLABLE CO,!o,Dental click + o,consonant
+U+E144,ISIBHEQE SYLLABLE CU,!u,Dental click + u,consonant
+# Click - aspirated dental ch
+U+E148,ISIBHEQE SYLLABLE CHA,!ha,Aspirated dental click + a,consonant
+U+E149,ISIBHEQE SYLLABLE CHE,!he,Aspirated dental click + e,consonant
+U+E14A,ISIBHEQE SYLLABLE CHI,!hi,Aspirated dental click + i,consonant
+U+E14B,ISIBHEQE SYLLABLE CHO,!ho,Aspirated dental click + o,consonant
+U+E14C,ISIBHEQE SYLLABLE CHU,!hu,Aspirated dental click + u,consonant
+# Click - voiced dental gc
+U+E150,ISIBHEQE SYLLABLE GCA,g!a,Voiced dental click + a,consonant
+U+E151,ISIBHEQE SYLLABLE GCE,g!e,Voiced dental click + e,consonant
+U+E152,ISIBHEQE SYLLABLE GCI,g!i,Voiced dental click + i,consonant
+U+E153,ISIBHEQE SYLLABLE GCO,g!o,Voiced dental click + o,consonant
+U+E154,ISIBHEQE SYLLABLE GCU,g!u,Voiced dental click + u,consonant
+# Click - nasal dental nc
+U+E158,ISIBHEQE SYLLABLE NCA,n!a,Nasal dental click + a,consonant
+U+E159,ISIBHEQE SYLLABLE NCE,n!e,Nasal dental click + e,consonant
+U+E15A,ISIBHEQE SYLLABLE NCI,n!i,Nasal dental click + i,consonant
+U+E15B,ISIBHEQE SYLLABLE NCO,n!o,Nasal dental click + o,consonant
+U+E15C,ISIBHEQE SYLLABLE NCU,n!u,Nasal dental click + u,consonant
+# Click - palatal q
+U+E160,ISIBHEQE SYLLABLE QA,||a,Palatal click + a,consonant
+U+E161,ISIBHEQE SYLLABLE QE,||e,Palatal click + e,consonant
+U+E162,ISIBHEQE SYLLABLE QI,||i,Palatal click + i,consonant
+U+E163,ISIBHEQE SYLLABLE QO,||o,Palatal click + o,consonant
+U+E164,ISIBHEQE SYLLABLE QU,||u,Palatal click + u,consonant
+# Click - aspirated palatal qh
+U+E168,ISIBHEQE SYLLABLE QHA,||ha,Aspirated palatal click + a,consonant
+U+E169,ISIBHEQE SYLLABLE QHE,||he,Aspirated palatal click + e,consonant
+U+E16A,ISIBHEQE SYLLABLE QHI,||hi,Aspirated palatal click + i,consonant
+U+E16B,ISIBHEQE SYLLABLE QHO,||ho,Aspirated palatal click + o,consonant
+U+E16C,ISIBHEQE SYLLABLE QHU,||hu,Aspirated palatal click + u,consonant
+# Click - voiced palatal gq
+U+E170,ISIBHEQE SYLLABLE GQA,g||a,Voiced palatal click + a,consonant
+U+E171,ISIBHEQE SYLLABLE GQE,g||e,Voiced palatal click + e,consonant
+U+E172,ISIBHEQE SYLLABLE GQI,g||i,Voiced palatal click + i,consonant
+U+E173,ISIBHEQE SYLLABLE GQO,g||o,Voiced palatal click + o,consonant
+U+E174,ISIBHEQE SYLLABLE GQU,g||u,Voiced palatal click + u,consonant
+# Click - nasal palatal nq
+U+E178,ISIBHEQE SYLLABLE NQA,n||a,Nasal palatal click + a,consonant
+U+E179,ISIBHEQE SYLLABLE NQE,n||e,Nasal palatal click + e,consonant
+U+E17A,ISIBHEQE SYLLABLE NQI,n||i,Nasal palatal click + i,consonant
+U+E17B,ISIBHEQE SYLLABLE NQO,n||o,Nasal palatal click + o,consonant
+U+E17C,ISIBHEQE SYLLABLE NQU,n||u,Nasal palatal click + u,consonant
+# Click - lateral x
+U+E180,ISIBHEQE SYLLABLE XA,||xa,Lateral click + a,consonant
+U+E181,ISIBHEQE SYLLABLE XE,||xe,Lateral click + e,consonant
+U+E182,ISIBHEQE SYLLABLE XI,||xi,Lateral click + i,consonant
+U+E183,ISIBHEQE SYLLABLE XO,||xo,Lateral click + o,consonant
+U+E184,ISIBHEQE SYLLABLE XU,||xu,Lateral click + u,consonant
+# Click - aspirated lateral xh
+U+E188,ISIBHEQE SYLLABLE XHA,||xha,Aspirated lateral click + a,consonant
+U+E189,ISIBHEQE SYLLABLE XHE,||xhe,Aspirated lateral click + e,consonant
+U+E18A,ISIBHEQE SYLLABLE XHI,||xhi,Aspirated lateral click + i,consonant
+U+E18B,ISIBHEQE SYLLABLE XHO,||xho,Aspirated lateral click + o,consonant
+U+E18C,ISIBHEQE SYLLABLE XHU,||xhu,Aspirated lateral click + u,consonant
+# Click - voiced lateral gx
+U+E190,ISIBHEQE SYLLABLE GXA,g||xa,Voiced lateral click + a,consonant
+U+E191,ISIBHEQE SYLLABLE GXE,g||xe,Voiced lateral click + e,consonant
+U+E192,ISIBHEQE SYLLABLE GXI,g||xi,Voiced lateral click + i,consonant
+U+E193,ISIBHEQE SYLLABLE GXO,g||xo,Voiced lateral click + o,consonant
+U+E194,ISIBHEQE SYLLABLE GXU,g||xu,Voiced lateral click + u,consonant
+# Click - nasal lateral nx
+U+E198,ISIBHEQE SYLLABLE NXA,n||xa,Nasal lateral click + a,consonant
+U+E199,ISIBHEQE SYLLABLE NXE,n||xe,Nasal lateral click + e,consonant
+U+E19A,ISIBHEQE SYLLABLE NXI,n||xi,Nasal lateral click + i,consonant
+U+E19B,ISIBHEQE SYLLABLE NXO,n||xo,Nasal lateral click + o,consonant
+U+E19C,ISIBHEQE SYLLABLE NXU,n||xu,Nasal lateral click + u,consonant
+# Syllabic nasals
+U+E1B0,ISIBHEQE SYLLABIC NASAL M,m,Syllabic bilabial nasal,syllabic_nasal
+U+E1B1,ISIBHEQE SYLLABIC NASAL N,n,Syllabic alveolar nasal,syllabic_nasal
+U+E1B2,ISIBHEQE SYLLABIC NASAL NG,ng,Syllabic velar nasal,syllabic_nasal

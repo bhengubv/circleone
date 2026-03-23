@@ -1,0 +1,102 @@
+{
+  "name": "CircleOne QWERTY",
+  "locale": "zu",
+  "layout": {
+    "rows": [
+      [
+        { "label": "q", "hint": { "label": "!" } },
+        { "label": "w", "hint": { "label": "@" } },
+        { "label": "e", "hint": { "label": "#" } },
+        { "label": "r", "hint": { "label": "R" } },
+        { "label": "t", "hint": { "label": "T" } },
+        { "label": "y", "hint": { "label": "Y" } },
+        { "label": "u", "hint": { "label": "U" } },
+        { "label": "i", "hint": { "label": "I" } },
+        { "label": "o", "hint": { "label": "O" } },
+        { "label": "p", "hint": { "label": "P" } }
+      ],
+      [
+        { "label": "a", "hint": { "label": "A" } },
+        { "label": "s", "hint": { "label": "S" } },
+        { "label": "d", "hint": { "label": "D" } },
+        { "label": "f", "hint": { "label": "F" } },
+        { "label": "g", "hint": { "label": "G" } },
+        { "label": "h", "hint": { "label": "H" } },
+        { "label": "j", "hint": { "label": "J" } },
+        { "label": "k", "hint": { "label": "K" } },
+        { "label": "l", "hint": { "label": "L" } }
+      ],
+      [
+        { "label": "shift", "type": "modifier" },
+        { "label": "z", "hint": { "label": "Z" } },
+        {
+          "label": "x",
+          "hint": { "label": "/\u0078\u0329/" },
+          "popup": [
+            { "label": "x", "hint": "lateral click" },
+            { "label": "\u01c3", "hint": "alveolar click" }
+          ]
+        },
+        {
+          "label": "c",
+          "hint": { "label": "/\u01c0/" },
+          "popup": [
+            { "label": "c", "hint": "dental click" },
+            { "label": "\u01c0", "hint": "IPA dental click" },
+            { "label": "ch", "hint": "aspirated" },
+            { "label": "gc", "hint": "voiced" },
+            { "label": "nc", "hint": "nasal" },
+            { "label": "nch", "hint": "nasal aspirated" }
+          ]
+        },
+        { "label": "v", "hint": { "label": "V" } },
+        { "label": "b", "hint": { "label": "B" } },
+        { "label": "n", "hint": { "label": "N" } },
+        { "label": "m", "hint": { "label": "M" } },
+        {
+          "label": "q",
+          "hint": { "label": "/\u01c3/" },
+          "popup": [
+            { "label": "q", "hint": "alveolar click" },
+            { "label": "\u01c3", "hint": "IPA alveolar click" },
+            { "label": "qh", "hint": "aspirated" },
+            { "label": "gq", "hint": "voiced" },
+            { "label": "nq", "hint": "nasal" },
+            { "label": "nqh", "hint": "nasal aspirated" }
+          ]
+        },
+        { "label": "delete", "type": "modifier" }
+      ],
+      [
+        { "label": "123", "type": "mode_switch" },
+        { "label": ",", "hint": { "label": ";" } },
+        {
+          "label": " ",
+          "type": "spacebar",
+          "width": 5
+        },
+        { "label": ".", "hint": { "label": ":" } },
+        { "label": "enter", "type": "action" }
+      ]
+    ]
+  },
+  "click_consonants": {
+    "description": "Quick-access click consonant combinations for Nguni languages",
+    "dental_c": ["c", "ch", "gc", "nc", "nch", "ngc"],
+    "alveolar_q": ["q", "qh", "gq", "nq", "nqh", "ngq"],
+    "lateral_x": ["x", "xh", "gx", "nx", "nxh", "ngx"]
+  },
+  "supported_locales": [
+    "zu",
+    "xh",
+    "nr",
+    "ss",
+    "st",
+    "tn",
+    "nso",
+    "ve",
+    "ts",
+    "af",
+    "en_ZA"
+  ]
+}

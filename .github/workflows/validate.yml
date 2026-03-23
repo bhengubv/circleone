@@ -1,0 +1,62 @@
+name: Validate Schema and Dictionary
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "rime/**"
+      - "font/one-pua-map.csv"
+      - "scripts/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "rime/**"
+      - "font/one-pua-map.csv"
+      - "scripts/**"
+
+jobs:
+  validate:
+    name: Validate Rime schema and dictionary
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Install librime
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librime-dev librime1
+
+      - name: Generate dictionary from CSV
+        run: python scripts/generate_dict.py
+
+      - name: Validate Rime schema
+        run: python scripts/validate_schema.py
+
+      - name: Validate Rime dictionary
+        run: python scripts/validate_dict.py
+
+      - name: Count syllables in inventory
+        run: |
+          echo "--- Syllable Inventory Summary ---"
+          CSV_FILE="font/one-pua-map.csv"
+          TOTAL=$(grep -v '^#' "$CSV_FILE" | grep -v '^codepoint' | grep -v '^$' | wc -l)
+          VOWELS=$(grep -v '^#' "$CSV_FILE" | grep 'vowel' | wc -l)
+          CLICKS=$(grep -v '^#' "$CSV_FILE" | grep 'cv_[gn]*[cqx]' | wc -l)
+          NASALS=$(grep -v '^#' "$CSV_FILE" | grep 'nasal_' | wc -l)
+          echo "Total entries: $TOTAL"
+          echo "Vowels: $VOWELS"
+          echo "Click syllables: $CLICKS"
+          echo "Syllabic nasals: $NASALS"
+          echo "CV syllables: $((TOTAL - VOWELS - NASALS))"
