@@ -53,7 +53,7 @@ CENTER_X = 500
 CENTER_Y = 400          # Optical center (slightly above baseline midpoint)
 RADIUS = 350            # Outer shape radius
 INNER_RADIUS = 200      # Inner consonant mark radius
-STROKE_WIDTH = 60
+STROKE_WIDTH = 80
 
 # ---------------------------------------------------------------------------
 # Vowel Shapes -- the 8 isiBheqe vowel forms
@@ -145,6 +145,58 @@ CONSONANTS = [
     {"latin": "xh",   "ipa": "||xh", "base_cp": 0xE188, "group": "click_lateral"},
     {"latin": "gx",   "ipa": "g||x", "base_cp": 0xE190, "group": "click_lateral"},
     {"latin": "nx",   "ipa": "n||x", "base_cp": 0xE198, "group": "click_lateral"},
+    # --- Additional prenasalized ---
+    {"latin": "nz",   "ipa": "nz",   "base_cp": 0xE1C0, "group": "prenasalized"},
+    {"latin": "mf",   "ipa": "mf",   "base_cp": 0xE1C8, "group": "prenasalized"},
+    {"latin": "mv",   "ipa": "mv",   "base_cp": 0xE1D0, "group": "prenasalized"},
+    {"latin": "mph",  "ipa": "mph",  "base_cp": 0xE1D8, "group": "prenasalized"},
+    {"latin": "ndl",  "ipa": "ndl",  "base_cp": 0xE1E0, "group": "prenasalized"},
+    {"latin": "nhl",  "ipa": "nhl",  "base_cp": 0xE1E8, "group": "prenasalized"},
+    {"latin": "ntl",  "ipa": "ntl",  "base_cp": 0xE1F0, "group": "prenasalized"},
+    {"latin": "ns",   "ipa": "ns",   "base_cp": 0xE1F8, "group": "prenasalized"},
+    # --- Labialized plosives ---
+    {"latin": "bw",   "ipa": "bw",   "base_cp": 0xE200, "group": "labialized"},
+    {"latin": "pw",   "ipa": "pw",   "base_cp": 0xE208, "group": "labialized"},
+    {"latin": "phw",  "ipa": "phw",  "base_cp": 0xE210, "group": "labialized"},
+    {"latin": "dw",   "ipa": "dw",   "base_cp": 0xE218, "group": "labialized"},
+    {"latin": "tw",   "ipa": "tw",   "base_cp": 0xE220, "group": "labialized"},
+    {"latin": "thw",  "ipa": "thw",  "base_cp": 0xE228, "group": "labialized"},
+    {"latin": "gw",   "ipa": "gw",   "base_cp": 0xE230, "group": "labialized"},
+    {"latin": "kw",   "ipa": "kw",   "base_cp": 0xE238, "group": "labialized"},
+    {"latin": "khw",  "ipa": "khw",  "base_cp": 0xE240, "group": "labialized"},
+    # --- Labialized fricatives ---
+    {"latin": "fw",   "ipa": "fw",   "base_cp": 0xE248, "group": "labialized"},
+    {"latin": "vw",   "ipa": "vw",   "base_cp": 0xE250, "group": "labialized"},
+    {"latin": "sw",   "ipa": "sw",   "base_cp": 0xE258, "group": "labialized"},
+    {"latin": "zw",   "ipa": "zw",   "base_cp": 0xE260, "group": "labialized"},
+    {"latin": "shw",  "ipa": "shw",  "base_cp": 0xE268, "group": "labialized"},
+    {"latin": "hw",   "ipa": "hw",   "base_cp": 0xE270, "group": "labialized"},
+    {"latin": "hlw",  "ipa": "hlw",  "base_cp": 0xE278, "group": "labialized"},
+    {"latin": "dlw",  "ipa": "dlw",  "base_cp": 0xE280, "group": "labialized"},
+    # --- Labialized nasals/liquids ---
+    {"latin": "mw",   "ipa": "mw",   "base_cp": 0xE288, "group": "labialized"},
+    {"latin": "nw",   "ipa": "nw",   "base_cp": 0xE290, "group": "labialized"},
+    {"latin": "ngw",  "ipa": "ngw",  "base_cp": 0xE298, "group": "labialized"},
+    {"latin": "nyw",  "ipa": "nyw",  "base_cp": 0xE2A0, "group": "labialized"},
+    {"latin": "lw",   "ipa": "lw",   "base_cp": 0xE2A8, "group": "labialized"},
+    {"latin": "rw",   "ipa": "rw",   "base_cp": 0xE2B0, "group": "labialized"},
+    # --- Labialized prenasalized ---
+    {"latin": "mbw",  "ipa": "mbw",  "base_cp": 0xE2B8, "group": "labialized"},
+    {"latin": "ndw",  "ipa": "ndw",  "base_cp": 0xE2C0, "group": "labialized"},
+    {"latin": "ntw",  "ipa": "ntw",  "base_cp": 0xE2C8, "group": "labialized"},
+    {"latin": "nkw",  "ipa": "nkw",  "base_cp": 0xE2D0, "group": "labialized"},
+    {"latin": "njw",  "ipa": "njw",  "base_cp": 0xE2D8, "group": "labialized"},
+    {"latin": "nzw",  "ipa": "nzw",  "base_cp": 0xE2E0, "group": "labialized"},
+    # --- Labialized clicks ---
+    {"latin": "cw",   "ipa": "!w",   "base_cp": 0xE300, "group": "click_labialized"},
+    {"latin": "qw",   "ipa": "||w",  "base_cp": 0xE308, "group": "click_labialized"},
+    {"latin": "xw",   "ipa": "||xw", "base_cp": 0xE310, "group": "click_labialized"},
+    {"latin": "gcw",  "ipa": "g!w",  "base_cp": 0xE318, "group": "click_labialized"},
+    {"latin": "gqw",  "ipa": "g||w", "base_cp": 0xE320, "group": "click_labialized"},
+    {"latin": "gxw",  "ipa": "g||xw","base_cp": 0xE328, "group": "click_labialized"},
+    {"latin": "ncw",  "ipa": "n!w",  "base_cp": 0xE330, "group": "click_labialized"},
+    {"latin": "nqw",  "ipa": "n||w", "base_cp": 0xE338, "group": "click_labialized"},
+    {"latin": "nxw",  "ipa": "n||xw","base_cp": 0xE340, "group": "click_labialized"},
 ]
 
 # ---------------------------------------------------------------------------
@@ -162,7 +214,7 @@ SYLLABIC_NASALS = [
 # Drawing Helpers
 # ===========================================================================
 
-OUTLINE_WIDTH = 50   # Thickness of the hollow outline stroke
+OUTLINE_WIDTH = 70   # Thickness of the hollow outline stroke
 
 def _circle_cw(pen, cx, cy, r):
     """Draw a circle clockwise (outer contour)."""
@@ -448,9 +500,41 @@ def draw_consonant_mark(pen, consonant_latin, cx, cy, r):
         "nx":   [(cx - half, cy + quarter, cx + half, cy - quarter),
                  (cx - half, cy - quarter, cx + half, cy + quarter),
                  (cx - quarter, cy, cx + quarter, cy)],
+        # Additional prenasalized
+        "nz":   [(cx - half, cy - quarter, cx + half, cy + quarter),
+                 (cx - quarter, cy, cx + quarter, cy)],
+        "mf":   [(cx - half, cy + half, cx, cy), (cx, cy, cx + half, cy + half),
+                 (cx - quarter, cy, cx + quarter, cy)],
+        "mv":   [(cx - half, cy - half, cx, cy), (cx, cy, cx + half, cy - half),
+                 (cx - quarter, cy, cx + quarter, cy)],
+        "mph":  [(cx - half, cy + half, cx, cy), (cx, cy, cx + half, cy + half),
+                 (cx, cy + quarter, cx, cy - quarter)],
+        "ndl":  [(cx - half, cy, cx + half, cy),
+                 (cx - half, cy - quarter, cx + half, cy - quarter),
+                 (cx, cy - quarter, cx, cy + quarter)],
+        "nhl":  [(cx - half, cy, cx + half, cy),
+                 (cx - half, cy + quarter, cx + half, cy + quarter),
+                 (cx, cy - quarter, cx, cy + quarter)],
+        "ntl":  [(cx - half, cy, cx + half, cy),
+                 (cx, cy, cx, cy + half),
+                 (cx - quarter, cy + half, cx + quarter, cy + half)],
+        "ns":   [(cx - half, cy + quarter, cx + half, cy - quarter),
+                 (cx - quarter, cy, cx + quarter, cy)],
     }
 
-    lines = group_marks.get(consonant_latin, [(cx - half, cy, cx + half, cy)])
+    # Labialized consonants: reuse base mark and add a small "w" tail
+    # If the consonant ends with 'w', draw the base consonant mark then add a w-tail
+    base = consonant_latin
+    is_labialized = False
+    if base.endswith("w") and base != "w" and len(base) > 1:
+        base = base[:-1]
+        is_labialized = True
+
+    if base not in group_marks and consonant_latin in group_marks:
+        base = consonant_latin
+        is_labialized = False
+
+    lines = group_marks.get(base, group_marks.get(consonant_latin, [(cx - half, cy, cx + half, cy)]))
 
     for line in lines:
         x1, y1, x2, y2 = line
@@ -470,6 +554,13 @@ def draw_consonant_mark(pen, consonant_latin, cx, cy, r):
         pen.lineTo((x2 - nx_val, y2 - ny_val))
         pen.lineTo((x1 - nx_val, y1 - ny_val))
         pen.closePath()
+
+    # Add a small circle dot at bottom-right for labialized consonants
+    if is_labialized:
+        dot_r = STROKE_WIDTH * 0.35
+        dot_cx = cx + half * 0.7
+        dot_cy = cy - half * 0.7
+        _circle_cw(pen, dot_cx, dot_cy, dot_r)
 
 
 def draw_syllabic_nasal(pen, nasal_latin, cx, cy, r):
