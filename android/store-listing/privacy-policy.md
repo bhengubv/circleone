@@ -1,8 +1,8 @@
 # CircleOne Keyboard -- Privacy Policy
 
 **Effective date:** 2026-03-23
-**Package name:** africa.one.keyboard
-**Developer:** The Geek Network (Pty) Ltd
+**Package name:** za.co.thegeek.circleone
+**Developer:** The Other Bhengu (Pty) Ltd t/a The Geek.
 
 ---
 

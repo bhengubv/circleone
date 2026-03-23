@@ -31,7 +31,7 @@ The signed (or debug) APK will be written to `output/circleone-release.apk`.
 1. Clones the HeliBoard repository at a pinned tag.
 2. Copies `heliboard-config/one_layout.json` into the appropriate assets
    directory.
-3. Patches `applicationId` to `africa.one.keyboard` and the display name to
+3. Patches `applicationId` to `za.co.thegeek.circleone` and the display name to
    "CircleOne".
 4. Copies dictionary and font assets (when present in `assets/`).
 5. Runs `./gradlew assembleRelease`.

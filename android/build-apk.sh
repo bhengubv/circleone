@@ -17,7 +17,7 @@ OUTPUT_DIR="${WORK_DIR}/output"
 LAYOUT_SRC="${WORK_DIR}/heliboard-config/one_layout.json"
 ASSETS_DIR="${WORK_DIR}/assets"
 
-NEW_APP_ID="africa.one.keyboard"
+NEW_APP_ID="za.co.thegeek.circleone"
 NEW_APP_NAME="CircleOne"
 BUILD_TYPE="Release"
 

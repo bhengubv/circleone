@@ -55,4 +55,4 @@ CircleOne is part of The Geek Network, a South African technology ecosystem focu
 
 If you speak an African language, this keyboard was built for you.
 
-Package: africa.one.keyboard
+Package: za.co.thegeek.circleone
