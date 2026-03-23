@@ -1,58 +1,46 @@
-CircleOne -- Type in Your Mother Tongue
+CircleOne -- The keyboard that writes every language.
 
-CircleOne is a free, open-source keyboard built for the languages of Southern Africa. It is the first mobile keyboard designed from the ground up to support click consonants, tonal markers, and the full orthographic range of Nguni, Sotho, and Venda language families.
+CircleOne is a free, open-source keyboard featuring isiBheqe soHlamvu -- a featural syllabary that encodes how sounds are physically produced. Unlike the Latin alphabet, isiBheqe maps articulatory features directly: vowels are directional triangles, consonant strokes overlay them. Any human language can be written with it.
 
-The name CircleOne is written as a symbol: a triangle pointing right, a circle, and a triangle pointing left. In isiBheqe soHlamvu -- the indigenous Southern African syllabary -- this symbol represents the foundational vowel /a/. Every word begins with a sound. Every journey begins with a single step. CircleOne is that first step toward digital language equality.
+Built from Africa. Belonging to everyone.
 
 
-SUPPORTED LANGUAGES
+WHAT IS isiBheqe soHlamvu?
 
-- isiZulu
-- isiXhosa
-- isiNdebele
-- siSwati
-- Sesotho
-- Setswana
-- Sepedi (Northern Sotho)
-- Tshivenda
-- Xitsonga
-- Afrikaans
-- South African English
+A writing system where the shape of each character tells you how the sound is produced. Consonant strokes indicate place and manner of articulation. Vowel shapes represent tongue position and lip rounding. One script for all languages -- because human speech is universal.
 
 
 KEY FEATURES
 
-Vowel-First Input
-CircleOne recognises that vowels are the backbone of Bantu syllable structure. The prediction engine prioritises vowel-consonant patterns to offer faster, more accurate word suggestions for agglutinative languages.
+isiBheqe Syllabary Input
+Type Latin transliteration (e.g., "ba", "ngu", "kwe") and see isiBheqe glyphs rendered in real time. 471 glyphs covering all consonant-vowel combinations including clicks, prenasalised, and labialized consonants.
 
 Click Consonant Support
-Long-press c, q, or x to access a full popup of click variants: aspirated (ch, qh, xh), voiced (gc, gq, gx), nasalised (nc, nq, nx), and nasal-aspirated combinations. No more hunting through symbol menus.
+Long-press c, q, or x to access a full popup of click variants: aspirated (ch, qh, xh), voiced (gc, gq, gx), nasalised (nc, nq, nx), and nasal-aspirated combinations.
 
 Word Prediction and Autocorrect
-Built-in dictionaries for all eleven official South African languages plus Afrikaans. The prediction engine understands noun class prefixes, verb extensions, and common agglutinative patterns.
+Built-in dictionaries with prediction that understands noun class prefixes, verb extensions, and common agglutinative patterns.
 
-isiBheqe soHlamvu Awareness
-Future releases will include an optional isiBheqe syllabary input mode, allowing users to type using the indigenous script alongside Latin orthography.
+Universal Language Support
+isiBheqe encodes articulatory features, not language-specific orthography. Zulu, Xhosa, Swahili, Shona, Mandarin, Russian, Arabic -- if it has sounds, it can be written.
 
 Open Source and Transparent
-CircleOne is built on HeliBoard, itself a fork of the respected OpenBoard project. The full source code is available for inspection, contribution, and community improvement.
+Built on HeliBoard. Full source code available at github.com/bhengubv/circleone.
 
 
 PRIVACY -- YOUR WORDS STAY ON YOUR DEVICE
 
-CircleOne does not transmit your keystrokes anywhere. There is no analytics SDK, no telemetry, no usage tracking, and no advertising framework embedded in the app. Your typing data never leaves your device. Period.
+CircleOne does not transmit your keystrokes anywhere. No analytics, no telemetry, no tracking, no ads. Your typing data never leaves your device.
 
 - No keystroke logging or transmission
-- No analytics or crash reporting that includes user content
+- No analytics or crash reporting
 - No advertising of any kind
-- No network requests from the keyboard itself
+- No network requests from the keyboard
 - No account required
 
 
 BUILT IN SOUTH AFRICA
 
-CircleOne is part of The Geek Network, a South African technology ecosystem focused on economic empowerment, safety, and opportunity. It exists because nine of the eleven official languages of South Africa have been underserved by mainstream keyboard apps for decades.
-
-If you speak an African language, this keyboard was built for you.
+CircleOne is part of The Geek Network -- a South African technology ecosystem for economic empowerment, safety, and opportunity. The isiBheqe soHlamvu script was created by Mqondisi Bhebhe, drawing on indigenous Southern African geometric traditions.
 
 Package: za.co.thegeek.circleone
