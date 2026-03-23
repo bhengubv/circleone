@@ -162,10 +162,11 @@ SYLLABIC_NASALS = [
 # Drawing Helpers
 # ===========================================================================
 
-def draw_circle(pen, cx, cy, r, num_points=64):
-    """Draw a circle using cubic bezier approximation."""
-    # Use 4-segment cubic bezier approximation for a circle
-    k = r * 0.5522847498     # magic number for cubic bezier circle approx
+OUTLINE_WIDTH = 50   # Thickness of the hollow outline stroke
+
+def _circle_cw(pen, cx, cy, r):
+    """Draw a circle clockwise (outer contour)."""
+    k = r * 0.5522847498
     pen.moveTo((cx, cy + r))
     pen.curveTo((cx + k, cy + r), (cx + r, cy + k), (cx + r, cy))
     pen.curveTo((cx + r, cy - k), (cx + k, cy - r), (cx, cy - r))
@@ -173,44 +174,137 @@ def draw_circle(pen, cx, cy, r, num_points=64):
     pen.curveTo((cx - r, cy + k), (cx - k, cy + r), (cx, cy + r))
     pen.closePath()
 
+def _circle_ccw(pen, cx, cy, r):
+    """Draw a circle counter-clockwise (inner cutout)."""
+    k = r * 0.5522847498
+    pen.moveTo((cx, cy + r))
+    pen.curveTo((cx - k, cy + r), (cx - r, cy + k), (cx - r, cy))
+    pen.curveTo((cx - r, cy - k), (cx - k, cy - r), (cx, cy - r))
+    pen.curveTo((cx + k, cy - r), (cx + r, cy - k), (cx + r, cy))
+    pen.curveTo((cx + r, cy + k), (cx + k, cy + r), (cx, cy + r))
+    pen.closePath()
+
+def draw_circle(pen, cx, cy, r, num_points=64):
+    """Draw a hollow circle outline."""
+    _circle_cw(pen, cx, cy, r)
+    _circle_ccw(pen, cx, cy, r - OUTLINE_WIDTH)
+
 
 def draw_right_half_circle(pen, cx, cy, r):
-    """Draw a right-facing half-circle (iphambili / e vowel)."""
+    """Draw a hollow right-facing half-circle (iphambili / e vowel)."""
     k = r * 0.5522847498
+    ri = r - OUTLINE_WIDTH
+    ki = ri * 0.5522847498
+    # Outer path (clockwise)
     pen.moveTo((cx, cy + r))
     pen.curveTo((cx + k, cy + r), (cx + r, cy + k), (cx + r, cy))
     pen.curveTo((cx + r, cy - k), (cx + k, cy - r), (cx, cy - r))
-    pen.lineTo((cx, cy + r))
+    pen.lineTo((cx, cy - ri))
+    # Inner path (back up, counter-clockwise)
+    pen.curveTo((cx + ki, cy - ri), (cx + ri, cy - ki), (cx + ri, cy))
+    pen.curveTo((cx + ri, cy + ki), (cx + ki, cy + ri), (cx, cy + ri))
+    pen.closePath()
+    # Left edge (vertical bar closing the flat side)
+    pen.moveTo((cx, cy + r))
+    pen.lineTo((cx, cy + ri))
+    pen.lineTo((cx - OUTLINE_WIDTH, cy + ri))
+    pen.lineTo((cx - OUTLINE_WIDTH, cy - ri))
+    pen.lineTo((cx, cy - ri))
+    pen.lineTo((cx, cy - r))
+    pen.lineTo((cx - OUTLINE_WIDTH, cy - r))
+    pen.lineTo((cx - OUTLINE_WIDTH, cy + r))
     pen.closePath()
 
 
 def draw_left_half_circle(pen, cx, cy, r):
-    """Draw a left-facing half-circle (imuva / o vowel)."""
+    """Draw a hollow left-facing half-circle (imuva / o vowel)."""
     k = r * 0.5522847498
+    ri = r - OUTLINE_WIDTH
+    ki = ri * 0.5522847498
+    # Outer path (clockwise)
     pen.moveTo((cx, cy - r))
     pen.curveTo((cx - k, cy - r), (cx - r, cy - k), (cx - r, cy))
     pen.curveTo((cx - r, cy + k), (cx - k, cy + r), (cx, cy + r))
+    pen.lineTo((cx, cy + ri))
+    # Inner path (back down, counter-clockwise)
+    pen.curveTo((cx - ki, cy + ri), (cx - ri, cy + ki), (cx - ri, cy))
+    pen.curveTo((cx - ri, cy - ki), (cx - ki, cy - ri), (cx, cy - ri))
+    pen.closePath()
+    # Right edge (vertical bar closing the flat side)
+    pen.moveTo((cx, cy + r))
+    pen.lineTo((cx, cy + ri))
+    pen.lineTo((cx + OUTLINE_WIDTH, cy + ri))
+    pen.lineTo((cx + OUTLINE_WIDTH, cy - ri))
+    pen.lineTo((cx, cy - ri))
     pen.lineTo((cx, cy - r))
+    pen.lineTo((cx + OUTLINE_WIDTH, cy - r))
+    pen.lineTo((cx + OUTLINE_WIDTH, cy + r))
+    pen.closePath()
+
+
+def _triangle_outline(pen, p1, p2, p3, w):
+    """Draw a hollow triangle outline given 3 vertices and stroke width w."""
+    import math as _m
+    pts = [p1, p2, p3]
+    # Compute inset triangle vertices
+    inner = []
+    for i in range(3):
+        # Get the two edges meeting at this vertex
+        prev = pts[(i - 1) % 3]
+        curr = pts[i]
+        nxt = pts[(i + 1) % 3]
+        # Edge vectors pointing inward
+        e1x, e1y = prev[0] - curr[0], prev[1] - curr[1]
+        e2x, e2y = nxt[0] - curr[0], nxt[1] - curr[1]
+        l1 = _m.sqrt(e1x*e1x + e1y*e1y)
+        l2 = _m.sqrt(e2x*e2x + e2y*e2y)
+        if l1 == 0 or l2 == 0:
+            inner.append(curr)
+            continue
+        e1x, e1y = e1x/l1, e1y/l1
+        e2x, e2y = e2x/l2, e2y/l2
+        # Bisector
+        bx, by = e1x + e2x, e1y + e2y
+        bl = _m.sqrt(bx*bx + by*by)
+        if bl == 0:
+            inner.append(curr)
+            continue
+        bx, by = bx/bl, by/bl
+        # Distance along bisector to achieve offset w from edge
+        sin_half = abs(e1x * by - e1y * bx)
+        if sin_half < 0.01:
+            inner.append(curr)
+            continue
+        d = w / sin_half
+        inner.append((curr[0] + bx * d, curr[1] + by * d))
+    # Outer triangle (clockwise)
+    pen.moveTo(pts[0])
+    pen.lineTo(pts[1])
+    pen.lineTo(pts[2])
+    pen.closePath()
+    # Inner triangle (counter-clockwise cutout)
+    pen.moveTo(inner[0])
+    pen.lineTo(inner[2])
+    pen.lineTo(inner[1])
     pen.closePath()
 
 
 def draw_triangle_down(pen, cx, cy, r):
-    """Draw a downward-pointing triangle (intombi / i vowel)."""
-    # Equilateral triangle pointing down
+    """Draw a hollow downward-pointing triangle (intombi / i vowel)."""
     h = r * math.sqrt(3) / 2
-    pen.moveTo((cx - r, cy + h * 0.67))
-    pen.lineTo((cx + r, cy + h * 0.67))
-    pen.lineTo((cx, cy - h * 1.33))
-    pen.closePath()
+    p1 = (cx - r, cy + h * 0.67)
+    p2 = (cx + r, cy + h * 0.67)
+    p3 = (cx, cy - h * 1.33)
+    _triangle_outline(pen, p1, p2, p3, OUTLINE_WIDTH)
 
 
 def draw_triangle_up(pen, cx, cy, r):
-    """Draw an upward-pointing triangle (umkhonto / u vowel)."""
+    """Draw a hollow upward-pointing triangle (umkhonto / u vowel)."""
     h = r * math.sqrt(3) / 2
-    pen.moveTo((cx - r, cy - h * 0.67))
-    pen.lineTo((cx + r, cy - h * 0.67))
-    pen.lineTo((cx, cy + h * 1.33))
-    pen.closePath()
+    p1 = (cx - r, cy - h * 0.67)
+    p2 = (cx + r, cy - h * 0.67)
+    p3 = (cx, cy + h * 1.33)
+    _triangle_outline(pen, p1, p2, p3, OUTLINE_WIDTH)
 
 
 def draw_vowel_shape(pen, vowel_name, cx, cy, r):
@@ -379,9 +473,10 @@ def draw_consonant_mark(pen, consonant_latin, cx, cy, r):
 
 
 def draw_syllabic_nasal(pen, nasal_latin, cx, cy, r):
-    """Draw a syllabic nasal glyph (amaQanda) -- a circle with nasal marker."""
-    # Outer circle
-    draw_circle(pen, cx, cy, r * 0.6)
+    """Draw a syllabic nasal glyph (amaQanda) -- a hollow circle with nasal marker."""
+    # Hollow outer circle
+    _circle_cw(pen, cx, cy, r * 0.6)
+    _circle_ccw(pen, cx, cy, r * 0.6 - OUTLINE_WIDTH)
     # Inner nasal mark
     if nasal_latin == "m_syl":
         # Horizontal bar through center
