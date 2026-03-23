@@ -8,9 +8,9 @@ Each glyph encodes a complete CV syllable, pure vowel, or syllabic nasal
 using Unicode Private Use Area (PUA) codepoints starting at U+E000.
 
 The geometric design follows isiBheqe SoNtu conventions:
-  - Vowels define the outer shape (circle, half-circle, triangle)
-  - Consonants define the inner mark or stroke pattern
-  - Syllabic nasals (amaQanda) are standalone circle forms
+  - Vowels are directional triangles/chevrons encoding articulation
+  - Consonant strokes overlay and cross through the vowel shape
+  - Syllabic nasals (amaQanda) are standalone triangle forms with nasal marks
 
 Usage:
     fontforge -script generate_glyphs.py
@@ -50,10 +50,10 @@ GLYPH_WIDTH = 1000      # Monospaced advance width
 
 # Geometric parameters for glyph drawing
 CENTER_X = 500
-CENTER_Y = 400          # Optical center (slightly above baseline midpoint)
-RADIUS = 380            # Outer shape radius
-INNER_RADIUS = 140      # Inner consonant mark radius
-STROKE_WIDTH = 140
+CENTER_Y = 350          # Optical center
+SIZE = 320              # Half-height/width of vowel shapes
+STROKE = 45             # Universal stroke thickness (thin, clean lines)
+CONSONANT_EXTENT = 280  # How far consonant lines extend from center
 
 # ---------------------------------------------------------------------------
 # Vowel Shapes -- the 8 isiBheqe vowel forms
@@ -214,390 +214,334 @@ SYLLABIC_NASALS = [
 # Drawing Helpers
 # ===========================================================================
 
-OUTLINE_WIDTH = 180  # Thickness of the hollow outline stroke
+# ===========================================================================
+# Stroke Drawing Primitives
+# ===========================================================================
 
-def _circle_cw(pen, cx, cy, r):
-    """Draw a circle clockwise (outer contour)."""
+def _draw_line(pen, x1, y1, x2, y2, w=None):
+    """Draw a line as a thin rectangle with width w (defaults to STROKE)."""
+    if w is None:
+        w = STROKE
+    dx = x2 - x1
+    dy = y2 - y1
+    length = math.sqrt(dx * dx + dy * dy)
+    if length == 0:
+        return
+    nx = -dy / length * w / 2
+    ny = dx / length * w / 2
+    pen.moveTo((x1 + nx, y1 + ny))
+    pen.lineTo((x2 + nx, y2 + ny))
+    pen.lineTo((x2 - nx, y2 - ny))
+    pen.lineTo((x1 - nx, y1 - ny))
+    pen.closePath()
+
+
+def _draw_triangle_outline(pen, p1, p2, p3, w=None):
+    """Draw a triangle as three stroked lines."""
+    if w is None:
+        w = STROKE
+    _draw_line(pen, p1[0], p1[1], p2[0], p2[1], w)
+    _draw_line(pen, p2[0], p2[1], p3[0], p3[1], w)
+    _draw_line(pen, p3[0], p3[1], p1[0], p1[1], w)
+
+
+def _draw_circle_outline(pen, cx, cy, r, w=None):
+    """Draw a circle as an outlined ring (outer CW, inner CCW)."""
+    if w is None:
+        w = STROKE
     k = r * 0.5522847498
+    ri = r - w
+    ki = ri * 0.5522847498
+    # Outer clockwise
     pen.moveTo((cx, cy + r))
     pen.curveTo((cx + k, cy + r), (cx + r, cy + k), (cx + r, cy))
     pen.curveTo((cx + r, cy - k), (cx + k, cy - r), (cx, cy - r))
     pen.curveTo((cx - k, cy - r), (cx - r, cy - k), (cx - r, cy))
     pen.curveTo((cx - r, cy + k), (cx - k, cy + r), (cx, cy + r))
     pen.closePath()
-
-def _circle_ccw(pen, cx, cy, r):
-    """Draw a circle counter-clockwise (inner cutout)."""
-    k = r * 0.5522847498
-    pen.moveTo((cx, cy + r))
-    pen.curveTo((cx - k, cy + r), (cx - r, cy + k), (cx - r, cy))
-    pen.curveTo((cx - r, cy - k), (cx - k, cy - r), (cx, cy - r))
-    pen.curveTo((cx + k, cy - r), (cx + r, cy - k), (cx + r, cy))
-    pen.curveTo((cx + r, cy + k), (cx + k, cy + r), (cx, cy + r))
-    pen.closePath()
-
-def draw_circle(pen, cx, cy, r, num_points=64):
-    """Draw a hollow circle outline."""
-    _circle_cw(pen, cx, cy, r)
-    _circle_ccw(pen, cx, cy, r - OUTLINE_WIDTH)
-
-
-def draw_right_half_circle(pen, cx, cy, r):
-    """Draw a hollow right-facing half-circle (iphambili / e vowel)."""
-    k = r * 0.5522847498
-    ri = r - OUTLINE_WIDTH
-    ki = ri * 0.5522847498
-    # Outer path (clockwise)
-    pen.moveTo((cx, cy + r))
-    pen.curveTo((cx + k, cy + r), (cx + r, cy + k), (cx + r, cy))
-    pen.curveTo((cx + r, cy - k), (cx + k, cy - r), (cx, cy - r))
-    pen.lineTo((cx, cy - ri))
-    # Inner path (back up, counter-clockwise)
+    # Inner counter-clockwise (cutout)
+    pen.moveTo((cx, cy + ri))
+    pen.curveTo((cx - ki, cy + ri), (cx - ri, cy + ki), (cx - ri, cy))
+    pen.curveTo((cx - ri, cy - ki), (cx - ki, cy - ri), (cx, cy - ri))
     pen.curveTo((cx + ki, cy - ri), (cx + ri, cy - ki), (cx + ri, cy))
     pen.curveTo((cx + ri, cy + ki), (cx + ki, cy + ri), (cx, cy + ri))
     pen.closePath()
-    # Left edge (vertical bar closing the flat side)
-    pen.moveTo((cx, cy + r))
-    pen.lineTo((cx, cy + ri))
-    pen.lineTo((cx - OUTLINE_WIDTH, cy + ri))
-    pen.lineTo((cx - OUTLINE_WIDTH, cy - ri))
-    pen.lineTo((cx, cy - ri))
-    pen.lineTo((cx, cy - r))
-    pen.lineTo((cx - OUTLINE_WIDTH, cy - r))
-    pen.lineTo((cx - OUTLINE_WIDTH, cy + r))
-    pen.closePath()
 
 
-def draw_left_half_circle(pen, cx, cy, r):
-    """Draw a hollow left-facing half-circle (imuva / o vowel)."""
+def _draw_dot(pen, cx, cy, r):
+    """Draw a small filled circle (dot)."""
     k = r * 0.5522847498
-    ri = r - OUTLINE_WIDTH
-    ki = ri * 0.5522847498
-    # Outer path (clockwise)
-    pen.moveTo((cx, cy - r))
+    pen.moveTo((cx, cy + r))
+    pen.curveTo((cx + k, cy + r), (cx + r, cy + k), (cx + r, cy))
+    pen.curveTo((cx + r, cy - k), (cx + k, cy - r), (cx, cy - r))
     pen.curveTo((cx - k, cy - r), (cx - r, cy - k), (cx - r, cy))
     pen.curveTo((cx - r, cy + k), (cx - k, cy + r), (cx, cy + r))
-    pen.lineTo((cx, cy + ri))
-    # Inner path (back down, counter-clockwise)
-    pen.curveTo((cx - ki, cy + ri), (cx - ri, cy + ki), (cx - ri, cy))
-    pen.curveTo((cx - ri, cy - ki), (cx - ki, cy - ri), (cx, cy - ri))
-    pen.closePath()
-    # Right edge (vertical bar closing the flat side)
-    pen.moveTo((cx, cy + r))
-    pen.lineTo((cx, cy + ri))
-    pen.lineTo((cx + OUTLINE_WIDTH, cy + ri))
-    pen.lineTo((cx + OUTLINE_WIDTH, cy - ri))
-    pen.lineTo((cx, cy - ri))
-    pen.lineTo((cx, cy - r))
-    pen.lineTo((cx + OUTLINE_WIDTH, cy - r))
-    pen.lineTo((cx + OUTLINE_WIDTH, cy + r))
     pen.closePath()
 
 
-def _triangle_outline(pen, p1, p2, p3, w):
-    """Draw a hollow triangle outline given 3 vertices and stroke width w."""
-    import math as _m
-    pts = [p1, p2, p3]
-    # Compute inset triangle vertices
-    inner = []
-    for i in range(3):
-        # Get the two edges meeting at this vertex
-        prev = pts[(i - 1) % 3]
-        curr = pts[i]
-        nxt = pts[(i + 1) % 3]
-        # Edge vectors pointing inward
-        e1x, e1y = prev[0] - curr[0], prev[1] - curr[1]
-        e2x, e2y = nxt[0] - curr[0], nxt[1] - curr[1]
-        l1 = _m.sqrt(e1x*e1x + e1y*e1y)
-        l2 = _m.sqrt(e2x*e2x + e2y*e2y)
-        if l1 == 0 or l2 == 0:
-            inner.append(curr)
-            continue
-        e1x, e1y = e1x/l1, e1y/l1
-        e2x, e2y = e2x/l2, e2y/l2
-        # Bisector
-        bx, by = e1x + e2x, e1y + e2y
-        bl = _m.sqrt(bx*bx + by*by)
-        if bl == 0:
-            inner.append(curr)
-            continue
-        bx, by = bx/bl, by/bl
-        # Distance along bisector to achieve offset w from edge
-        sin_half = abs(e1x * by - e1y * bx)
-        if sin_half < 0.01:
-            inner.append(curr)
-            continue
-        d = w / sin_half
-        inner.append((curr[0] + bx * d, curr[1] + by * d))
-    # Outer triangle (clockwise)
-    pen.moveTo(pts[0])
-    pen.lineTo(pts[1])
-    pen.lineTo(pts[2])
-    pen.closePath()
-    # Inner triangle (counter-clockwise cutout)
-    pen.moveTo(inner[0])
-    pen.lineTo(inner[2])
-    pen.lineTo(inner[1])
-    pen.closePath()
+# ===========================================================================
+# Vowel Shape Drawing -- isiBheqe directional triangles/chevrons
+# ===========================================================================
+# From the isiBheqe reference:
+#   a (isoka)     = upward triangle △ (open central -- mouth open, points up)
+#   e (iphambili) = left triangle ◁ (front vowel -- points to front/left)
+#   i (intombi)   = upward triangle △ (close front -- narrower/taller than a)
+#   o (imuva)     = right triangle ▷ (back vowel -- points to back/right)
+#   u (umkhonto)  = downward triangle ▽ (close back -- spear, points down)
+
+def draw_vowel_a(pen, cx, cy, s):
+    """Upward triangle △ -- wide base, open central vowel."""
+    p1 = (cx - s, cy - s * 0.7)       # bottom-left
+    p2 = (cx + s, cy - s * 0.7)       # bottom-right
+    p3 = (cx, cy + s)                  # apex
+    _draw_triangle_outline(pen, p1, p2, p3)
+
+def draw_vowel_e(pen, cx, cy, s):
+    """Left-pointing triangle ◁ -- front vowel."""
+    p1 = (cx + s * 0.7, cy + s)       # top-right
+    p2 = (cx + s * 0.7, cy - s)       # bottom-right
+    p3 = (cx - s, cy)                  # left apex
+    _draw_triangle_outline(pen, p1, p2, p3)
+
+def draw_vowel_i(pen, cx, cy, s):
+    """Upward triangle △ -- narrower/taller than a, close front."""
+    p1 = (cx - s * 0.6, cy - s * 0.8) # bottom-left
+    p2 = (cx + s * 0.6, cy - s * 0.8) # bottom-right
+    p3 = (cx, cy + s)                  # apex
+    _draw_triangle_outline(pen, p1, p2, p3)
+
+def draw_vowel_o(pen, cx, cy, s):
+    """Right-pointing triangle ▷ -- back vowel."""
+    p1 = (cx - s * 0.7, cy + s)       # top-left
+    p2 = (cx - s * 0.7, cy - s)       # bottom-left
+    p3 = (cx + s, cy)                  # right apex
+    _draw_triangle_outline(pen, p1, p2, p3)
+
+def draw_vowel_u(pen, cx, cy, s):
+    """Downward triangle ▽ -- close back, spear pointing down."""
+    p1 = (cx - s, cy + s * 0.7)       # top-left
+    p2 = (cx + s, cy + s * 0.7)       # top-right
+    p3 = (cx, cy - s)                  # bottom apex
+    _draw_triangle_outline(pen, p1, p2, p3)
 
 
-def draw_triangle_down(pen, cx, cy, r):
-    """Draw a hollow downward-pointing triangle (intombi / i vowel)."""
-    h = r * math.sqrt(3) / 2
-    p1 = (cx - r, cy + h * 0.67)
-    p2 = (cx + r, cy + h * 0.67)
-    p3 = (cx, cy - h * 1.33)
-    _triangle_outline(pen, p1, p2, p3, OUTLINE_WIDTH)
-
-
-def draw_triangle_up(pen, cx, cy, r):
-    """Draw a hollow upward-pointing triangle (umkhonto / u vowel)."""
-    h = r * math.sqrt(3) / 2
-    p1 = (cx - r, cy - h * 0.67)
-    p2 = (cx + r, cy - h * 0.67)
-    p3 = (cx, cy + h * 1.33)
-    _triangle_outline(pen, p1, p2, p3, OUTLINE_WIDTH)
-
-
-def draw_vowel_shape(pen, vowel_name, cx, cy, r):
-    """Draw the outer vowel shape based on isiBheqe name."""
+def draw_vowel_shape(pen, vowel_name, cx, cy, s):
+    """Draw the vowel shape based on isiBheqe name."""
     if vowel_name in ("isoka", "isoka_long"):
-        # Full circle
-        draw_circle(pen, cx, cy, r)
+        draw_vowel_a(pen, cx, cy, s)
         if vowel_name == "isoka_long":
-            # Double circle for long vowel
-            draw_circle(pen, cx, cy, r * 0.85)
+            draw_vowel_a(pen, cx, cy, s * 0.7)
     elif vowel_name in ("iphambili", "iphambili_long"):
-        draw_right_half_circle(pen, cx, cy, r)
+        draw_vowel_e(pen, cx, cy, s)
         if vowel_name == "iphambili_long":
-            draw_right_half_circle(pen, cx, cy, r * 0.85)
+            draw_vowel_e(pen, cx, cy, s * 0.7)
     elif vowel_name in ("intombi", "intombi_long"):
-        draw_triangle_down(pen, cx, cy, r)
+        draw_vowel_i(pen, cx, cy, s)
         if vowel_name == "intombi_long":
-            draw_triangle_down(pen, cx, cy, r * 0.85)
+            draw_vowel_i(pen, cx, cy, s * 0.7)
     elif vowel_name == "imuva":
-        draw_left_half_circle(pen, cx, cy, r)
+        draw_vowel_o(pen, cx, cy, s)
     elif vowel_name == "umkhonto":
-        draw_triangle_up(pen, cx, cy, r)
+        draw_vowel_u(pen, cx, cy, s)
     else:
-        # Fallback: circle
-        draw_circle(pen, cx, cy, r)
+        draw_vowel_a(pen, cx, cy, s)
 
 
-def draw_consonant_mark(pen, consonant_latin, cx, cy, r):
+def draw_consonant_mark(pen, consonant_latin, cx, cy, ext):
     """
-    Draw the inner consonant grapheme mark.
+    Draw the consonant stroke(s) overlaid on the vowel shape.
 
-    Each consonant group has a distinctive stroke pattern placed inside the
-    vowel shape. This is a placeholder system -- real glyph art would be
-    designed by a typographer. The generator creates distinguishable marks
-    for each consonant so that the font is structurally complete and testable.
+    Based on the isiBheqe reference: consonant marks are simple line strokes
+    that cross through the vowel shape. Each consonant has a unique pattern
+    of lines, crosses, dots, or circles from the reference chart (page 3).
     """
-    half = r * 0.4
-    quarter = r * 0.2
+    h = ext       # full extent
+    hh = ext * 0.5  # half extent
+    q = ext * 0.35  # quarter extent
 
-    # Simple distinguishing marks per consonant group
-    # These are structural placeholders; final art is a design task.
-    group_marks = {
-        # Plosives: horizontal lines at various heights
-        "b":    [(cx - half, cy, cx + half, cy)],
-        "p":    [(cx - half, cy + quarter, cx + half, cy + quarter)],
-        "ph":   [(cx - half, cy + quarter, cx + half, cy + quarter),
-                 (cx, cy + quarter, cx, cy - quarter)],
-        "d":    [(cx - half, cy - quarter, cx + half, cy - quarter)],
-        "t":    [(cx - half, cy, cx + half, cy),
-                 (cx, cy, cx, cy + half)],
-        "th":   [(cx - half, cy, cx + half, cy),
-                 (cx, cy, cx, cy - half)],
-        "g":    [(cx - half, cy - half, cx + half, cy + half)],
-        "k":    [(cx - half, cy + half, cx + half, cy - half)],
-        "kh":   [(cx - half, cy + half, cx + half, cy - half),
-                 (cx - half, cy - half, cx + half, cy + half)],
-        # Fricatives: curved or angled marks
-        "f":    [(cx - half, cy + half, cx + half, cy - half)],
-        "v":    [(cx - half, cy - half, cx, cy), (cx, cy, cx + half, cy - half)],
-        "s":    [(cx - half, cy + quarter, cx + half, cy - quarter)],
-        "z":    [(cx - half, cy - quarter, cx + half, cy + quarter)],
-        "sh":   [(cx - half, cy + quarter, cx, cy - quarter),
-                 (cx, cy - quarter, cx + half, cy + quarter)],
-        "h":    [(cx - quarter, cy + half, cx - quarter, cy - half),
-                 (cx + quarter, cy + half, cx + quarter, cy - half)],
-        "hl":   [(cx - half, cy, cx + half, cy),
-                 (cx - half, cy + quarter, cx + half, cy + quarter)],
-        "dl":   [(cx - half, cy, cx + half, cy),
-                 (cx - half, cy - quarter, cx + half, cy - quarter)],
-        # Nasals: dots or short strokes
-        "m":    [(cx - quarter, cy, cx + quarter, cy)],
-        "n":    [(cx, cy - quarter, cx, cy + quarter)],
-        "ng":   [(cx - quarter, cy, cx + quarter, cy),
-                 (cx, cy - quarter, cx, cy + quarter)],
-        "ny":   [(cx - quarter, cy + quarter, cx + quarter, cy - quarter)],
+    # Consonant stroke patterns from the isiBheqe reference chart
+    # Each entry is a list of (x1,y1,x2,y2) line segments
+    marks = {
+        # Plosives -- from reference chart row 1
+        "b":    [(cx - h, cy, cx + h, cy)],                          # horizontal line
+        "p":    [(cx, cy - h, cx, cy + h)],                          # vertical line
+        "ph":   [(cx, cy - h, cx, cy + h),                           # vertical + horizontal
+                 (cx - hh, cy, cx + hh, cy)],
+        "d":    [(cx - h, cy - h, cx + h, cy + h)],                  # diagonal /
+        "t":    [(cx - h, cy + h, cx + h, cy - h)],                  # diagonal \
+        "th":   [(cx - h, cy + h, cx + h, cy - h),                   # X cross
+                 (cx - h, cy - h, cx + h, cy + h)],
+        "g":    [(cx - h, cy, cx + h, cy),                           # + cross
+                 (cx, cy - h, cx, cy + h)],
+        "k":    [(cx - h, cy, cx + h, cy),                           # horizontal + diagonal
+                 (cx - hh, cy + hh, cx + hh, cy - hh)],
+        "kh":   [(cx - h, cy, cx + h, cy),                           # horizontal + X
+                 (cx - hh, cy + hh, cx + hh, cy - hh),
+                 (cx - hh, cy - hh, cx + hh, cy + hh)],
+        # Fricatives -- reference chart row 2
+        "f":    [(cx - h, cy + h, cx, cy - h),                       # V shape (inverted)
+                 (cx, cy - h, cx + h, cy + h)],
+        "v":    [(cx - h, cy - h, cx, cy + h),                       # V shape
+                 (cx, cy + h, cx + h, cy - h)],
+        "s":    [(cx - h, cy + q, cx + h, cy - q)],                  # gentle diagonal
+        "z":    [(cx - h, cy - q, cx + h, cy + q)],                  # gentle diagonal other way
+        "sh":   [(cx - h, cy + q, cx, cy - q),                       # zigzag
+                 (cx, cy - q, cx + h, cy + q)],
+        "h":    [(cx - q, cy - h, cx - q, cy + h),                   # two verticals
+                 (cx + q, cy - h, cx + q, cy + h)],
+        "hl":   [(cx - h, cy + q, cx + h, cy + q),                   # two horizontals
+                 (cx - h, cy - q, cx + h, cy - q)],
+        "dl":   [(cx - h, cy, cx + h, cy),                           # horizontal + two short verticals
+                 (cx - q, cy - hh, cx - q, cy + hh),
+                 (cx + q, cy - hh, cx + q, cy + hh)],
+        # Nasals -- reference chart: circles and dots
+        "m":    "circle",                                             # small circle
+        "n":    "dot",                                                # filled dot
+        "ng":   "circle_cross",                                       # circle with cross
+        "ny":   "circle_dot",                                         # circle with dot inside
         # Liquids
-        "l":    [(cx, cy + half, cx, cy - half)],
-        "r":    [(cx - half, cy, cx, cy + quarter), (cx, cy + quarter, cx + half, cy)],
+        "l":    [(cx, cy - h, cx, cy + h)],                          # single vertical
+        "r":    [(cx - h, cy, cx + h, cy),                           # horizontal + hook
+                 (cx + hh, cy, cx + h, cy + q)],
         # Approximants
-        "w":    [(cx - half, cy + half, cx - quarter, cy - half),
-                 (cx - quarter, cy - half, cx + quarter, cy + half),
-                 (cx + quarter, cy + half, cx + half, cy - half)],
-        "y":    [(cx - half, cy + half, cx, cy),
-                 (cx + half, cy + half, cx, cy),
-                 (cx, cy, cx, cy - half)],
+        "w":    [(cx - hh, cy + hh, cx, cy - hh),                    # W shape
+                 (cx, cy - hh, cx + hh, cy + hh)],
+        "y":    [(cx - hh, cy + h, cx, cy),                          # Y shape
+                 (cx + hh, cy + h, cx, cy),
+                 (cx, cy, cx, cy - h)],
         # Implosive
-        "bh":   [(cx - half, cy, cx + half, cy),
-                 (cx - half, cy, cx - half, cy + quarter)],
-        # Prenasalized
-        "mb":   [(cx - quarter, cy, cx + quarter, cy),
-                 (cx - half, cy - quarter, cx + half, cy - quarter)],
-        "nd":   [(cx, cy - quarter, cx, cy + quarter),
-                 (cx - half, cy - quarter, cx + half, cy - quarter)],
-        "nt":   [(cx - half, cy, cx + half, cy),
-                 (cx, cy, cx, cy + half),
-                 (cx - quarter, cy + half, cx + quarter, cy + half)],
-        "nk":   [(cx - half, cy + half, cx + half, cy - half),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        "nj":   [(cx - half, cy, cx + half, cy),
-                 (cx - quarter, cy - quarter, cx + quarter, cy + quarter)],
-        "ntsh": [(cx - half, cy, cx + half, cy),
-                 (cx, cy, cx, cy - half),
-                 (cx - quarter, cy - half, cx + quarter, cy - half)],
+        "bh":   [(cx - h, cy, cx + h, cy),                           # horizontal + hook down
+                 (cx - hh, cy, cx - hh, cy - q)],
+        # Prenasalized -- dot prefix + base consonant pattern
+        "mb":   [(cx - h, cy, cx + h, cy),                           # horizontal + dot below
+                 (cx - q, cy - hh, cx + q, cy - hh)],
+        "nd":   [(cx - h, cy - h, cx + h, cy + h),                   # diagonal + short horiz
+                 (cx - q, cy, cx + q, cy)],
+        "nt":   [(cx - h, cy + h, cx + h, cy - h),                   # \ + short horiz
+                 (cx - q, cy, cx + q, cy)],
+        "nk":   [(cx - h, cy, cx + h, cy),                           # + cross + short diag
+                 (cx, cy - h, cx, cy + h),
+                 (cx - q, cy + q, cx + q, cy - q)],
+        "nj":   [(cx - h, cy, cx + h, cy),                           # horizontal + V below
+                 (cx - q, cy - q, cx, cy - hh),
+                 (cx, cy - hh, cx + q, cy - q)],
+        "ntsh": [(cx - h, cy + h, cx + h, cy - h),                   # X + horizontal
+                 (cx - h, cy - h, cx + h, cy + h),
+                 (cx - hh, cy, cx + hh, cy)],
+        "nz":   [(cx - h, cy - q, cx + h, cy + q),                   # gentle diag + short horiz
+                 (cx - q, cy, cx + q, cy)],
+        "mf":   [(cx - h, cy + h, cx, cy - h),                       # V + dot
+                 (cx, cy - h, cx + h, cy + h)],
+        "mv":   [(cx - h, cy - h, cx, cy + h),                       # inverted V + dot
+                 (cx, cy + h, cx + h, cy - h)],
+        "mph":  [(cx, cy - h, cx, cy + h),                           # vertical + V
+                 (cx - hh, cy + hh, cx, cy),
+                 (cx, cy, cx + hh, cy + hh)],
+        "ndl":  [(cx - h, cy - h, cx + h, cy + h),                   # diag + two horiz
+                 (cx - hh, cy + q, cx + hh, cy + q),
+                 (cx - hh, cy - q, cx + hh, cy - q)],
+        "nhl":  [(cx - q, cy - h, cx - q, cy + h),                   # two verticals + horiz
+                 (cx + q, cy - h, cx + q, cy + h),
+                 (cx - hh, cy, cx + hh, cy)],
+        "ntl":  [(cx - h, cy + h, cx + h, cy - h),                   # \ + vertical
+                 (cx, cy - hh, cx, cy + hh)],
+        "ns":   [(cx - h, cy + q, cx + h, cy - q),                   # gentle diag + dot
+                 (cx - q, cy - q, cx + q, cy - q)],
         # Affricates
-        "j":    [(cx - half, cy, cx + half, cy),
-                 (cx + quarter, cy + quarter, cx + quarter, cy - quarter)],
-        "tsh":  [(cx - half, cy, cx + half, cy),
-                 (cx, cy, cx, cy + half),
-                 (cx - quarter, cy, cx + quarter, cy + half)],
-        # Clicks -- dental
-        "c":    [(cx, cy + half, cx, cy - half),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        "ch":   [(cx, cy + half, cx, cy - half),
-                 (cx - quarter, cy + quarter, cx + quarter, cy + quarter)],
-        "gc":   [(cx, cy + half, cx, cy - half),
-                 (cx - half, cy - quarter, cx, cy - half)],
-        "nc":   [(cx, cy + half, cx, cy - half),
-                 (cx - quarter, cy, cx + quarter, cy),
-                 (cx - quarter, cy + quarter, cx + quarter, cy + quarter)],
-        # Clicks -- palatal
-        "q":    [(cx - quarter, cy + half, cx - quarter, cy - half),
-                 (cx + quarter, cy + half, cx + quarter, cy - half)],
-        "qh":   [(cx - quarter, cy + half, cx - quarter, cy - half),
-                 (cx + quarter, cy + half, cx + quarter, cy - half),
-                 (cx - quarter, cy + quarter, cx + quarter, cy + quarter)],
-        "gq":   [(cx - quarter, cy + half, cx - quarter, cy - half),
-                 (cx + quarter, cy + half, cx + quarter, cy - half),
-                 (cx - half, cy - quarter, cx - quarter, cy - half)],
-        "nq":   [(cx - quarter, cy + half, cx - quarter, cy - half),
-                 (cx + quarter, cy + half, cx + quarter, cy - half),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        # Clicks -- lateral
-        "x":    [(cx - half, cy + quarter, cx + half, cy - quarter),
-                 (cx - half, cy - quarter, cx + half, cy + quarter)],
-        "xh":   [(cx - half, cy + quarter, cx + half, cy - quarter),
-                 (cx - half, cy - quarter, cx + half, cy + quarter),
-                 (cx, cy + half, cx, cy + quarter)],
-        "gx":   [(cx - half, cy + quarter, cx + half, cy - quarter),
-                 (cx - half, cy - quarter, cx + half, cy + quarter),
-                 (cx - half, cy, cx - half, cy - quarter)],
-        "nx":   [(cx - half, cy + quarter, cx + half, cy - quarter),
-                 (cx - half, cy - quarter, cx + half, cy + quarter),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        # Additional prenasalized
-        "nz":   [(cx - half, cy - quarter, cx + half, cy + quarter),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        "mf":   [(cx - half, cy + half, cx, cy), (cx, cy, cx + half, cy + half),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        "mv":   [(cx - half, cy - half, cx, cy), (cx, cy, cx + half, cy - half),
-                 (cx - quarter, cy, cx + quarter, cy)],
-        "mph":  [(cx - half, cy + half, cx, cy), (cx, cy, cx + half, cy + half),
-                 (cx, cy + quarter, cx, cy - quarter)],
-        "ndl":  [(cx - half, cy, cx + half, cy),
-                 (cx - half, cy - quarter, cx + half, cy - quarter),
-                 (cx, cy - quarter, cx, cy + quarter)],
-        "nhl":  [(cx - half, cy, cx + half, cy),
-                 (cx - half, cy + quarter, cx + half, cy + quarter),
-                 (cx, cy - quarter, cx, cy + quarter)],
-        "ntl":  [(cx - half, cy, cx + half, cy),
-                 (cx, cy, cx, cy + half),
-                 (cx - quarter, cy + half, cx + quarter, cy + half)],
-        "ns":   [(cx - half, cy + quarter, cx + half, cy - quarter),
-                 (cx - quarter, cy, cx + quarter, cy)],
+        "j":    [(cx - hh, cy, cx + hh, cy),                         # T shape
+                 (cx, cy, cx, cy - h)],
+        "tsh":  [(cx - h, cy + h, cx + h, cy - h),                   # \ + T below
+                 (cx - q, cy - hh, cx + q, cy - hh),
+                 (cx, cy - hh, cx, cy - h)],
+        # Clicks -- dental: vertical line + modifiers
+        "c":    [(cx, cy - h, cx, cy + h),                           # vertical + short horiz
+                 (cx - q, cy, cx + q, cy)],
+        "ch":   [(cx, cy - h, cx, cy + h),                           # vertical + tick right
+                 (cx, cy + q, cx + q, cy + q)],
+        "gc":   [(cx, cy - h, cx, cy + h),                           # vertical + tick left-down
+                 (cx - q, cy - q, cx, cy - hh)],
+        "nc":   [(cx, cy - h, cx, cy + h),                           # vertical + two horiz
+                 (cx - q, cy + q, cx + q, cy + q),
+                 (cx - q, cy - q, cx + q, cy - q)],
+        # Clicks -- palatal: two verticals + modifiers
+        "q":    [(cx - q, cy - h, cx - q, cy + h),                   # two verticals
+                 (cx + q, cy - h, cx + q, cy + h)],
+        "qh":   [(cx - q, cy - h, cx - q, cy + h),                   # two verticals + tick
+                 (cx + q, cy - h, cx + q, cy + h),
+                 (cx + q, cy + q, cx + hh, cy + q)],
+        "gq":   [(cx - q, cy - h, cx - q, cy + h),                   # two verticals + tick down
+                 (cx + q, cy - h, cx + q, cy + h),
+                 (cx - q, cy - q, cx - hh, cy - hh)],
+        "nq":   [(cx - q, cy - h, cx - q, cy + h),                   # two verticals + horiz
+                 (cx + q, cy - h, cx + q, cy + h),
+                 (cx - q, cy, cx + q, cy)],
+        # Clicks -- lateral: X cross + modifiers
+        "x":    [(cx - h, cy + h, cx + h, cy - h),                   # X
+                 (cx - h, cy - h, cx + h, cy + h)],
+        "xh":   [(cx - h, cy + h, cx + h, cy - h),                   # X + tick
+                 (cx - h, cy - h, cx + h, cy + h),
+                 (cx, cy + q, cx + q, cy + q)],
+        "gx":   [(cx - h, cy + h, cx + h, cy - h),                   # X + tick down
+                 (cx - h, cy - h, cx + h, cy + h),
+                 (cx - q, cy - q, cx - hh, cy - hh)],
+        "nx":   [(cx - h, cy + h, cx + h, cy - h),                   # X + horiz
+                 (cx - h, cy - h, cx + h, cy + h),
+                 (cx - q, cy, cx + q, cy)],
     }
 
-    # Labialized consonants: reuse base mark and add a small "w" tail
-    # If the consonant ends with 'w', draw the base consonant mark then add a w-tail
+    # Handle labialized consonants: base mark + small circle
     base = consonant_latin
     is_labialized = False
     if base.endswith("w") and base != "w" and len(base) > 1:
         base = base[:-1]
         is_labialized = True
-
-    if base not in group_marks and consonant_latin in group_marks:
+    if base not in marks and consonant_latin in marks:
         base = consonant_latin
         is_labialized = False
 
-    lines = group_marks.get(base, group_marks.get(consonant_latin, [(cx - half, cy, cx + half, cy)]))
+    mark = marks.get(base, marks.get(consonant_latin, [(cx - h, cy, cx + h, cy)]))
 
-    for line in lines:
-        x1, y1, x2, y2 = line
-        # Draw a thin rectangle along the line to simulate a stroke
-        dx = x2 - x1
-        dy = y2 - y1
-        length = math.sqrt(dx * dx + dy * dy)
-        if length == 0:
-            continue
-        # Perpendicular offset for stroke width
-        sw = STROKE_WIDTH * 0.4
-        nx_val = -dy / length * sw
-        ny_val = dx / length * sw
+    # Special nasal marks (circles/dots)
+    if mark == "circle":
+        _draw_circle_outline(pen, cx, cy, q)
+    elif mark == "dot":
+        _draw_dot(pen, cx, cy, STROKE * 0.8)
+    elif mark == "circle_cross":
+        _draw_circle_outline(pen, cx, cy, q)
+        _draw_line(pen, cx - q, cy, cx + q, cy)
+        _draw_line(pen, cx, cy - q, cx, cy + q)
+    elif mark == "circle_dot":
+        _draw_circle_outline(pen, cx, cy, q)
+        _draw_dot(pen, cx, cy, STROKE * 0.5)
+    else:
+        # Draw line segments
+        for seg in mark:
+            x1, y1, x2, y2 = seg
+            _draw_line(pen, x1, y1, x2, y2)
 
-        pen.moveTo((x1 + nx_val, y1 + ny_val))
-        pen.lineTo((x2 + nx_val, y2 + ny_val))
-        pen.lineTo((x2 - nx_val, y2 - ny_val))
-        pen.lineTo((x1 - nx_val, y1 - ny_val))
-        pen.closePath()
-
-    # Add a small circle dot at bottom-right for labialized consonants
+    # Labialized: add small open circle at bottom-right
     if is_labialized:
-        dot_r = STROKE_WIDTH * 0.35
-        dot_cx = cx + half * 0.7
-        dot_cy = cy - half * 0.7
-        _circle_cw(pen, dot_cx, dot_cy, dot_r)
+        _draw_circle_outline(pen, cx + hh, cy - hh, STROKE * 1.2)
 
 
-def draw_syllabic_nasal(pen, nasal_latin, cx, cy, r):
-    """Draw a syllabic nasal glyph (amaQanda) -- a hollow circle with nasal marker."""
-    # Hollow outer circle
-    _circle_cw(pen, cx, cy, r * 0.6)
-    _circle_ccw(pen, cx, cy, r * 0.6 - OUTLINE_WIDTH)
-    # Inner nasal mark
+def draw_syllabic_nasal(pen, nasal_latin, cx, cy, s):
+    """Draw a syllabic nasal glyph (amaQanda) -- triangle with nasal marker."""
+    # Draw a small upward triangle as the base shape
+    r = s * 0.6
+    p1 = (cx - r, cy - r * 0.7)
+    p2 = (cx + r, cy - r * 0.7)
+    p3 = (cx, cy + r)
+    _draw_triangle_outline(pen, p1, p2, p3)
+    # Nasal mark inside
+    q = r * 0.4
     if nasal_latin == "m_syl":
-        # Horizontal bar through center
-        sw = STROKE_WIDTH * 0.5
-        pen.moveTo((cx - r * 0.3, cy + sw))
-        pen.lineTo((cx + r * 0.3, cy + sw))
-        pen.lineTo((cx + r * 0.3, cy - sw))
-        pen.lineTo((cx - r * 0.3, cy - sw))
-        pen.closePath()
+        _draw_circle_outline(pen, cx, cy, q)
     elif nasal_latin == "n_syl":
-        # Vertical bar through center
-        sw = STROKE_WIDTH * 0.5
-        pen.moveTo((cx - sw, cy + r * 0.3))
-        pen.lineTo((cx + sw, cy + r * 0.3))
-        pen.lineTo((cx + sw, cy - r * 0.3))
-        pen.lineTo((cx - sw, cy - r * 0.3))
-        pen.closePath()
+        _draw_dot(pen, cx, cy, STROKE * 0.8)
     elif nasal_latin == "ng_syl":
-        # Cross through center
-        sw = STROKE_WIDTH * 0.35
-        pen.moveTo((cx - r * 0.3, cy + sw))
-        pen.lineTo((cx + r * 0.3, cy + sw))
-        pen.lineTo((cx + r * 0.3, cy - sw))
-        pen.lineTo((cx - r * 0.3, cy - sw))
-        pen.closePath()
-        pen.moveTo((cx - sw, cy + r * 0.3))
-        pen.lineTo((cx + sw, cy + r * 0.3))
-        pen.lineTo((cx + sw, cy - r * 0.3))
-        pen.lineTo((cx - sw, cy - r * 0.3))
-        pen.closePath()
+        _draw_circle_outline(pen, cx, cy, q)
+        _draw_line(pen, cx - q, cy, cx + q, cy)
+        _draw_line(pen, cx, cy - q, cx, cy + q)
 
 
 # ===========================================================================
@@ -698,7 +642,7 @@ def create_font():
         glyph = font.createChar(v["codepoint"], glyph_name)
         glyph.width = GLYPH_WIDTH
         pen = glyph.glyphPen()
-        draw_vowel_shape(pen, v["name"], CENTER_X, CENTER_Y, RADIUS)
+        draw_vowel_shape(pen, v["name"], CENTER_X, CENTER_Y, SIZE)
         pen = None
 
     # -----------------------------------------------------------------------
@@ -712,11 +656,11 @@ def create_font():
             glyph.width = GLYPH_WIDTH
             pen = glyph.glyphPen()
 
-            # Draw outer vowel shape
-            draw_vowel_shape(pen, v["name"], CENTER_X, CENTER_Y, RADIUS)
+            # Draw vowel shape (triangle/chevron)
+            draw_vowel_shape(pen, v["name"], CENTER_X, CENTER_Y, SIZE)
 
-            # Draw inner consonant mark
-            draw_consonant_mark(pen, c["latin"], CENTER_X, CENTER_Y, INNER_RADIUS)
+            # Draw consonant strokes crossing through the shape
+            draw_consonant_mark(pen, c["latin"], CENTER_X, CENTER_Y, CONSONANT_EXTENT)
 
             pen = None
 
@@ -727,7 +671,7 @@ def create_font():
         glyph = font.createChar(sn["codepoint"], sn["glyph_name"])
         glyph.width = GLYPH_WIDTH
         pen = glyph.glyphPen()
-        draw_syllabic_nasal(pen, sn["latin"], CENTER_X, CENTER_Y, RADIUS)
+        draw_syllabic_nasal(pen, sn["latin"], CENTER_X, CENTER_Y, SIZE)
         pen = None
 
     return font
