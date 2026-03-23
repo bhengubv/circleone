@@ -51,9 +51,9 @@ GLYPH_WIDTH = 1000      # Monospaced advance width
 # Geometric parameters for glyph drawing
 CENTER_X = 500
 CENTER_Y = 400          # Optical center (slightly above baseline midpoint)
-RADIUS = 350            # Outer shape radius
-INNER_RADIUS = 200      # Inner consonant mark radius
-STROKE_WIDTH = 160
+RADIUS = 380            # Outer shape radius
+INNER_RADIUS = 140      # Inner consonant mark radius
+STROKE_WIDTH = 140
 
 # ---------------------------------------------------------------------------
 # Vowel Shapes -- the 8 isiBheqe vowel forms
