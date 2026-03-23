@@ -1,42 +1,64 @@
-[Package]
-Version=0.1.0
-Name=CircleOne isiBheqe soHlamvu
-Copyright=(c) 2026 The Geek Network
-Author=The Geek Network
-AuthorEmail=dev@thegeeknetwork.co.za
-WebSite=https://github.com/bhengubv/circleone
-Description=Keyman keyboard for the isiBheqe soHlamvu (Ditema tsa Dinoko) featural syllabary. Enables typing of siNtu language syllables using Latin transliteration input mapped to Private Use Area (PUA) codepoints rendered by the bundled CircleOne font (one.ttf).
-
-[Files]
-0=circleone.kmn
-1=../font/one.ttf
-2=welcome.htm
-3=readme.htm
-4=circleone.keyman-touch-layout
-5=HISTORY.md
-6=LICENSE.md
-
-[Keyboards]
-0=circleone
-
-[Keyboard circleone]
-Name=CircleOne isiBheqe
-ID=circleone
-Version=0.1.0
-Languages=zu,xh,nr,ss,st,tn,ts,ve
-OSK=0
-DisplayFont=one.ttf
-
-[Info]
-Description=File0
-Readme=File3
-Welcome=File2
-
-[File0]
-Description=CircleOne isiBheqe soHlamvu keyboard for siNtu languages (isiZulu, isiXhosa, isiNdebele, siSwati, Sesotho, Setswana, Xitsonga, Tshivenda). Maps Latin transliteration input to isiBheqe syllable glyphs in the Private Use Area.
-
-[File2]
-Description=Welcome page displayed after installation.
-
-[File3]
-Description=Readme displayed before installation.
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <System>
+    <KeymanDeveloperVersion>18.0</KeymanDeveloperVersion>
+    <FileVersion>7.0</FileVersion>
+  </System>
+  <Options>
+    <FollowKeyboardVersion/>
+  </Options>
+  <Info>
+    <Name URL="">CircleOne isiBheqe soHlamvu</Name>
+    <Copyright URL="">(c) 2026 The Geek Network</Copyright>
+    <Author URL="mailto:dev@thegeeknetwork.co.za">The Geek Network</Author>
+    <WebSite URL="https://github.com/bhengubv/circleone">https://github.com/bhengubv/circleone</WebSite>
+    <Version URL="">0.1.0</Version>
+    <Description URL="">Keyman keyboard for the isiBheqe soHlamvu (Ditema tsa Dinoko) featural syllabary. Enables typing of siNtu language syllables using Latin transliteration input mapped to Private Use Area (PUA) codepoints rendered by the bundled CircleOne font (one.ttf).</Description>
+  </Info>
+  <Files>
+    <File>
+      <Name>..\font\one.ttf</Name>
+      <Description>CircleOne isiBheqe font</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.ttf</FileType>
+    </File>
+    <File>
+      <Name>circleone.kmx</Name>
+      <Description>CircleOne keyboard</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.kmx</FileType>
+    </File>
+    <File>
+      <Name>welcome.htm</Name>
+      <Description>Welcome page</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.htm</FileType>
+    </File>
+    <File>
+      <Name>readme.htm</Name>
+      <Description>Readme</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.htm</FileType>
+    </File>
+  </Files>
+  <Keyboards>
+    <Keyboard>
+      <Name>CircleOne isiBheqe</Name>
+      <ID>circleone</ID>
+      <Version>0.1.0</Version>
+      <DisplayFont>..\font\one.ttf</DisplayFont>
+      <Languages>
+        <Language ID="zu">isiZulu</Language>
+        <Language ID="xh">isiXhosa</Language>
+        <Language ID="nr">isiNdebele</Language>
+        <Language ID="ss">siSwati</Language>
+        <Language ID="st">Sesotho</Language>
+        <Language ID="tn">Setswana</Language>
+        <Language ID="ts">Xitsonga</Language>
+        <Language ID="ve">Tshivenda</Language>
+      </Languages>
+    </Keyboard>
+  </Keyboards>
+  <RelatedPackages>
+  </RelatedPackages>
+</Package>

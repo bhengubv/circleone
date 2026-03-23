@@ -1,17 +1,19 @@
 c CircleOne isiBheqe soHlamvu Keyboard
 c Featural syllabary for isiZulu/isiXhosa/isiNdebele
 c
-c Input is Latin transliteration order (consonant+vowel, e.g. 'ba')
+c Input is Latin transliteration (consonant+vowel, e.g. 'ba')
 c Rendering shows vowel-first (isiBheqe glyph has vowel as outer shape)
 c
-c PUA codepoints: U+E000-U+E4FF
-c Layout: each consonant group starts at a 0x10-aligned boundary
-c         with 5 vowel variants (a, e, i, o, u) per consonant
+c PUA codepoints: U+E000-U+E1B2
+c Layout: each consonant group at 0x08 or 0x10 boundaries
+c         with 5 vowel variants (a=+0, e=+1, i=+2, o=+3, u=+4)
+c
+c Source of truth: font/one-pua-map.csv
 
-VERSION 10.0
-NAME "CircleOne isiBheqe"
-FONT "one.ttf"
-COPYRIGHT "(c) 2026 The Geek Network"
+store(&version) '10.0'
+store(&name) 'CircleOne isiBheqe'
+store(&copyright) '(c) 2026 The Geek Network'
+store(&keyboardversion) '0.1.0'
 
 begin Unicode > use(main)
 
@@ -27,446 +29,533 @@ c ============================================================
 + 'u' > U+E004  c u
 
 c ============================================================
-c SYLLABIC NASALS: U+E005 - U+E007
+c LONG VOWELS: U+E005 - U+E007
+c Double-tap a vowel to get its long form
 c ============================================================
-c These are standalone nasal consonants functioning as syllable nuclei.
-c Input: prefix with hyphen to distinguish from CV nasals.
-+ '-' 'm' > U+E005  c syllabic m
-+ '-' 'n' > U+E006  c syllabic n
-+ '-' 'n' 'g' > U+E007  c syllabic ng
+U+E000 + 'a' > U+E005  c aa (long a)
+U+E001 + 'e' > U+E006  c ee (long e)
+U+E002 + 'i' > U+E007  c ii (long i)
 
 c ============================================================
+c SYLLABIC NASALS: U+E1B0 - U+E1B2
+c Prefix with hyphen to distinguish from CV nasals
+c ============================================================
+'-' + 'm' > U+E1B0  c syllabic m
+'-' + 'n' > U+E1B1  c syllabic n
+U+E1B1 + 'g' > U+E1B2  c syllabic ng (typed as -ng)
+
+c ============================================================
+c SINGLE-CONSONANT CV SYLLABLES
+c Pattern: 'C' + 'V' > U+XXXX
+c ============================================================
+
+c ------------------------------------------------------------
 c B SYLLABLES: U+E010 - U+E014
-c ============================================================
-+ 'b' 'a' > U+E010  c ba
-+ 'b' 'e' > U+E011  c be
-+ 'b' 'i' > U+E012  c bi
-+ 'b' 'o' > U+E013  c bo
-+ 'b' 'u' > U+E014  c bu
+c ------------------------------------------------------------
+'b' + 'a' > U+E010  c ba
+'b' + 'e' > U+E011  c be
+'b' + 'i' > U+E012  c bi
+'b' + 'o' > U+E013  c bo
+'b' + 'u' > U+E014  c bu
 
-c ============================================================
-c BH SYLLABLES: U+E020 - U+E024
-c ============================================================
-+ 'b' 'h' 'a' > U+E020  c bha
-+ 'b' 'h' 'e' > U+E021  c bhe
-+ 'b' 'h' 'i' > U+E022  c bhi
-+ 'b' 'h' 'o' > U+E023  c bho
-+ 'b' 'h' 'u' > U+E024  c bhu
+c ------------------------------------------------------------
+c P SYLLABLES: U+E018 - U+E01C
+c ------------------------------------------------------------
+'p' + 'a' > U+E018  c pa
+'p' + 'e' > U+E019  c pe
+'p' + 'i' > U+E01A  c pi
+'p' + 'o' > U+E01B  c po
+'p' + 'u' > U+E01C  c pu
 
-c ============================================================
-c D SYLLABLES: U+E030 - U+E034
-c ============================================================
-+ 'd' 'a' > U+E030  c da
-+ 'd' 'e' > U+E031  c de
-+ 'd' 'i' > U+E032  c di
-+ 'd' 'o' > U+E033  c do
-+ 'd' 'u' > U+E034  c du
+c ------------------------------------------------------------
+c D SYLLABLES: U+E028 - U+E02C
+c ------------------------------------------------------------
+'d' + 'a' > U+E028  c da
+'d' + 'e' > U+E029  c de
+'d' + 'i' > U+E02A  c di
+'d' + 'o' > U+E02B  c do
+'d' + 'u' > U+E02C  c du
 
-c ============================================================
-c DL SYLLABLES: U+E040 - U+E044
-c ============================================================
-+ 'd' 'l' 'a' > U+E040  c dla
-+ 'd' 'l' 'e' > U+E041  c dle
-+ 'd' 'l' 'i' > U+E042  c dli
-+ 'd' 'l' 'o' > U+E043  c dlo
-+ 'd' 'l' 'u' > U+E044  c dlu
+c ------------------------------------------------------------
+c T SYLLABLES: U+E030 - U+E034
+c ------------------------------------------------------------
+'t' + 'a' > U+E030  c ta
+'t' + 'e' > U+E031  c te
+'t' + 'i' > U+E032  c ti
+'t' + 'o' > U+E033  c to
+'t' + 'u' > U+E034  c tu
 
-c ============================================================
-c F SYLLABLES: U+E050 - U+E054
-c ============================================================
-+ 'f' 'a' > U+E050  c fa
-+ 'f' 'e' > U+E051  c fe
-+ 'f' 'i' > U+E052  c fi
-+ 'f' 'o' > U+E053  c fo
-+ 'f' 'u' > U+E054  c fu
+c ------------------------------------------------------------
+c G SYLLABLES: U+E040 - U+E044
+c ------------------------------------------------------------
+'g' + 'a' > U+E040  c ga
+'g' + 'e' > U+E041  c ge
+'g' + 'i' > U+E042  c gi
+'g' + 'o' > U+E043  c go
+'g' + 'u' > U+E044  c gu
 
-c ============================================================
-c G SYLLABLES: U+E060 - U+E064
-c ============================================================
-+ 'g' 'a' > U+E060  c ga
-+ 'g' 'e' > U+E061  c ge
-+ 'g' 'i' > U+E062  c gi
-+ 'g' 'o' > U+E063  c go
-+ 'g' 'u' > U+E064  c gu
+c ------------------------------------------------------------
+c K SYLLABLES: U+E048 - U+E04C
+c ------------------------------------------------------------
+'k' + 'a' > U+E048  c ka
+'k' + 'e' > U+E049  c ke
+'k' + 'i' > U+E04A  c ki
+'k' + 'o' > U+E04B  c ko
+'k' + 'u' > U+E04C  c ku
 
-c ============================================================
-c H SYLLABLES: U+E070 - U+E074
-c ============================================================
-+ 'h' 'a' > U+E070  c ha
-+ 'h' 'e' > U+E071  c he
-+ 'h' 'i' > U+E072  c hi
-+ 'h' 'o' > U+E073  c ho
-+ 'h' 'u' > U+E074  c hu
+c ------------------------------------------------------------
+c F SYLLABLES: U+E060 - U+E064
+c ------------------------------------------------------------
+'f' + 'a' > U+E060  c fa
+'f' + 'e' > U+E061  c fe
+'f' + 'i' > U+E062  c fi
+'f' + 'o' > U+E063  c fo
+'f' + 'u' > U+E064  c fu
 
-c ============================================================
-c HL SYLLABLES: U+E080 - U+E084
-c ============================================================
-+ 'h' 'l' 'a' > U+E080  c hla
-+ 'h' 'l' 'e' > U+E081  c hle
-+ 'h' 'l' 'i' > U+E082  c hli
-+ 'h' 'l' 'o' > U+E083  c hlo
-+ 'h' 'l' 'u' > U+E084  c hlu
+c ------------------------------------------------------------
+c V SYLLABLES: U+E068 - U+E06C
+c ------------------------------------------------------------
+'v' + 'a' > U+E068  c va
+'v' + 'e' > U+E069  c ve
+'v' + 'i' > U+E06A  c vi
+'v' + 'o' > U+E06B  c vo
+'v' + 'u' > U+E06C  c vu
 
-c ============================================================
-c J SYLLABLES: U+E090 - U+E094
-c ============================================================
-+ 'j' 'a' > U+E090  c ja
-+ 'j' 'e' > U+E091  c je
-+ 'j' 'i' > U+E092  c ji
-+ 'j' 'o' > U+E093  c jo
-+ 'j' 'u' > U+E094  c ju
+c ------------------------------------------------------------
+c S SYLLABLES: U+E070 - U+E074
+c ------------------------------------------------------------
+'s' + 'a' > U+E070  c sa
+'s' + 'e' > U+E071  c se
+'s' + 'i' > U+E072  c si
+'s' + 'o' > U+E073  c so
+'s' + 'u' > U+E074  c su
 
-c ============================================================
-c K SYLLABLES: U+E0A0 - U+E0A4
-c ============================================================
-+ 'k' 'a' > U+E0A0  c ka
-+ 'k' 'e' > U+E0A1  c ke
-+ 'k' 'i' > U+E0A2  c ki
-+ 'k' 'o' > U+E0A3  c ko
-+ 'k' 'u' > U+E0A4  c ku
+c ------------------------------------------------------------
+c Z SYLLABLES: U+E078 - U+E07C
+c ------------------------------------------------------------
+'z' + 'a' > U+E078  c za
+'z' + 'e' > U+E079  c ze
+'z' + 'i' > U+E07A  c zi
+'z' + 'o' > U+E07B  c zo
+'z' + 'u' > U+E07C  c zu
 
-c ============================================================
-c KH SYLLABLES: U+E0B0 - U+E0B4
-c ============================================================
-+ 'k' 'h' 'a' > U+E0B0  c kha
-+ 'k' 'h' 'e' > U+E0B1  c khe
-+ 'k' 'h' 'i' > U+E0B2  c khi
-+ 'k' 'h' 'o' > U+E0B3  c kho
-+ 'k' 'h' 'u' > U+E0B4  c khu
+c ------------------------------------------------------------
+c H SYLLABLES: U+E088 - U+E08C
+c ------------------------------------------------------------
+'h' + 'a' > U+E088  c ha
+'h' + 'e' > U+E089  c he
+'h' + 'i' > U+E08A  c hi
+'h' + 'o' > U+E08B  c ho
+'h' + 'u' > U+E08C  c hu
 
-c ============================================================
+c ------------------------------------------------------------
+c M SYLLABLES: U+E0A0 - U+E0A4
+c ------------------------------------------------------------
+'m' + 'a' > U+E0A0  c ma
+'m' + 'e' > U+E0A1  c me
+'m' + 'i' > U+E0A2  c mi
+'m' + 'o' > U+E0A3  c mo
+'m' + 'u' > U+E0A4  c mu
+
+c ------------------------------------------------------------
+c N SYLLABLES: U+E0A8 - U+E0AC
+c ------------------------------------------------------------
+'n' + 'a' > U+E0A8  c na
+'n' + 'e' > U+E0A9  c ne
+'n' + 'i' > U+E0AA  c ni
+'n' + 'o' > U+E0AB  c no
+'n' + 'u' > U+E0AC  c nu
+
+c ------------------------------------------------------------
 c L SYLLABLES: U+E0C0 - U+E0C4
-c ============================================================
-+ 'l' 'a' > U+E0C0  c la
-+ 'l' 'e' > U+E0C1  c le
-+ 'l' 'i' > U+E0C2  c li
-+ 'l' 'o' > U+E0C3  c lo
-+ 'l' 'u' > U+E0C4  c lu
+c ------------------------------------------------------------
+'l' + 'a' > U+E0C0  c la
+'l' + 'e' > U+E0C1  c le
+'l' + 'i' > U+E0C2  c li
+'l' + 'o' > U+E0C3  c lo
+'l' + 'u' > U+E0C4  c lu
+
+c ------------------------------------------------------------
+c R SYLLABLES: U+E0C8 - U+E0CC
+c ------------------------------------------------------------
+'r' + 'a' > U+E0C8  c ra
+'r' + 'e' > U+E0C9  c re
+'r' + 'i' > U+E0CA  c ri
+'r' + 'o' > U+E0CB  c ro
+'r' + 'u' > U+E0CC  c ru
+
+c ------------------------------------------------------------
+c W SYLLABLES: U+E0D0 - U+E0D4
+c ------------------------------------------------------------
+'w' + 'a' > U+E0D0  c wa
+'w' + 'e' > U+E0D1  c we
+'w' + 'i' > U+E0D2  c wi
+'w' + 'o' > U+E0D3  c wo
+'w' + 'u' > U+E0D4  c wu
+
+c ------------------------------------------------------------
+c Y SYLLABLES: U+E0D8 - U+E0DC
+c ------------------------------------------------------------
+'y' + 'a' > U+E0D8  c ya
+'y' + 'e' > U+E0D9  c ye
+'y' + 'i' > U+E0DA  c yi
+'y' + 'o' > U+E0DB  c yo
+'y' + 'u' > U+E0DC  c yu
+
+c ------------------------------------------------------------
+c J SYLLABLES: U+E120 - U+E124
+c ------------------------------------------------------------
+'j' + 'a' > U+E120  c ja
+'j' + 'e' > U+E121  c je
+'j' + 'i' > U+E122  c ji
+'j' + 'o' > U+E123  c jo
+'j' + 'u' > U+E124  c ju
+
+c ------------------------------------------------------------
+c C SYLLABLES (dental click): U+E140 - U+E144
+c ------------------------------------------------------------
+'c' + 'a' > U+E140  c ca
+'c' + 'e' > U+E141  c ce
+'c' + 'i' > U+E142  c ci
+'c' + 'o' > U+E143  c co
+'c' + 'u' > U+E144  c cu
+
+c ------------------------------------------------------------
+c Q SYLLABLES (palatal click): U+E160 - U+E164
+c ------------------------------------------------------------
+'q' + 'a' > U+E160  c qa
+'q' + 'e' > U+E161  c qe
+'q' + 'i' > U+E162  c qi
+'q' + 'o' > U+E163  c qo
+'q' + 'u' > U+E164  c qu
+
+c ------------------------------------------------------------
+c X SYLLABLES (lateral click): U+E180 - U+E184
+c ------------------------------------------------------------
+'x' + 'a' > U+E180  c xa
+'x' + 'e' > U+E181  c xe
+'x' + 'i' > U+E182  c xi
+'x' + 'o' > U+E183  c xo
+'x' + 'u' > U+E184  c xu
 
 c ============================================================
-c M SYLLABLES: U+E0D0 - U+E0D4
-c ============================================================
-+ 'm' 'a' > U+E0D0  c ma
-+ 'm' 'e' > U+E0D1  c me
-+ 'm' 'i' > U+E0D2  c mi
-+ 'm' 'o' > U+E0D3  c mo
-+ 'm' 'u' > U+E0D4  c mu
-
-c ============================================================
-c MB SYLLABLES: U+E0E0 - U+E0E4
-c ============================================================
-+ 'm' 'b' 'a' > U+E0E0  c mba
-+ 'm' 'b' 'e' > U+E0E1  c mbe
-+ 'm' 'b' 'i' > U+E0E2  c mbi
-+ 'm' 'b' 'o' > U+E0E3  c mbo
-+ 'm' 'b' 'u' > U+E0E4  c mbu
-
-c ============================================================
-c N SYLLABLES: U+E0F0 - U+E0F4
-c ============================================================
-+ 'n' 'a' > U+E0F0  c na
-+ 'n' 'e' > U+E0F1  c ne
-+ 'n' 'i' > U+E0F2  c ni
-+ 'n' 'o' > U+E0F3  c no
-+ 'n' 'u' > U+E0F4  c nu
-
-c ============================================================
-c ND SYLLABLES: U+E100 - U+E104
-c ============================================================
-+ 'n' 'd' 'a' > U+E100  c nda
-+ 'n' 'd' 'e' > U+E101  c nde
-+ 'n' 'd' 'i' > U+E102  c ndi
-+ 'n' 'd' 'o' > U+E103  c ndo
-+ 'n' 'd' 'u' > U+E104  c ndu
-
-c ============================================================
-c NG SYLLABLES: U+E110 - U+E114
-c ============================================================
-+ 'n' 'g' 'a' > U+E110  c nga
-+ 'n' 'g' 'e' > U+E111  c nge
-+ 'n' 'g' 'i' > U+E112  c ngi
-+ 'n' 'g' 'o' > U+E113  c ngo
-+ 'n' 'g' 'u' > U+E114  c ngu
-
-c ============================================================
-c NJ SYLLABLES: U+E120 - U+E124
-c ============================================================
-+ 'n' 'j' 'a' > U+E120  c nja
-+ 'n' 'j' 'e' > U+E121  c nje
-+ 'n' 'j' 'i' > U+E122  c nji
-+ 'n' 'j' 'o' > U+E123  c njo
-+ 'n' 'j' 'u' > U+E124  c nju
-
-c ============================================================
-c NK SYLLABLES: U+E130 - U+E134
-c ============================================================
-+ 'n' 'k' 'a' > U+E130  c nka
-+ 'n' 'k' 'e' > U+E131  c nke
-+ 'n' 'k' 'i' > U+E132  c nki
-+ 'n' 'k' 'o' > U+E133  c nko
-+ 'n' 'k' 'u' > U+E134  c nku
-
-c ============================================================
-c NT SYLLABLES: U+E140 - U+E144
-c ============================================================
-+ 'n' 't' 'a' > U+E140  c nta
-+ 'n' 't' 'e' > U+E141  c nte
-+ 'n' 't' 'i' > U+E142  c nti
-+ 'n' 't' 'o' > U+E143  c nto
-+ 'n' 't' 'u' > U+E144  c ntu
-
-c ============================================================
-c NY SYLLABLES: U+E150 - U+E154
-c ============================================================
-+ 'n' 'y' 'a' > U+E150  c nya
-+ 'n' 'y' 'e' > U+E151  c nye
-+ 'n' 'y' 'i' > U+E152  c nyi
-+ 'n' 'y' 'o' > U+E153  c nyo
-+ 'n' 'y' 'u' > U+E154  c nyu
-
-c ============================================================
-c P SYLLABLES: U+E160 - U+E164
-c ============================================================
-+ 'p' 'a' > U+E160  c pa
-+ 'p' 'e' > U+E161  c pe
-+ 'p' 'i' > U+E162  c pi
-+ 'p' 'o' > U+E163  c po
-+ 'p' 'u' > U+E164  c pu
-
-c ============================================================
-c PH SYLLABLES: U+E170 - U+E174
-c ============================================================
-+ 'p' 'h' 'a' > U+E170  c pha
-+ 'p' 'h' 'e' > U+E171  c phe
-+ 'p' 'h' 'i' > U+E172  c phi
-+ 'p' 'h' 'o' > U+E173  c pho
-+ 'p' 'h' 'u' > U+E174  c phu
-
-c ============================================================
-c R SYLLABLES: U+E180 - U+E184
-c ============================================================
-+ 'r' 'a' > U+E180  c ra
-+ 'r' 'e' > U+E181  c re
-+ 'r' 'i' > U+E182  c ri
-+ 'r' 'o' > U+E183  c ro
-+ 'r' 'u' > U+E184  c ru
-
-c ============================================================
-c S SYLLABLES: U+E190 - U+E194
-c ============================================================
-+ 's' 'a' > U+E190  c sa
-+ 's' 'e' > U+E191  c se
-+ 's' 'i' > U+E192  c si
-+ 's' 'o' > U+E193  c so
-+ 's' 'u' > U+E194  c su
-
-c ============================================================
-c SH SYLLABLES: U+E1A0 - U+E1A4
-c ============================================================
-+ 's' 'h' 'a' > U+E1A0  c sha
-+ 's' 'h' 'e' > U+E1A1  c she
-+ 's' 'h' 'i' > U+E1A2  c shi
-+ 's' 'h' 'o' > U+E1A3  c sho
-+ 's' 'h' 'u' > U+E1A4  c shu
-
-c ============================================================
-c T SYLLABLES: U+E1B0 - U+E1B4
-c ============================================================
-+ 't' 'a' > U+E1B0  c ta
-+ 't' 'e' > U+E1B1  c te
-+ 't' 'i' > U+E1B2  c ti
-+ 't' 'o' > U+E1B3  c to
-+ 't' 'u' > U+E1B4  c tu
-
-c ============================================================
-c TH SYLLABLES: U+E1C0 - U+E1C4
-c ============================================================
-+ 't' 'h' 'a' > U+E1C0  c tha
-+ 't' 'h' 'e' > U+E1C1  c the
-+ 't' 'h' 'i' > U+E1C2  c thi
-+ 't' 'h' 'o' > U+E1C3  c tho
-+ 't' 'h' 'u' > U+E1C4  c thu
-
-c ============================================================
-c TL SYLLABLES: U+E1D0 - U+E1D4
-c ============================================================
-+ 't' 'l' 'a' > U+E1D0  c tla
-+ 't' 'l' 'e' > U+E1D1  c tle
-+ 't' 'l' 'i' > U+E1D2  c tli
-+ 't' 'l' 'o' > U+E1D3  c tlo
-+ 't' 'l' 'u' > U+E1D4  c tlu
-
-c ============================================================
-c V SYLLABLES: U+E1E0 - U+E1E4
-c ============================================================
-+ 'v' 'a' > U+E1E0  c va
-+ 'v' 'e' > U+E1E1  c ve
-+ 'v' 'i' > U+E1E2  c vi
-+ 'v' 'o' > U+E1E3  c vo
-+ 'v' 'u' > U+E1E4  c vu
-
-c ============================================================
-c W SYLLABLES: U+E1F0 - U+E1F4
-c ============================================================
-+ 'w' 'a' > U+E1F0  c wa
-+ 'w' 'e' > U+E1F1  c we
-+ 'w' 'i' > U+E1F2  c wi
-+ 'w' 'o' > U+E1F3  c wo
-+ 'w' 'u' > U+E1F4  c wu
-
-c ============================================================
-c Y SYLLABLES: U+E200 - U+E204
-c ============================================================
-+ 'y' 'a' > U+E200  c ya
-+ 'y' 'e' > U+E201  c ye
-+ 'y' 'i' > U+E202  c yi
-+ 'y' 'o' > U+E203  c yo
-+ 'y' 'u' > U+E204  c yu
-
-c ============================================================
-c Z SYLLABLES: U+E210 - U+E214
-c ============================================================
-+ 'z' 'a' > U+E210  c za
-+ 'z' 'e' > U+E211  c ze
-+ 'z' 'i' > U+E212  c zi
-+ 'z' 'o' > U+E213  c zo
-+ 'z' 'u' > U+E214  c zu
-
-c ============================================================
-c CLICK CONSONANTS
+c TWO-CHAR CONSONANT CV SYLLABLES (deadkey-based)
+c First char + second char produces a deadkey,
+c then deadkey + vowel produces the glyph.
 c ============================================================
 
 c ------------------------------------------------------------
-c C (dental click) SYLLABLES: U+E220 - U+E224
+c PH: U+E020 - U+E024
 c ------------------------------------------------------------
-+ 'c' 'a' > U+E220  c ca (dental click + a)
-+ 'c' 'e' > U+E221  c ce (dental click + e)
-+ 'c' 'i' > U+E222  c ci (dental click + i)
-+ 'c' 'o' > U+E223  c co (dental click + o)
-+ 'c' 'u' > U+E224  c cu (dental click + u)
+'p' + 'h' > dk(ph)
+dk(ph) + 'a' > U+E020  c pha
+dk(ph) + 'e' > U+E021  c phe
+dk(ph) + 'i' > U+E022  c phi
+dk(ph) + 'o' > U+E023  c pho
+dk(ph) + 'u' > U+E024  c phu
 
 c ------------------------------------------------------------
-c Q (palatal click) SYLLABLES: U+E230 - U+E234
+c TH: U+E038 - U+E03C
 c ------------------------------------------------------------
-+ 'q' 'a' > U+E230  c qa (palatal click + a)
-+ 'q' 'e' > U+E231  c qe (palatal click + e)
-+ 'q' 'i' > U+E232  c qi (palatal click + i)
-+ 'q' 'o' > U+E233  c qo (palatal click + o)
-+ 'q' 'u' > U+E234  c qu (palatal click + u)
+'t' + 'h' > dk(th)
+dk(th) + 'a' > U+E038  c tha
+dk(th) + 'e' > U+E039  c the
+dk(th) + 'i' > U+E03A  c thi
+dk(th) + 'o' > U+E03B  c tho
+dk(th) + 'u' > U+E03C  c thu
 
 c ------------------------------------------------------------
-c X (lateral click) SYLLABLES: U+E240 - U+E244
+c KH: U+E050 - U+E054
 c ------------------------------------------------------------
-+ 'x' 'a' > U+E240  c xa (lateral click + a)
-+ 'x' 'e' > U+E241  c xe (lateral click + e)
-+ 'x' 'i' > U+E242  c xi (lateral click + i)
-+ 'x' 'o' > U+E243  c xo (lateral click + o)
-+ 'x' 'u' > U+E244  c xu (lateral click + u)
+'k' + 'h' > dk(kh)
+dk(kh) + 'a' > U+E050  c kha
+dk(kh) + 'e' > U+E051  c khe
+dk(kh) + 'i' > U+E052  c khi
+dk(kh) + 'o' > U+E053  c kho
+dk(kh) + 'u' > U+E054  c khu
 
 c ------------------------------------------------------------
-c NC (nasal dental click) SYLLABLES: U+E250 - U+E254
+c SH: U+E080 - U+E084
 c ------------------------------------------------------------
-+ 'n' 'c' 'a' > U+E250  c nca (nasal dental click + a)
-+ 'n' 'c' 'e' > U+E251  c nce (nasal dental click + e)
-+ 'n' 'c' 'i' > U+E252  c nci (nasal dental click + i)
-+ 'n' 'c' 'o' > U+E253  c nco (nasal dental click + o)
-+ 'n' 'c' 'u' > U+E254  c ncu (nasal dental click + u)
+'s' + 'h' > dk(sh)
+dk(sh) + 'a' > U+E080  c sha
+dk(sh) + 'e' > U+E081  c she
+dk(sh) + 'i' > U+E082  c shi
+dk(sh) + 'o' > U+E083  c sho
+dk(sh) + 'u' > U+E084  c shu
 
 c ------------------------------------------------------------
-c NQ (nasal palatal click) SYLLABLES: U+E260 - U+E264
+c HL: U+E090 - U+E094
 c ------------------------------------------------------------
-+ 'n' 'q' 'a' > U+E260  c nqa (nasal palatal click + a)
-+ 'n' 'q' 'e' > U+E261  c nqe (nasal palatal click + e)
-+ 'n' 'q' 'i' > U+E262  c nqi (nasal palatal click + i)
-+ 'n' 'q' 'o' > U+E263  c nqo (nasal palatal click + o)
-+ 'n' 'q' 'u' > U+E264  c nqu (nasal palatal click + u)
+'h' + 'l' > dk(hl)
+dk(hl) + 'a' > U+E090  c hla
+dk(hl) + 'e' > U+E091  c hle
+dk(hl) + 'i' > U+E092  c hli
+dk(hl) + 'o' > U+E093  c hlo
+dk(hl) + 'u' > U+E094  c hlu
 
 c ------------------------------------------------------------
-c NX (nasal lateral click) SYLLABLES: U+E270 - U+E274
+c DL: U+E098 - U+E09C
 c ------------------------------------------------------------
-+ 'n' 'x' 'a' > U+E270  c nxa (nasal lateral click + a)
-+ 'n' 'x' 'e' > U+E271  c nxe (nasal lateral click + e)
-+ 'n' 'x' 'i' > U+E272  c nxi (nasal lateral click + i)
-+ 'n' 'x' 'o' > U+E273  c nxo (nasal lateral click + o)
-+ 'n' 'x' 'u' > U+E274  c nxu (nasal lateral click + u)
+'d' + 'l' > dk(dl)
+dk(dl) + 'a' > U+E098  c dla
+dk(dl) + 'e' > U+E099  c dle
+dk(dl) + 'i' > U+E09A  c dli
+dk(dl) + 'o' > U+E09B  c dlo
+dk(dl) + 'u' > U+E09C  c dlu
 
 c ------------------------------------------------------------
-c GC (voiced dental click) SYLLABLES: U+E280 - U+E284
+c NG: U+E0B0 - U+E0B4
 c ------------------------------------------------------------
-+ 'g' 'c' 'a' > U+E280  c gca (voiced dental click + a)
-+ 'g' 'c' 'e' > U+E281  c gce (voiced dental click + e)
-+ 'g' 'c' 'i' > U+E282  c gci (voiced dental click + i)
-+ 'g' 'c' 'o' > U+E283  c gco (voiced dental click + o)
-+ 'g' 'c' 'u' > U+E284  c gcu (voiced dental click + u)
+'n' + 'g' > dk(ng)
+dk(ng) + 'a' > U+E0B0  c nga
+dk(ng) + 'e' > U+E0B1  c nge
+dk(ng) + 'i' > U+E0B2  c ngi
+dk(ng) + 'o' > U+E0B3  c ngo
+dk(ng) + 'u' > U+E0B4  c ngu
 
 c ------------------------------------------------------------
-c GQ (voiced palatal click) SYLLABLES: U+E290 - U+E294
+c NY: U+E0B8 - U+E0BC
 c ------------------------------------------------------------
-+ 'g' 'q' 'a' > U+E290  c gqa (voiced palatal click + a)
-+ 'g' 'q' 'e' > U+E291  c gqe (voiced palatal click + e)
-+ 'g' 'q' 'i' > U+E292  c gqi (voiced palatal click + i)
-+ 'g' 'q' 'o' > U+E293  c gqo (voiced palatal click + o)
-+ 'g' 'q' 'u' > U+E294  c gqu (voiced palatal click + u)
+'n' + 'y' > dk(ny)
+dk(ny) + 'a' > U+E0B8  c nya
+dk(ny) + 'e' > U+E0B9  c nye
+dk(ny) + 'i' > U+E0BA  c nyi
+dk(ny) + 'o' > U+E0BB  c nyo
+dk(ny) + 'u' > U+E0BC  c nyu
 
 c ------------------------------------------------------------
-c GX (voiced lateral click) SYLLABLES: U+E2A0 - U+E2A4
+c BH: U+E0E0 - U+E0E4
 c ------------------------------------------------------------
-+ 'g' 'x' 'a' > U+E2A0  c gxa (voiced lateral click + a)
-+ 'g' 'x' 'e' > U+E2A1  c gxe (voiced lateral click + e)
-+ 'g' 'x' 'i' > U+E2A2  c gxi (voiced lateral click + i)
-+ 'g' 'x' 'o' > U+E2A3  c gxo (voiced lateral click + o)
-+ 'g' 'x' 'u' > U+E2A4  c gxu (voiced lateral click + u)
+'b' + 'h' > dk(bh)
+dk(bh) + 'a' > U+E0E0  c bha
+dk(bh) + 'e' > U+E0E1  c bhe
+dk(bh) + 'i' > U+E0E2  c bhi
+dk(bh) + 'o' > U+E0E3  c bho
+dk(bh) + 'u' > U+E0E4  c bhu
+
+c ------------------------------------------------------------
+c MB: U+E0E8 - U+E0EC
+c ------------------------------------------------------------
+'m' + 'b' > dk(mb)
+dk(mb) + 'a' > U+E0E8  c mba
+dk(mb) + 'e' > U+E0E9  c mbe
+dk(mb) + 'i' > U+E0EA  c mbi
+dk(mb) + 'o' > U+E0EB  c mbo
+dk(mb) + 'u' > U+E0EC  c mbu
+
+c ------------------------------------------------------------
+c ND: U+E0F0 - U+E0F4
+c ------------------------------------------------------------
+'n' + 'd' > dk(nd)
+dk(nd) + 'a' > U+E0F0  c nda
+dk(nd) + 'e' > U+E0F1  c nde
+dk(nd) + 'i' > U+E0F2  c ndi
+dk(nd) + 'o' > U+E0F3  c ndo
+dk(nd) + 'u' > U+E0F4  c ndu
+
+c ------------------------------------------------------------
+c NT: U+E0F8 - U+E0FC
+c ------------------------------------------------------------
+'n' + 't' > dk(nt)
+dk(nt) + 'a' > U+E0F8  c nta
+dk(nt) + 'e' > U+E0F9  c nte
+dk(nt) + 'i' > U+E0FA  c nti
+dk(nt) + 'o' > U+E0FB  c nto
+dk(nt) + 'u' > U+E0FC  c ntu
+
+c ------------------------------------------------------------
+c NK: U+E100 - U+E104
+c ------------------------------------------------------------
+'n' + 'k' > dk(nk)
+dk(nk) + 'a' > U+E100  c nka
+dk(nk) + 'e' > U+E101  c nke
+dk(nk) + 'i' > U+E102  c nki
+dk(nk) + 'o' > U+E103  c nko
+dk(nk) + 'u' > U+E104  c nku
+
+c ------------------------------------------------------------
+c NJ: U+E108 - U+E10C
+c ------------------------------------------------------------
+'n' + 'j' > dk(nj)
+dk(nj) + 'a' > U+E108  c nja
+dk(nj) + 'e' > U+E109  c nje
+dk(nj) + 'i' > U+E10A  c nji
+dk(nj) + 'o' > U+E10B  c njo
+dk(nj) + 'u' > U+E10C  c nju
+
+c ------------------------------------------------------------
+c CH: U+E148 - U+E14C
+c ------------------------------------------------------------
+'c' + 'h' > dk(ch)
+dk(ch) + 'a' > U+E148  c cha
+dk(ch) + 'e' > U+E149  c che
+dk(ch) + 'i' > U+E14A  c chi
+dk(ch) + 'o' > U+E14B  c cho
+dk(ch) + 'u' > U+E14C  c chu
+
+c ------------------------------------------------------------
+c GC: U+E150 - U+E154
+c ------------------------------------------------------------
+'g' + 'c' > dk(gc)
+dk(gc) + 'a' > U+E150  c gca
+dk(gc) + 'e' > U+E151  c gce
+dk(gc) + 'i' > U+E152  c gci
+dk(gc) + 'o' > U+E153  c gco
+dk(gc) + 'u' > U+E154  c gcu
+
+c ------------------------------------------------------------
+c NC: U+E158 - U+E15C
+c ------------------------------------------------------------
+'n' + 'c' > dk(nc)
+dk(nc) + 'a' > U+E158  c nca
+dk(nc) + 'e' > U+E159  c nce
+dk(nc) + 'i' > U+E15A  c nci
+dk(nc) + 'o' > U+E15B  c nco
+dk(nc) + 'u' > U+E15C  c ncu
+
+c ------------------------------------------------------------
+c QH: U+E168 - U+E16C
+c ------------------------------------------------------------
+'q' + 'h' > dk(qh)
+dk(qh) + 'a' > U+E168  c qha
+dk(qh) + 'e' > U+E169  c qhe
+dk(qh) + 'i' > U+E16A  c qhi
+dk(qh) + 'o' > U+E16B  c qho
+dk(qh) + 'u' > U+E16C  c qhu
+
+c ------------------------------------------------------------
+c GQ: U+E170 - U+E174
+c ------------------------------------------------------------
+'g' + 'q' > dk(gq)
+dk(gq) + 'a' > U+E170  c gqa
+dk(gq) + 'e' > U+E171  c gqe
+dk(gq) + 'i' > U+E172  c gqi
+dk(gq) + 'o' > U+E173  c gqo
+dk(gq) + 'u' > U+E174  c gqu
+
+c ------------------------------------------------------------
+c NQ: U+E178 - U+E17C
+c ------------------------------------------------------------
+'n' + 'q' > dk(nq)
+dk(nq) + 'a' > U+E178  c nqa
+dk(nq) + 'e' > U+E179  c nqe
+dk(nq) + 'i' > U+E17A  c nqi
+dk(nq) + 'o' > U+E17B  c nqo
+dk(nq) + 'u' > U+E17C  c nqu
+
+c ------------------------------------------------------------
+c XH: U+E188 - U+E18C
+c ------------------------------------------------------------
+'x' + 'h' > dk(xh)
+dk(xh) + 'a' > U+E188  c xha
+dk(xh) + 'e' > U+E189  c xhe
+dk(xh) + 'i' > U+E18A  c xhi
+dk(xh) + 'o' > U+E18B  c xho
+dk(xh) + 'u' > U+E18C  c xhu
+
+c ------------------------------------------------------------
+c GX: U+E190 - U+E194
+c ------------------------------------------------------------
+'g' + 'x' > dk(gx)
+dk(gx) + 'a' > U+E190  c gxa
+dk(gx) + 'e' > U+E191  c gxe
+dk(gx) + 'i' > U+E192  c gxi
+dk(gx) + 'o' > U+E193  c gxo
+dk(gx) + 'u' > U+E194  c gxu
+
+c ------------------------------------------------------------
+c NX: U+E198 - U+E19C
+c ------------------------------------------------------------
+'n' + 'x' > dk(nx)
+dk(nx) + 'a' > U+E198  c nxa
+dk(nx) + 'e' > U+E199  c nxe
+dk(nx) + 'i' > U+E19A  c nxi
+dk(nx) + 'o' > U+E19B  c nxo
+dk(nx) + 'u' > U+E19C  c nxu
+
+c ============================================================
+c THREE-CHAR CONSONANT: TSH (chained deadkeys)
+c t -> s produces dk(ts), dk(ts) + h produces dk(tsh)
+c U+E128 - U+E12C
+c ============================================================
+'t' + 's' > dk(ts)
+dk(ts) + 'h' > dk(tsh)
+dk(tsh) + 'a' > U+E128  c tsha
+dk(tsh) + 'e' > U+E129  c tshe
+dk(tsh) + 'i' > U+E12A  c tshi
+dk(tsh) + 'o' > U+E12B  c tsho
+dk(tsh) + 'u' > U+E12C  c tshu
+
+c ============================================================
+c FOUR-CHAR CONSONANT: NTSH (chained deadkeys)
+c n -> t produces dk(nt), dk(nt) + s produces dk(nts),
+c dk(nts) + h produces dk(ntsh)
+c U+E110 - U+E114
+c ============================================================
+dk(nt) + 's' > dk(nts)
+dk(nts) + 'h' > dk(ntsh)
+dk(ntsh) + 'a' > U+E110  c ntsha
+dk(ntsh) + 'e' > U+E111  c ntshe
+dk(ntsh) + 'i' > U+E112  c ntshi
+dk(ntsh) + 'o' > U+E113  c ntsho
+dk(ntsh) + 'u' > U+E114  c ntshu
 
 c ============================================================
 c END OF KEYBOARD DEFINITION
 c ============================================================
 c
-c PUA ALLOCATION SUMMARY:
-c   U+E000-E004  Pure vowels (a, e, i, o, u)
-c   U+E005-E007  Syllabic nasals (m, n, ng)
-c   U+E010-E014  b + vowels
-c   U+E020-E024  bh + vowels
-c   U+E030-E034  d + vowels
-c   U+E040-E044  dl + vowels
-c   U+E050-E054  f + vowels
-c   U+E060-E064  g + vowels
-c   U+E070-E074  h + vowels
-c   U+E080-E084  hl + vowels
-c   U+E090-E094  j + vowels
-c   U+E0A0-E0A4  k + vowels
-c   U+E0B0-E0B4  kh + vowels
-c   U+E0C0-E0C4  l + vowels
-c   U+E0D0-E0D4  m + vowels
-c   U+E0E0-E0E4  mb + vowels
-c   U+E0F0-E0F4  n + vowels
-c   U+E100-E104  nd + vowels
-c   U+E110-E114  ng + vowels
-c   U+E120-E124  nj + vowels
-c   U+E130-E134  nk + vowels
-c   U+E140-E144  nt + vowels
-c   U+E150-E154  ny + vowels
-c   U+E160-E164  p + vowels
-c   U+E170-E174  ph + vowels
-c   U+E180-E184  r + vowels
-c   U+E190-E194  s + vowels
-c   U+E1A0-E1A4  sh + vowels
-c   U+E1B0-E1B4  t + vowels
-c   U+E1C0-E1C4  th + vowels
-c   U+E1D0-E1D4  tl + vowels
-c   U+E1E0-E1E4  v + vowels
-c   U+E1F0-E1F4  w + vowels
-c   U+E200-E204  y + vowels
-c   U+E210-E214  z + vowels
-c   U+E220-E224  c (dental click) + vowels
-c   U+E230-E234  q (palatal click) + vowels
-c   U+E240-E244  x (lateral click) + vowels
-c   U+E250-E254  nc (nasal dental click) + vowels
-c   U+E260-E264  nq (nasal palatal click) + vowels
-c   U+E270-E274  nx (nasal lateral click) + vowels
-c   U+E280-E284  gc (voiced dental click) + vowels
-c   U+E290-E294  gq (voiced palatal click) + vowels
-c   U+E2A0-E2A4  gx (voiced lateral click) + vowels
+c PUA ALLOCATION SUMMARY (vowel offset: a=+0, e=+1, i=+2, o=+3, u=+4):
 c
-c   Reserved: U+E2B0-E4FF for future expansion
-c     (aspirated clicks, breathy voiced, ejectives, tone marks, etc.)
+c   U+E000-E004  Pure vowels (a, e, i, o, u)
+c   U+E005-E007  Long vowels (aa, ee, ii)
+c
+c   U+E010-E014  b + vowels
+c   U+E018-E01C  p + vowels
+c   U+E020-E024  ph + vowels
+c   U+E028-E02C  d + vowels
+c   U+E030-E034  t + vowels
+c   U+E038-E03C  th + vowels
+c   U+E040-E044  g + vowels
+c   U+E048-E04C  k + vowels
+c   U+E050-E054  kh + vowels
+c   U+E060-E064  f + vowels
+c   U+E068-E06C  v + vowels
+c   U+E070-E074  s + vowels
+c   U+E078-E07C  z + vowels
+c   U+E080-E084  sh + vowels
+c   U+E088-E08C  h + vowels
+c   U+E090-E094  hl + vowels
+c   U+E098-E09C  dl + vowels
+c   U+E0A0-E0A4  m + vowels
+c   U+E0A8-E0AC  n + vowels
+c   U+E0B0-E0B4  ng + vowels
+c   U+E0B8-E0BC  ny + vowels
+c   U+E0C0-E0C4  l + vowels
+c   U+E0C8-E0CC  r + vowels
+c   U+E0D0-E0D4  w + vowels
+c   U+E0D8-E0DC  y + vowels
+c   U+E0E0-E0E4  bh + vowels
+c   U+E0E8-E0EC  mb + vowels
+c   U+E0F0-E0F4  nd + vowels
+c   U+E0F8-E0FC  nt + vowels
+c   U+E100-E104  nk + vowels
+c   U+E108-E10C  nj + vowels
+c   U+E110-E114  ntsh + vowels
+c   U+E120-E124  j + vowels
+c   U+E128-E12C  tsh + vowels
+c   U+E140-E144  c (dental click) + vowels
+c   U+E148-E14C  ch + vowels
+c   U+E150-E154  gc + vowels
+c   U+E158-E15C  nc + vowels
+c   U+E160-E164  q (palatal click) + vowels
+c   U+E168-E16C  qh + vowels
+c   U+E170-E174  gq + vowels
+c   U+E178-E17C  nq + vowels
+c   U+E180-E184  x (lateral click) + vowels
+c   U+E188-E18C  xh + vowels
+c   U+E190-E194  gx + vowels
+c   U+E198-E19C  nx + vowels
+c   U+E1B0-E1B2  Syllabic nasals (m, n, ng)
+c
 c ============================================================
