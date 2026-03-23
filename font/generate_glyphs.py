@@ -53,7 +53,7 @@ CENTER_X = 500
 CENTER_Y = 400          # Optical center (slightly above baseline midpoint)
 RADIUS = 350            # Outer shape radius
 INNER_RADIUS = 200      # Inner consonant mark radius
-STROKE_WIDTH = 120
+STROKE_WIDTH = 160
 
 # ---------------------------------------------------------------------------
 # Vowel Shapes -- the 8 isiBheqe vowel forms
@@ -214,7 +214,7 @@ SYLLABIC_NASALS = [
 # Drawing Helpers
 # ===========================================================================
 
-OUTLINE_WIDTH = 120  # Thickness of the hollow outline stroke
+OUTLINE_WIDTH = 180  # Thickness of the hollow outline stroke
 
 def _circle_cw(pen, cx, cy, r):
     """Draw a circle clockwise (outer contour)."""
