@@ -11,4 +11,4 @@
   - 9 click consonant groups (dental, palatal, lateral — plain, nasal, voiced)
   - 3 syllabic nasals
 - PUA font one.ttf bundled (U+E000 onwards)
-- Supported languages: isiZulu, isiXhosa, Sesotho, Setswana, SiSwati, Tshivenda, Xitsonga
+- Supported languages: all (featural script encodes universal articulatory features)
