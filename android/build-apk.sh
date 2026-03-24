@@ -64,11 +64,44 @@ find "$BUILD_DIR/app" -maxdepth 1 -name "build.gradle*" | while read -r gf; do
     sed -i "s/applicationId\s*=\?\s*[\"']helium314\.keyboard[\"']/applicationId = \"${NEW_APP_ID}\"/" "$gf"
 done
 
-# -- strings.xml (app_name)
+# -- donottranslate.xml (english_ime_name -- this is where HeliBoard stores it)
+DONOTTRANSLATE="${BUILD_DIR}/app/src/main/res/values/donottranslate.xml"
+if [[ -f "$DONOTTRANSLATE" ]]; then
+    sed -i "s|>HeliBoard<|>${NEW_APP_NAME}<|g" "$DONOTTRANSLATE"
+    echo "       Patched donottranslate.xml"
+fi
+
+# -- strings.xml (settings labels)
 STRINGS_FILE="${BUILD_DIR}/app/src/main/res/values/strings.xml"
 if [[ -f "$STRINGS_FILE" ]]; then
-    sed -i "s|<string name=\"english_ime_name\">.*</string>|<string name=\"english_ime_name\">${NEW_APP_NAME}</string>|" "$STRINGS_FILE"
-    sed -i "s|<string name=\"app_name\">.*</string>|<string name=\"app_name\">${NEW_APP_NAME}</string>|" "$STRINGS_FILE"
+    sed -i "s/HeliBoard Spell Checker/${NEW_APP_NAME} Spell Checker/g" "$STRINGS_FILE"
+    sed -i "s/HeliBoard Settings/${NEW_APP_NAME} Settings/g" "$STRINGS_FILE"
+    echo "       Patched strings.xml"
+fi
+
+# -- Replace launcher icon with CircleOne icon
+echo "       Replacing launcher icons..."
+ICON_SRC="${WORK_DIR}/../android/store-listing/graphics/app-icon-1024.png"
+if [[ -f "$ICON_SRC" ]] && command -v python &>/dev/null; then
+    python -c "
+from PIL import Image
+import os, sys
+src = Image.open(sys.argv[1])
+base = sys.argv[2]
+sizes = {'mdpi':48,'hdpi':72,'xhdpi':96,'xxhdpi':144,'xxxhdpi':192}
+for d, px in sizes.items():
+    r = src.resize((px,px), Image.LANCZOS)
+    for n in ['ic_launcher.png','ic_launcher_round.png']:
+        r.save(os.path.join(base, f'mipmap-{d}', n))
+# Remove adaptive icon XML overrides
+av26 = os.path.join(base, 'mipmap-anydpi-v26')
+for f in ['ic_launcher.xml','ic_launcher_round.xml']:
+    p = os.path.join(av26, f)
+    if os.path.exists(p): os.remove(p)
+" "$ICON_SRC" "${BUILD_DIR}/app/src/main/res"
+    echo "       Launcher icons replaced."
+else
+    echo "       WARNING: Could not replace icons (need Python + Pillow + app-icon-1024.png)"
 fi
 
 ###############################################################################
