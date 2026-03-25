@@ -35,9 +35,15 @@ echo "[patch] Applying CircleOne patches to HeliBoard..."
 ###############################################################################
 echo "  [1/8] Copying CircleOne source files..."
 
-mkdir -p "${SRC_DIR}/circleone"
+mkdir -p "${SRC_DIR}/circleone" "${SRC_DIR}/circleone/scriptview"
 cp "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/"*.java "${SRC_DIR}/circleone/"
 echo "       Copied circleone/ package ($(ls "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/"*.java | wc -l) files)"
+
+# Copy ScriptView subpackage (bundled accessibility service for PUA glyph rendering)
+if [[ -d "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/scriptview" ]]; then
+    cp "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/scriptview/"*.java "${SRC_DIR}/circleone/scriptview/"
+    echo "       Copied scriptview/ subpackage ($(ls "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/scriptview/"*.java | wc -l) files)"
+fi
 
 if [[ -f "${OVERLAY_DIR}/java/helium314/keyboard/latin/CircleOneTransliterator.java" ]]; then
     cp "${OVERLAY_DIR}/java/helium314/keyboard/latin/CircleOneTransliterator.java" "${SRC_DIR}/"
@@ -62,6 +68,13 @@ mkdir -p "${RES_DIR}/layout" "${RES_DIR}/xml"
 cp "${OVERLAY_DIR}/res/layout/"*.xml "${RES_DIR}/layout/" 2>/dev/null || true
 cp "${OVERLAY_DIR}/res/xml/"*.xml "${RES_DIR}/xml/" 2>/dev/null || true
 echo "       Copied layouts and XML resources"
+
+# Add ScriptView string resources to HeliBoard's strings
+STRINGS_FILE="${RES_DIR}/values/donottranslate.xml"
+if [[ -f "$STRINGS_FILE" ]] && ! grep -q "scriptview_description" "$STRINGS_FILE"; then
+    sed -i 's|</resources>|    <string name="scriptview_description" translatable="false">Renders isiBheqe soHlamvu and other unencoded writing systems across all apps. Without this, text appears as unreadable squares.</string>\n</resources>|' "$STRINGS_FILE"
+    echo "       Added ScriptView string resources"
+fi
 
 ###############################################################################
 # 3. Copy assets (font + PUA map)
@@ -344,6 +357,18 @@ ADDITIONS = '''
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+
+        <!-- ScriptView: Accessibility service for PUA glyph rendering across all apps -->
+        <service android:name="helium314.keyboard.latin.circleone.scriptview.ScriptViewService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/scriptview_config" />
+        </service>
 
         <!-- CircleOne FileProvider for image + GIF sharing -->
         <provider android:name="androidx.core.content.FileProvider"
