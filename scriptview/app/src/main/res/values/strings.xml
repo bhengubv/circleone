@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ScriptView String Resources
+  License: GPL-3.0-only
+  Copyright (C) 2026 The Other Bhengu (Pty) Ltd t/a The Geek
+-->
+<resources>
+    <string name="app_name">ScriptView</string>
+
+    <string name="scriptview_description">
+        Renders unencoded writing systems (like isiBheqe soHlamvu) across all apps. Without ScriptView, text in these scripts appears as unreadable squares. ScriptView makes them visible.
+    </string>
+
+    <string name="enable_title">Enable ScriptView</string>
+
+    <string name="enable_description">
+        ScriptView needs accessibility access to detect and render custom script text across apps.
+    </string>
+
+    <string name="enable_button">Open Accessibility Settings</string>
+
+    <string name="test_title">ScriptView Test</string>
+</resources>

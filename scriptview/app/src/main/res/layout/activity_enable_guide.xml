@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SPDX-License-Identifier: GPL-3.0-only
+  Copyright (C) 2026 The Other Bhengu (Pty) Ltd t/a The Geek Network
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/app_name"
+        android:src="@android:drawable/ic_dialog_info" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable ScriptView"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ScriptView provides visual overlays for scripts and character information. It requires accessibility service permission to function."
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/openSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Accessibility Settings"
+        android:layout_marginTop="32dp" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
