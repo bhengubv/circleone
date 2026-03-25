@@ -360,8 +360,9 @@ ADDITIONS = '''
 
         <!-- ScriptView: Accessibility service for PUA glyph rendering across all apps -->
         <service android:name="helium314.keyboard.latin.circleone.scriptview.ScriptViewService"
+            android:label="CircleOne ScriptView"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
