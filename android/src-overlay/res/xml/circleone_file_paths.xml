@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (C) 2026 The Other Bhengu (Pty) Ltd t/a The Geek.
+ SPDX-License-Identifier: GPL-3.0-only
+-->
+<paths>
+    <cache-path name="isibheqe_images" path="isibheqe_images/" />
+    <cache-path name="gif_cache" path="gif_cache/" />
+</paths>
