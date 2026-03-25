@@ -55,6 +55,18 @@ fi
 git clone --depth 1 --branch "$HELIBOARD_TAG" "$HELIBOARD_REPO" "$BUILD_DIR"
 
 ###############################################################################
+# Apply CircleOne source patches (IsiBheqeSpan, compose activity, etc.)
+###############################################################################
+echo "[2.5/7] Applying CircleOne source patches..."
+
+PATCH_SCRIPT="${WORK_DIR}/patch-heliboard.sh"
+if [[ -f "$PATCH_SCRIPT" ]]; then
+    bash "$PATCH_SCRIPT"
+else
+    echo "       WARNING: patch-heliboard.sh not found — skipping CircleOne patches"
+fi
+
+###############################################################################
 # Patch application identity
 ###############################################################################
 echo "[3/7] Patching application ID and display name..."

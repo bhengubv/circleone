@@ -1,0 +1,219 @@
+/*
+ * build.gradle — Open Gesture Decoder library
+ *
+ * MIT License
+ * Copyright (c) 2026 The Other Bhengu (Pty) Ltd t/a The Geek.
+ *
+ * Plain Java library (no Android SDK dependency).
+ * Compatible with Java 8+ and Android minSdk 21+.
+ */
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+// ---------------------------------------------------------------------------
+// Coordinates
+// ---------------------------------------------------------------------------
+
+group   = 'com.thegeek.gesture'
+version = '0.1.0'
+
+// ---------------------------------------------------------------------------
+// Java source/target compatibility
+// ---------------------------------------------------------------------------
+// Java 8 class files run on every Android version >= 5.0 (minSdk 21) and on
+// any desktop JVM >= 8. Do not raise these without a compelling reason.
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    // Produce a sources JAR alongside the binary JAR so IDE users can browse
+    // the library's Javadoc inline.
+    withSourcesJar()
+    withJavadocJar()
+}
+
+// ---------------------------------------------------------------------------
+// Dependencies
+// ---------------------------------------------------------------------------
+// The library has NO runtime dependencies — it is a self-contained algorithm.
+// Test dependencies are scoped to testImplementation only.
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // No production dependencies.
+
+    // JUnit 5 for unit tests.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testRuntimeOnly    'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+}
+
+// ---------------------------------------------------------------------------
+// Test configuration
+// ---------------------------------------------------------------------------
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        showStandardStreams = false
+        exceptionFormat    = 'full'
+    }
+}
+
+// ---------------------------------------------------------------------------
+// JAR manifest
+// ---------------------------------------------------------------------------
+
+jar {
+    archiveBaseName    = 'open-gesture-decoder'
+    archiveVersion     = version
+    archiveClassifier  = ''
+
+    manifest {
+        attributes(
+            'Implementation-Title'  : 'Open Gesture Decoder',
+            'Implementation-Version': version,
+            'Implementation-Vendor' : 'The Other Bhengu (Pty) Ltd t/a The Geek',
+            'Built-By'              : 'The Geek Build System',
+            'Created-By'            : "Gradle ${gradle.gradleVersion}",
+            'Build-Jdk'             : System.getProperty('java.version'),
+            'Specification-Title'   : 'Open Gesture Decoder API',
+            'Specification-Version' : '1',
+            'Specification-Vendor'  : 'The Other Bhengu (Pty) Ltd t/a The Geek',
+            'Automatic-Module-Name' : 'com.thegeek.gesture'
+        )
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Javadoc
+// ---------------------------------------------------------------------------
+
+javadoc {
+    options {
+        encoding  = 'UTF-8'
+        charSet   = 'UTF-8'
+        author    = true
+        version   = true
+        use       = true
+        windowTitle = 'Open Gesture Decoder API'
+        docTitle    = "<h1>Open Gesture Decoder ${project.version}</h1>"
+        bottom      = "Copyright &copy; 2026 The Other Bhengu (Pty) Ltd t/a The Geek. MIT License."
+        links       = ['https://docs.oracle.com/javase/8/docs/api/']
+        addStringOption('Xdoclint:none', '-quiet') // Suppress pedantic warnings during early dev.
+    }
+    source = sourceSets.main.allJava
+}
+
+// ---------------------------------------------------------------------------
+// Maven publishing
+// ---------------------------------------------------------------------------
+// Configured for GitHub Packages and/or Maven Central (via OSSRH).
+//
+// Publish to GitHub Packages:
+//   ./gradlew publishMavenJavaPublicationToGitHubPackagesRepository \
+//       -PgithubUser=<user> -PgithubToken=<token>
+//
+// Publish to Maven Central (requires signing + OSSRH credentials):
+//   ./gradlew publishMavenJavaPublicationToOSSRHRepository
+//
+// Set credentials in ~/.gradle/gradle.properties (never commit them):
+//   githubUser=your-github-username
+//   githubToken=ghp_...
+//   ossrhUsername=your-sonatype-username
+//   ossrhPassword=your-sonatype-password
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId    = project.group
+            artifactId = 'open-gesture-decoder'
+            version    = project.version
+
+            from components.java
+
+            pom {
+                name        = 'Open Gesture Decoder'
+                description = 'An open-source gesture/swipe typing decoder for software keyboards.'
+                url         = 'https://github.com/bhengubv/open-gesture-decoder'
+                inceptionYear = '2026'
+
+                licenses {
+                    license {
+                        name         = 'MIT License'
+                        url          = 'https://opensource.org/licenses/MIT'
+                        distribution = 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id           = 'bhengubv'
+                        name         = 'The Other Bhengu (Pty) Ltd t/a The Geek'
+                        email        = 'dev@thegeeknetwork.co.za'
+                        organization = 'The Geek Network'
+                        organizationUrl = 'https://thegeeknetwork.co.za'
+                    }
+                }
+
+                scm {
+                    connection          = 'scm:git:git://github.com/bhengubv/open-gesture-decoder.git'
+                    developerConnection = 'scm:git:ssh://github.com/bhengubv/open-gesture-decoder.git'
+                    url                 = 'https://github.com/bhengubv/open-gesture-decoder'
+                }
+
+                issueManagement {
+                    system = 'GitHub Issues'
+                    url    = 'https://github.com/bhengubv/open-gesture-decoder/issues'
+                }
+            }
+        }
+    }
+
+    repositories {
+        // GitHub Packages — uses project properties supplied on the command line.
+        maven {
+            name = 'GitHubPackages'
+            url  = uri('https://maven.pkg.github.com/bhengubv/open-gesture-decoder')
+            credentials {
+                username = project.findProperty('githubUser') ?: System.getenv('GITHUB_ACTOR')
+                password = project.findProperty('githubToken') ?: System.getenv('GITHUB_TOKEN')
+            }
+        }
+
+        // OSSRH (Maven Central) — credentials must be in ~/.gradle/gradle.properties.
+        maven {
+            name = 'OSSRH'
+            def releasesRepo  = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepo = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            url = uri(version.endsWith('SNAPSHOT') ? snapshotsRepo : releasesRepo)
+            credentials {
+                username = project.findProperty('ossrhUsername') ?: ''
+                password = project.findProperty('ossrhPassword') ?: ''
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Optional: GPG signing for Maven Central
+// ---------------------------------------------------------------------------
+// Uncomment when preparing a release for Maven Central. Requires GnuPG and the
+// signing plugin credentials in ~/.gradle/gradle.properties:
+//   signing.keyId=<last 8 chars of key ID>
+//   signing.password=<passphrase>
+//   signing.secretKeyRingFile=/path/to/secring.gpg
+//
+// apply plugin: 'signing'
+// signing {
+//     sign publishing.publications.mavenJava
+// }
