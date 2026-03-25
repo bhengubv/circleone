@@ -157,19 +157,16 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                         // Syllable complete — append PUA glyph to composing buffer
                         mIsiBheqeComposing.append(result.output);
                     }
-                    // Show Latin transliteration as composing text (readable hint)
-                    // PUA glyphs via IsiBheqeSpan don't work reliably across OEMs (MIUI renders emoji instead)
-                    // The actual isiBheqe image is sent on commit (space/punctuation)
-                    final String latinHint = "[" + transliterator.getComposedLatin() + transliterator.getBuffer() + "]";
+                    // Show PUA codepoints as composing text — ScriptView overlays correct glyphs
                     mConnection.beginBatchEdit();
-                    mConnection.setComposingText(latinHint, 1);
+                    mConnection.setComposingText(mIsiBheqeComposing.toString(), 1);
                     mConnection.endBatchEdit();
                     // Return a properly formed InputTransaction so HeliBoard state stays valid
                     final InputTransaction inputTransaction = new InputTransaction(settingsValues,
                             event, SystemClock.uptimeMillis(), mSpaceState,
                             getActualCapsMode(settingsValues, keyboardShiftMode));
                     inputTransaction.setDidAffectContents();
-                    inputTransaction.setRequiresUpdateSuggestions();
+                    // Do NOT setRequiresUpdateSuggestions — prevents HeliBoard from re-setting composing text
                     return inputTransaction;
                 }
                 // passThrough — fall through to normal HeliBoard handling
@@ -180,9 +177,8 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                     mIsiBheqeComposing.append(c);
                     transliterator.addLiteral(c);
                     transliterator.reset();
-                    final String latinHint = "[" + transliterator.getComposedLatin() + "]";
                     mConnection.beginBatchEdit();
-                    mConnection.setComposingText(latinHint, 1);
+                    mConnection.setComposingText(mIsiBheqeComposing.toString(), 1);
                     mConnection.endBatchEdit();
                     final InputTransaction inputTransaction = new InputTransaction(settingsValues,
                             event, SystemClock.uptimeMillis(), mSpaceState,
@@ -191,23 +187,14 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                     return inputTransaction;
                 }
             }
-            // Enter — commit full message (with spaces and punctuation) as one image
+            // Enter — commit full message as real PUA text (ScriptView renders the glyphs)
             if (event.getCodePoint() == Constants.CODE_ENTER) {
                 if (mIsiBheqeComposing.length() > 0) {
                     final String textToCommit = mIsiBheqeComposing.toString().trim();
                     mConnection.beginBatchEdit();
                     mConnection.finishComposingText();
                     if (!textToCommit.isEmpty()) {
-                        boolean sentAsImage = false;
-                        try {
-                            final android.view.inputmethod.EditorInfo editorInfo =
-                                    mLatinIME.getCurrentInputEditorInfo();
-                            sentAsImage = CommitContentHelper.commitIsiBheqeImage(
-                                    mLatinIME, editorInfo, textToCommit);
-                        } catch (Exception ignored) { }
-                        if (!sentAsImage) {
-                            mConnection.commitText(textToCommit, 1);
-                        }
+                        mConnection.commitText(textToCommit, 1);
                     }
                     mConnection.endBatchEdit();
                     mIsiBheqeComposing.setLength(0);
@@ -227,7 +214,7 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                 transliterator.removeLastSyllable();
                 // Show updated Latin hint
                 final String hint = mIsiBheqeComposing.length() > 0
-                        ? "[" + transliterator.getComposedLatin() + transliterator.getBuffer() + "]" : "";
+                        ? mIsiBheqeComposing.toString() : "";
                 mConnection.setComposingText(hint, 1);
                 transliterator.reset();
                 final InputTransaction inputTransaction = new InputTransaction(settingsValues,
@@ -279,25 +266,14 @@ HELPER_METHODS = '''
      */
     public void commitIsiBheqeComposing() {
         if (mIsiBheqeComposing.length() > 0) {
-            mConnection.beginBatchEdit();
-            mConnection.finishComposingText();
-            // Trim trailing spaces before committing
             final String textToCommit = mIsiBheqeComposing.toString().trim();
-            // Try image commit first (apps without one.ttf show squares for raw PUA)
-            boolean sentAsImage = false;
-            try {
-                final android.view.inputmethod.EditorInfo editorInfo =
-                        mLatinIME.getCurrentInputEditorInfo();
-                sentAsImage = CommitContentHelper.commitIsiBheqeImage(
-                        mLatinIME, editorInfo, textToCommit);
-            } catch (Exception ignored) { }
-            if (!sentAsImage) {
+            if (!textToCommit.isEmpty()) {
+                mConnection.beginBatchEdit();
+                mConnection.finishComposingText();
+                // Commit as real PUA text — ScriptView accessibility service renders the glyphs
                 mConnection.commitText(textToCommit, 1);
-                android.widget.Toast.makeText(mLatinIME,
-                        "isiBheqe: image commit unavailable, sent as text",
-                        android.widget.Toast.LENGTH_SHORT).show();
+                mConnection.endBatchEdit();
             }
-            mConnection.endBatchEdit();
             mIsiBheqeComposing.setLength(0);
         }
         if (mTransliterator != null) {

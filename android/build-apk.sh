@@ -91,6 +91,21 @@ if [[ -f "$STRINGS_FILE" ]]; then
     echo "       Patched strings.xml"
 fi
 
+# -- debug strings.xml (HeliBoard overrides app name in debug builds)
+DEBUG_STRINGS="${BUILD_DIR}/app/src/debug/res/values/strings.xml"
+if [[ -f "$DEBUG_STRINGS" ]]; then
+    sed -i "s/HeliBoard debug/${NEW_APP_NAME}/g" "$DEBUG_STRINGS"
+    sed -i "s/HeliBoard/${NEW_APP_NAME}/g" "$DEBUG_STRINGS"
+    echo "       Patched debug strings.xml"
+fi
+
+# -- Remove debug applicationIdSuffix (causes duplicate installs)
+APP_GRADLE_FILE="${BUILD_DIR}/app/build.gradle.kts"
+if [[ -f "$APP_GRADLE_FILE" ]]; then
+    sed -i 's/applicationIdSuffix = ".debug"/\/\/ applicationIdSuffix removed for CircleOne/' "$APP_GRADLE_FILE"
+    echo "       Removed debug applicationIdSuffix"
+fi
+
 # -- Replace launcher icon with CircleOne icon
 echo "       Replacing launcher icons..."
 ICON_SRC="${WORK_DIR}/../android/store-listing/graphics/app-icon-1024.png"
