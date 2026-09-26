@@ -47,6 +47,26 @@ public class CircleOneTransliterator {
     /** Whether transliteration is enabled. */
     private boolean enabled = true;
 
+    /** So the empty-map warning is said once, not on every keystroke. */
+    private boolean warnedMapEmpty = false;
+
+    /**
+     * The failure that is otherwise silent.
+     *
+     * If the CSV is missing or malformed, loadMap() swallows it and cvMap
+     * stays empty. processChar then falls through to pass-through forever:
+     * the keyboard types plain Latin, the script never appears, and nothing
+     * anywhere says why. This says it - once, with no user input in it.
+     */
+    private void warnOnceIfMapEmpty() {
+        if (cvMap.isEmpty() && !warnedMapEmpty) {
+            warnedMapEmpty = true;
+            Log.w(TAG, "no CV mappings loaded from " + CSV_ASSET
+                    + " - transliteration is off and input is passing through "
+                    + "unchanged");
+        }
+    }
+
     public CircleOneTransliterator(Context context) {
         loadMap(context);
     }
@@ -129,9 +149,21 @@ public class CircleOneTransliterator {
      * @return Result indicating what to do
      */
     public Result processChar(char c) {
-        android.util.Log.d("CircleOneDebug", "processChar('" + c + "') enabled=" + enabled + " cvMap.size=" + cvMap.size() + " buffer='" + buffer + "'");
+        // NOTHING IS LOGGED HERE, AND THAT IS NOT AN OVERSIGHT.
+        //
+        // This method previously ran, on every keystroke:
+        //
+        //   Log.d("CircleOneDebug", "processChar('" + c + "') ... buffer='" + buffer + "'")
+        //
+        // In a keyboard that is every password, every message and every card
+        // number written to logcat, at debug level, with no BuildConfig.DEBUG
+        // guard. It printed the buffer as well, so partial words too.
+        //
+        // Do not add a logging flag here either. A flag that can be turned on
+        // is a flag that will be turned on, by somebody debugging something
+        // else, on a device that belongs to a person.
         if (!enabled || cvMap.isEmpty()) {
-            android.util.Log.d("CircleOneDebug", "passThrough: enabled=" + enabled + " cvMap.empty=" + cvMap.isEmpty());
+            warnOnceIfMapEmpty();
             return Result.passThrough();
         }
 
