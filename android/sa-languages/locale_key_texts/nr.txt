@@ -1,0 +1,7 @@
+[popup_keys]
+c ch gc nc nch ngc
+q qh gq nq nqh ngq
+x xh gx nx nxh ngx
+
+[tlds]
+za

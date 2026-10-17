@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cm_brand_circle_blue">#2196F3</color>
+    <color name="cm_brand_circle_blue_strong">#005EA8</color>
+    <color name="cm_brand_deep_navy">#2C3E50</color>
+    <color name="cm_brand_white">#FFFFFF</color>
+    <color name="cm_brand_ink">#08111D</color>
+    <color name="cm_brand_circle_spiral_blue">#0869E8</color>
+    <color name="cm_brand_circle_spiral_cyan">#00D7F1</color>
+    <color name="cm_brand_weather_sun">#FFE3A5</color>
+    <color name="cm_color_canvas">#F3F6FA</color>
+    <color name="cm_color_surface">#FFFFFF</color>
+    <color name="cm_color_surface_raised">#F9FBFD</color>
+    <color name="cm_color_surface_glass_tint">#EBFFFFFF</color>
+    <color name="cm_color_surface_glass_tint_edge">#6BFFFFFF</color>
+    <color name="cm_color_text_primary">#14202C</color>
+    <color name="cm_color_text_secondary">#475667</color>
+    <color name="cm_color_text_disabled">#5B6877</color>
+    <color name="cm_color_on_accent">#FFFFFF</color>
+    <color name="cm_color_accent">#005EA8</color>
+    <color name="cm_color_accent_soft">#DCEEFF</color>
+    <color name="cm_color_tile">#005EA8</color>
+    <color name="cm_color_on_tile">#FFFFFF</color>
+    <color name="cm_color_outline">#C6D0DB</color>
+    <color name="cm_color_outline_strong">#78899B</color>
+    <color name="cm_color_positive">#176B3A</color>
+    <color name="cm_color_warning">#805300</color>
+    <color name="cm_color_critical">#B3261E</color>
+    <color name="cm_color_glass_stroke">#B6C6D6</color>
+    <color name="cm_color_glass_edge_highlight">#D9FFFFFF</color>
+    <color name="cm_color_glass_edge_shadow">#8C000000</color>
+    <color name="cm_color_accent_text">#00548F</color>
+</resources>

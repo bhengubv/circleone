@@ -189,9 +189,15 @@ public class CircleOneTransliterator {
                 }
             }
 
-            // No match — flush buffer, pass through
-            buffer.setLength(0);
-            return Result.passThrough();
+            // No syllable for these letters and this vowel: write the buffer
+            // out - as a syllabic nasal when it is one - then the vowel's own
+            // glyph, rather than drop the consonants and let the vowel through.
+            final String pending = flush();
+            if (pending == null) return Result.passThrough();
+            final Integer vowel = cvMap.get(String.valueOf(c));
+            composedSyllables.add(String.valueOf(c));
+            return Result.commit(0, pending + (vowel != null
+                    ? new String(Character.toChars(vowel)) : String.valueOf(c)));
         }
 
         // Consonant — try to extend buffer
@@ -201,15 +207,37 @@ public class CircleOneTransliterator {
             return Result.buffered();
         }
 
-        // Not a valid extension — reset buffer, try as new prefix
-        buffer.setLength(0);
+        // Not a valid extension: what is buffered is written out, never
+        // dropped. It used to be cleared here, so "emzimbeni" lost its m - the
+        // buffer is not on screen, the letter simply vanished.
+        final String pending = flush();
         if (validPrefixes.contains(String.valueOf(c))) {
             buffer.append(c);
-            return Result.buffered();
+            return pending == null ? Result.buffered() : Result.commit(0, pending);
         }
 
-        // Not a valid prefix at all — pass through
-        return Result.passThrough();
+        // Not a valid prefix at all — pass through, after what was pending
+        if (pending == null) return Result.passThrough();
+        composedSyllables.add(String.valueOf(c));
+        return Result.commit(0, pending + c);
+    }
+
+    /**
+     * Writes out the consonant buffer and empties it: a lone nasal - m, n, ng
+     * before a consonant that does not take it into a syllable, the m of
+     * "emzimbeni" - is the script's syllabic nasal (the "m_syl" rows of the
+     * map); anything else is written as it was typed, so no keystroke is lost.
+     * Call before a space, punctuation or Enter ends the word.
+     *
+     * @return what to append to the composing text, or null when nothing was buffered
+     */
+    public String flush() {
+        if (buffer.length() == 0) return null;
+        final String letters = buffer.toString();
+        buffer.setLength(0);
+        composedSyllables.add(letters);
+        final Integer nasal = cvMap.get(letters + "_syl");
+        return nasal != null ? new String(Character.toChars(nasal)) : letters;
     }
 
     /** Reset the consonant buffer (on space, backspace, etc.). Does NOT clear composedLatin. */
@@ -231,6 +259,13 @@ public class CircleOneTransliterator {
     /** Get buffer length. */
     public int getBufferLength() {
         return buffer.length();
+    }
+
+    /** Backspace on letters still waiting for a vowel: the last one goes, as typed. */
+    public boolean deleteLastBuffered() {
+        if (buffer.length() == 0) return false;
+        buffer.setLength(buffer.length() - 1);
+        return true;
     }
 
     /** Get the Latin text that produced the completed PUA syllables so far (including spaces/punctuation). */

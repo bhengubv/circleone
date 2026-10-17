@@ -144,10 +144,17 @@ if [[ -f "$LAYOUT_SRC" ]]; then
     echo "       Copied one_layout.json"
 fi
 
-# Copy dictionaries if present
+# Copy dictionaries if present.
+#
+# Into assets/dicts/, which is where HeliBoard reads its bundled main_<locale>.dict
+# files from (main_en-US.dict and the rest live there). This used to copy them to
+# the assets root, where nothing looks, so a bundled dictionary would have shipped
+# and never been used. The South African word lists land through the same path -
+# see sa-languages/dictionaries/README.md.
 if [[ -d "$ASSETS_DIR/dictionaries" ]]; then
-    cp -r "$ASSETS_DIR/dictionaries/"* "$HELIBOARD_ASSETS/" 2>/dev/null || true
-    echo "       Copied dictionary files"
+    mkdir -p "$HELIBOARD_ASSETS/dicts"
+    cp "$ASSETS_DIR/dictionaries/"*.dict "$HELIBOARD_ASSETS/dicts/" 2>/dev/null || true
+    echo "       Copied dictionary files to assets/dicts/"
 fi
 
 # Copy font if present
@@ -172,11 +179,21 @@ if [[ -f "$KEYSTORE_PROPS" ]]; then
         cp "$KEYSTORE_PROPS" "$BUILD_DIR/keystore.properties"
     fi
 else
-    echo "       No keystore.properties found -- building unsigned / debug."
     if [[ "$BUILD_TYPE" == "Release" ]]; then
-        BUILD_TYPE="Debug"
-        echo "       Falling back to Debug build (no signing key)."
+        echo "" >&2
+        echo "REFUSED: a Release build needs a signing key." >&2
+        echo "  No keystore.properties found." >&2
+        echo "" >&2
+        echo "  This step used to fall back to Debug silently, which is how" >&2
+        echo "  a DEBUGGABLE apk came to be installed and offered as a" >&2
+        echo "  release. A release build without a key is not a release" >&2
+        echo "  build; it is a debug build with a release name on it." >&2
+        echo "" >&2
+        echo "  Provide keystore.properties, or pass --debug if a debug" >&2
+        echo "  build is genuinely what you want." >&2
+        exit 1
     fi
+    echo "       No keystore.properties found -- building unsigned / debug."
 fi
 
 ###############################################################################
@@ -203,6 +220,28 @@ BUILD_TYPE_LOWER="$(echo "$BUILD_TYPE" | tr '[:upper:]' '[:lower:]')"
 APK_SEARCH="${BUILD_DIR}/app/build/outputs/apk/${BUILD_TYPE_LOWER}"
 
 APK_FILE="$(find "$APK_SEARCH" -name "*.apk" -type f 2>/dev/null | head -1)"
+
+# Does the artefact itself carry the debuggable flag?
+#
+# Asked of the apk, not of the variable that was supposed to control it.
+# The shipped v3.8 was debuggable while every intention in this script said
+# Release, so intention is not evidence. Skipped only when no aapt is on the
+# PATH, and it says so rather than passing quietly.
+if [[ -n "$APK_FILE" && "$BUILD_TYPE" == "Release" ]]; then
+    AAPT="$(command -v aapt2 || command -v aapt || true)"
+    if [[ -n "$AAPT" ]]; then
+        if "$AAPT" dump badging "$APK_FILE" 2>/dev/null \
+                | grep -q "application-debuggable"; then
+            echo "REFUSED: the built apk is DEBUGGABLE." >&2
+            echo "  $APK_FILE" >&2
+            echo "  Not copied to the output directory." >&2
+            exit 1
+        fi
+        echo "       not debuggable - checked against the apk"
+    else
+        echo "       WARNING: no aapt on PATH, debuggable flag NOT checked"
+    fi
+fi
 
 if [[ -n "$APK_FILE" ]]; then
     cp "$APK_FILE" "${OUTPUT_DIR}/circleone-${BUILD_TYPE_LOWER}.apk"

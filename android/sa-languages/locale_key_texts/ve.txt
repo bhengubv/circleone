@@ -1,0 +1,8 @@
+[popup_keys]
+d ḓ
+l ḽ
+n ṋ ṅ
+t ṱ
+
+[tlds]
+za

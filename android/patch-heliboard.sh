@@ -10,7 +10,8 @@
 # 5. AndroidManifest.xml patches (compose activity + FileProvider)
 # 6. LatinIME.java patches (compose/commitContent + OTP + GIF + spacebar trackpad)
 # 7. MainKeyboardView.java patches (spacebar trackpad gesture)
-# 8. build.gradle patches (Google Play Services for SmsRetriever)
+# 8. build.gradle check (refuses Google Play Services)
+# 9. All eleven South African languages, on by default; isiBheqe as a choice
 
 set -euo pipefail
 
@@ -33,7 +34,7 @@ echo "[patch] Applying CircleOne patches to HeliBoard..."
 ###############################################################################
 # 1. Copy new source files
 ###############################################################################
-echo "  [1/8] Copying CircleOne source files..."
+echo "  [1/9] Copying CircleOne source files..."
 
 mkdir -p "${SRC_DIR}/circleone" "${SRC_DIR}/circleone/scriptview"
 cp "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/"*.java "${SRC_DIR}/circleone/"
@@ -43,6 +44,13 @@ echo "       Copied circleone/ package ($(ls "${OVERLAY_DIR}/java/helium314/keyb
 if [[ -d "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/scriptview" ]]; then
     cp "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/scriptview/"*.java "${SRC_DIR}/circleone/scriptview/"
     echo "       Copied scriptview/ subpackage ($(ls "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/scriptview/"*.java | wc -l) files)"
+fi
+
+# Copy Learn subpackage (CircleOne Learn: Hangman, one isiBheqe syllable at a time)
+if [[ -d "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/learn" ]]; then
+    mkdir -p "${SRC_DIR}/circleone/learn"
+    cp "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/learn/"*.java "${SRC_DIR}/circleone/learn/"
+    echo "       Copied learn/ subpackage ($(ls "${OVERLAY_DIR}/java/helium314/keyboard/latin/circleone/learn/"*.java | wc -l) files)"
 fi
 
 if [[ -f "${OVERLAY_DIR}/java/helium314/keyboard/latin/CircleOneTransliterator.java" ]]; then
@@ -62,12 +70,23 @@ fi
 ###############################################################################
 # 2. Copy resource files
 ###############################################################################
-echo "  [2/8] Copying resource files..."
+echo "  [2/9] Copying resource files..."
 
 mkdir -p "${RES_DIR}/layout" "${RES_DIR}/xml"
 cp "${OVERLAY_DIR}/res/layout/"*.xml "${RES_DIR}/layout/" 2>/dev/null || true
 cp "${OVERLAY_DIR}/res/xml/"*.xml "${RES_DIR}/xml/" 2>/dev/null || true
 echo "       Copied layouts and XML resources"
+
+# CircleMetroUI's generated tokens - colours, spacing, radii, type, day and night -
+# for CircleOne Learn. Copied from github.com/bhengubv/CircleMetroUI's Android
+# adapter, never edited by hand.
+for d in values values-night; do
+    if ls "${OVERLAY_DIR}/res/${d}/"circlemetro_*.xml >/dev/null 2>&1; then
+        mkdir -p "${RES_DIR}/${d}"
+        cp "${OVERLAY_DIR}/res/${d}/"circlemetro_*.xml "${RES_DIR}/${d}/"
+    fi
+done
+echo "       Copied CircleMetroUI tokens"
 
 # Add ScriptView string resources to HeliBoard's strings
 STRINGS_FILE="${RES_DIR}/values/donottranslate.xml"
@@ -79,15 +98,23 @@ fi
 ###############################################################################
 # 3. Copy assets (font + PUA map)
 ###############################################################################
-echo "  [3/8] Copying font and PUA map to assets..."
+echo "  [3/9] Copying font and PUA map to assets..."
 
 [[ -f "${FONT_DIR}/one.ttf" ]] && cp "${FONT_DIR}/one.ttf" "${ASSETS_DIR}/one.ttf" && echo "       Copied one.ttf"
 [[ -f "${FONT_DIR}/one-pua-map.csv" ]] && cp "${FONT_DIR}/one-pua-map.csv" "${ASSETS_DIR}/one-pua-map.csv" && echo "       Copied one-pua-map.csv"
 
+# CircleOne Learn's words: the commonest words of each isiBheqe language, from
+# the NCHLT corpora (sa-languages/dictionaries/build_dicts.py writes them).
+if ls "${SCRIPT_DIR}/sa-languages/learn/"words_*.txt >/dev/null 2>&1; then
+    mkdir -p "${ASSETS_DIR}/learn"
+    cp "${SCRIPT_DIR}/sa-languages/learn/"words_*.txt "${ASSETS_DIR}/learn/"
+    echo "       Copied Learn word lists ($(ls "${SCRIPT_DIR}/sa-languages/learn/"words_*.txt | wc -l) languages)"
+fi
+
 ###############################################################################
 # 4. Patch InputLogic.java
 ###############################################################################
-echo "  [4/8] Patching InputLogic.java..."
+echo "  [4/9] Patching InputLogic.java..."
 
 python - "$INPUT_LOGIC" << 'PYEOF'
 import sys, re
@@ -147,8 +174,22 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
         // Returns early on handled characters to show PUA glyphs via IsiBheqeSpan.
         // IMPORTANT: do NOT call mWordComposer.reset() — it kills HeliBoard's input pipeline.
         final CircleOneTransliterator transliterator = getTransliterator();
-        if (transliterator != null && transliterator.isEnabled()
+        // ONLY ON THE isiBheqe LAYOUT. The transliterator starts enabled and
+        // nothing turned it off, so every Latin syllable in every language
+        // became isiBheqe - "ba" typed on AngelDust committed one glyph, and
+        // English could not be typed at all. It is a language entry now,
+        // "isiZulu (isiBheqe)", chosen like any other (sa-languages/apply.py).
+        final boolean isiBheqe = isIsiBheqeLayout();
+        if (!isiBheqe && mIsiBheqeComposing.length() > 0) {
+            // Switched away mid-sentence: keep what was written, as written.
+            commitIsiBheqeComposing();
+        }
+        if (transliterator != null && isiBheqe && transliterator.isEnabled()
                 && event.getCodePoint() > 0 && !event.isFunctionalKeyEvent()) {
+            // No Latin suggestions over the script. The strip offered isiZulu
+            // words in Latin letters while glyphs were being written, and one
+            // tap would have put a Latin word in the middle of isiBheqe text.
+            mSuggestionStripViewAccessor.setSuggestions(SuggestedWords.getEmptyInstance());
             final char c = (char) event.getCodePoint();
             if (Character.isLetter(c)) {
                 final CircleOneTransliterator.Result result = transliterator.processChar(c);
@@ -158,8 +199,10 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                         mIsiBheqeComposing.append(result.output);
                     }
                     // Show PUA codepoints as composing text — ScriptView overlays correct glyphs
+                    // - and after them the letters still waiting for a vowel, so
+                    // nothing typed is ever invisible.
                     mConnection.beginBatchEdit();
-                    mConnection.setComposingText(mIsiBheqeComposing.toString(), 1);
+                    mConnection.setComposingText(isiBheqeShown(), 1);
                     mConnection.endBatchEdit();
                     // Return a properly formed InputTransaction so HeliBoard state stays valid
                     final InputTransaction inputTransaction = new InputTransaction(settingsValues,
@@ -170,6 +213,13 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                     return inputTransaction;
                 }
                 // passThrough — fall through to normal HeliBoard handling
+            }
+            // Space, punctuation or Enter end the word: write out the consonants
+            // still waiting for a vowel - a syllabic nasal, or the letters as
+            // typed - so the end of a word is never lost.
+            if (!Character.isLetter(c) || event.getCodePoint() == Constants.CODE_ENTER) {
+                final String pending = transliterator.flush();
+                if (pending != null) mIsiBheqeComposing.append(pending);
             }
             // Space or punctuation — add to buffer, keep composing
             if (event.getCodePoint() == Constants.CODE_SPACE || !Character.isLetterOrDigit(c)) {
@@ -192,8 +242,13 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                 if (mIsiBheqeComposing.length() > 0) {
                     final String textToCommit = mIsiBheqeComposing.toString().trim();
                     mConnection.beginBatchEdit();
-                    mConnection.finishComposingText();
-                    if (!textToCommit.isEmpty()) {
+                    // commitText REPLACES the composing text. Finishing the
+                    // composition first made it permanent, and commitText then
+                    // wrote it a second time - "ba" and Enter gave "ba ba",
+                    // measured on AngelDust.
+                    if (textToCommit.isEmpty()) {
+                        mConnection.finishComposingText();
+                    } else {
                         mConnection.commitText(textToCommit, 1);
                     }
                     mConnection.endBatchEdit();
@@ -207,7 +262,22 @@ TRANSLITERATION_BLOCK = '''        // CircleOne: intercept character input for i
                 }
             }
         }
-        // Handle delete — remove last glyph from composing buffer
+        // Handle delete. Letters still waiting for a vowel go first, one by
+        // one, as they were typed - backspace used to delete the glyph before
+        // them, leaving the letters in the buffer to come back.
+        if (transliterator != null && event.getKeyCode() == KeyCode.DELETE
+                && transliterator.getBufferLength() > 0) {
+            transliterator.deleteLastBuffered();
+            mConnection.beginBatchEdit();
+            mConnection.setComposingText(isiBheqeShown(), 1);
+            mConnection.endBatchEdit();
+            final InputTransaction inputTransaction = new InputTransaction(settingsValues,
+                    event, SystemClock.uptimeMillis(), mSpaceState,
+                    getActualCapsMode(settingsValues, keyboardShiftMode));
+            inputTransaction.setDidAffectContents();
+            return inputTransaction;
+        }
+        // Then the glyphs — remove last glyph from composing buffer
         if (transliterator != null && event.getKeyCode() == KeyCode.DELETE) {
             if (mIsiBheqeComposing.length() > 0) {
                 mIsiBheqeComposing.setLength(mIsiBheqeComposing.length() - 1);
@@ -265,15 +335,23 @@ HELPER_METHODS = '''
      * Commits any accumulated isiBheqe composing text and resets the buffer.
      */
     public void commitIsiBheqeComposing() {
+        // Letters still waiting for a vowel are written too - never dropped.
+        if (mTransliterator != null) {
+            final String pending = mTransliterator.flush();
+            if (pending != null) mIsiBheqeComposing.append(pending);
+        }
         if (mIsiBheqeComposing.length() > 0) {
             final String textToCommit = mIsiBheqeComposing.toString().trim();
-            if (!textToCommit.isEmpty()) {
-                mConnection.beginBatchEdit();
+            mConnection.beginBatchEdit();
+            if (textToCommit.isEmpty()) {
                 mConnection.finishComposingText();
-                // Commit as real PUA text — ScriptView accessibility service renders the glyphs
+            } else {
+                // Commit as real PUA text — ScriptView accessibility service renders the glyphs.
+                // commitText replaces the composing text; finishing the
+                // composition first wrote the word twice (see the Enter case).
                 mConnection.commitText(textToCommit, 1);
-                mConnection.endBatchEdit();
             }
+            mConnection.endBatchEdit();
             mIsiBheqeComposing.setLength(0);
         }
         if (mTransliterator != null) {
@@ -288,13 +366,87 @@ HELPER_METHODS = '''
         return mIsiBheqeComposing.toString();
     }
 
+    /** What the composing text shows: the glyphs, then the letters still waiting for a vowel. */
+    private String isiBheqeShown() {
+        final String waiting = mTransliterator != null ? mTransliterator.getBuffer() : "";
+        return mIsiBheqeComposing.toString() + waiting;
+    }
+
+    /**
+     * The field changed and the keyboard did not change it: the app cleared
+     * it (a game's next word, a chat's Send, a search box), or the person
+     * moved the cursor. What is on screen stays as it is; the keyboard's own
+     * copy goes, or the next key writes the old glyphs back - measured on
+     * AngelDust, where "ba" after a cleared field came out "nda ba ba".
+     */
+    private void forgetIsiBheqeComposing() {
+        mIsiBheqeComposing.setLength(0);
+        if (mTransliterator != null) mTransliterator.resetAll();
+    }
+
+    /** Whether the person chose "isiZulu (isiBheqe)" - the layout named isibheqe. */
+    private boolean isIsiBheqeLayout() {
+        try {
+            return "isibheqe".equals(helium314.keyboard.latin.RichInputMethodManager
+                    .getInstance().getCurrentSubtype().getMainLayoutName());
+        } catch (RuntimeException notReady) {
+            return false; // no subtype yet: plain Latin, never a surprise script
+        }
+    }
+
 '''
 
-if 'commitIsiBheqeComposing' not in content:
+# The DEFINITION, not the name: the transliteration block above now CALLS
+# commitIsiBheqeComposing() (to keep a half-written sentence when the person
+# switches layout), so a name check skipped these methods and the build
+# failed at javac with "cannot find symbol" on every caller.
+if 'public void commitIsiBheqeComposing()' not in content:
     target = '    public PrivateCommandPerformer getPrivateCommandPerformer()'
+    if target not in content:
+        print("       FAILED: no getPrivateCommandPerformer() to place the isiBheqe helpers before")
+        sys.exit(1)
     if target in content:
         content = content.replace(target, HELPER_METHODS + target)
         changes += 1
+
+# --- onUpdateSelection: a change the keyboard did not make ends its composing ---
+# isBelatedExpectedUpdate() is true for the updates our own setComposingText
+# calls cause (RichInputConnection tracks the expected cursor), and false when
+# the app shrank or removed the composing text or the cursor was moved. Past
+# that test the field is no longer what the keyboard composed.
+OLD_UPDATE = '''        if (mConnection.isBelatedExpectedUpdate(oldSelStart, newSelStart, oldSelEnd, newSelEnd, composingSpanStart, composingSpanEnd)) {
+            return false;
+        }
+'''
+NEW_UPDATE = OLD_UPDATE + '''        // CircleOne: the app or the person changed the field - drop the
+        // keyboard's isiBheqe copy, or the next key writes the old glyphs back.
+        if (mIsiBheqeComposing.length() > 0
+                || (mTransliterator != null && mTransliterator.getBufferLength() > 0)) {
+            forgetIsiBheqeComposing();
+        }
+'''
+if 'forgetIsiBheqeComposing();\n        }\n' not in content.split('public boolean onUpdateSelection', 1)[-1][:2000]:
+    if OLD_UPDATE not in content:
+        print("       FAILED: no isBelatedExpectedUpdate check in onUpdateSelection to hook")
+        sys.exit(1)
+    content = content.replace(OLD_UPDATE, NEW_UPDATE, 1)
+    changes += 1
+
+# --- startInput: a new or restarted editor starts with nothing composed ---
+# An app that replaces a field's text (EditText.setText - a game's next word, a
+# chat's Send) makes Android restart input on it, which arrives here and not in
+# onUpdateSelection. HeliBoard resets its own composing state here; the
+# isiBheqe copy has to go with it. Measured on AngelDust: without this, "ba"
+# typed after the field was cleared came back "bab", the old glyph and space
+# rewritten ahead of it.
+OLD_START = '        mConnection.onStartInput();\n'
+NEW_START = OLD_START + '        forgetIsiBheqeComposing(); // CircleOne: nothing composed carries into a new input\n'
+if 'forgetIsiBheqeComposing(); // CircleOne: nothing composed' not in content:
+    if content.count(OLD_START) != 1:
+        print("       FAILED: startInput anchor not found exactly once")
+        sys.exit(1)
+    content = content.replace(OLD_START, NEW_START, 1)
+    changes += 1
 
 # --- Patch finishInput() to commit isiBheqe buffer ---
 OLD_FINISH = '    public void finishInput() {\n        if (mWordComposer.isComposingWord()) {'
@@ -312,7 +464,7 @@ PYEOF
 ###############################################################################
 # 5. Patch AndroidManifest.xml
 ###############################################################################
-echo "  [5/8] Patching AndroidManifest.xml..."
+echo "  [5/9] Patching AndroidManifest.xml..."
 
 if ! grep -q "CircleOneComposeActivity" "$MANIFEST"; then
     python - "$MANIFEST" << 'PYEOF'
@@ -331,6 +483,20 @@ ADDITIONS = '''
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <!-- CircleOne Learn: Hangman, one isiBheqe syllable at a time. Its own
+             launcher entry, because it is how a person learns the keyboard. -->
+        <activity android:name="helium314.keyboard.latin.circleone.learn.LearnActivity"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar"
+            android:label="CircleOne Learn"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -370,30 +536,56 @@ else:
 PYEOF
 fi
 
-# Add INTERNET permission for Tenor GIF API (HeliBoard may not have it)
-if ! grep -q "android.permission.INTERNET" "$MANIFEST"; then
-    python - "$MANIFEST" << 'PYEOF'
+# STRIP the network permissions, rather than adding one.
+#
+# INTERNET was injected here for the Tenor GIF API. Four features used it:
+# Tenor GIFs, Emoji Kitchen (gstatic.com), the MyMemory inline translator -
+# which sent the text being translated to a third party - and SMS OTP via
+# Google Play Services. All four are gone.
+#
+# READ_CONTACTS is NOT ours: it is inherited from upstream HeliBoard's
+# contacts dictionary. It is stripped here so an upstream bump cannot bring
+# it back quietly.
+#
+# A keyboard that cannot reach the network cannot send what you type
+# anywhere. That is the one privacy claim a keyboard can actually prove,
+# and it is worth more than four features nobody asked a keyboard for.
+python - "$MANIFEST" << 'PYEOF'
+import re
 import sys
 
 filepath = sys.argv[1]
 with open(filepath, 'r', encoding='utf-8') as f:
     content = f.read()
 
-# Add INTERNET permission before <application tag
-PERMISSION = '    <uses-permission android:name="android.permission.INTERNET" />\n\n'
-target = '    <application'
-if target in content and 'android.permission.INTERNET' not in content:
-    content = content.replace(target, PERMISSION + target, 1)
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print("       Added INTERNET permission for Tenor GIF API")
+BANNED = ("android.permission.INTERNET",
+          "android.permission.READ_CONTACTS")
+
+removed = []
+for perm in BANNED:
+    pattern = re.compile(
+        r'[ \t]*<uses-permission[^>]*android:name="' + re.escape(perm)
+        + r'"[^>]*/>[ \t]*\n')
+    content, n = pattern.subn('', content)
+    if n:
+        removed.append('%s x%d' % (perm.rsplit('.', 1)[-1], n))
+
+with open(filepath, 'w', encoding='utf-8') as f:
+    f.write(content)
+
+for perm in BANNED:
+    if perm in content:
+        print('       FAILED to strip %s - it is still declared' % perm)
+        sys.exit(1)
+
+print('       Stripped: %s' % (', '.join(removed) if removed
+                               else 'nothing to strip'))
 PYEOF
-fi
 
 ###############################################################################
 # 6. Patch LatinIME.java (compose, commitContent, OTP, GIF, spacebar trackpad)
 ###############################################################################
-echo "  [6/8] Patching LatinIME.java..."
+echo "  [6/9] Patching LatinIME.java..."
 
 python - "$LATIN_IME" << 'PYEOF'
 import sys
@@ -408,15 +600,11 @@ changes = 0
 IMPORTS = """import helium314.keyboard.latin.circleone.CircleOneComposeActivity;
 import helium314.keyboard.latin.circleone.CommitContentHelper;
 import helium314.keyboard.latin.circleone.SpacebarTrackpadListener;
-import helium314.keyboard.latin.circleone.GifSearchView;
-import helium314.keyboard.latin.circleone.OtpSuggestionProvider;
 import helium314.keyboard.latin.circleone.ClipboardPinManager;
 import helium314.keyboard.latin.circleone.MultilingualDetector;
-import helium314.keyboard.latin.circleone.InlineTranslator;
 import helium314.keyboard.latin.circleone.NeuralPredictionProvider;
 import helium314.keyboard.latin.circleone.PhotoBackgroundManager;
 import helium314.keyboard.latin.circleone.FloatingKeyboardController;
-import helium314.keyboard.latin.circleone.EmojiKitchenProvider;
 import helium314.keyboard.latin.circleone.SwipeTypingHandler;
 """
 
@@ -436,20 +624,11 @@ FIELDS = """
     // CircleOne: spacebar trackpad for cursor control
     private SpacebarTrackpadListener mSpacebarTrackpad;
 
-    // CircleOne: GIF search panel
-    private GifSearchView mGifSearchView;
-
-    // CircleOne: OTP auto-fill from SMS
-    private OtpSuggestionProvider mOtpProvider;
-
     // CircleOne: clipboard pin manager
     private ClipboardPinManager mClipboardPinManager;
 
     // CircleOne Phase 2: multilingual SA language detection
     private MultilingualDetector mMultilingualDetector;
-
-    // CircleOne Phase 2: inline translation
-    private InlineTranslator mInlineTranslator;
 
     // CircleOne Phase 3: neural prediction provider (stub until model is trained)
     private NeuralPredictionProvider mNeuralProvider;
@@ -459,9 +638,6 @@ FIELDS = """
 
     // CircleOne Phase 4: floating keyboard
     private FloatingKeyboardController mFloatingKeyboardController;
-
-    // CircleOne Phase 4: emoji kitchen
-    private EmojiKitchenProvider mEmojiKitchenProvider;
 
     // CircleOne: swipe/gesture typing (Open Gesture Decoder, MIT)
     private SwipeTypingHandler mSwipeTypingHandler;
@@ -480,13 +656,10 @@ if 'mSpacebarTrackpad' not in content:
 ONCREATE_INIT = """
         // CircleOne: initialize all features
         mSpacebarTrackpad = new SpacebarTrackpadListener(this);
-        mOtpProvider = new OtpSuggestionProvider(this);
         mClipboardPinManager = new ClipboardPinManager(this);
         mMultilingualDetector = new MultilingualDetector();
-        mInlineTranslator = new InlineTranslator();
         mNeuralProvider = new NeuralPredictionProvider.DummyNeuralProvider();
         mPhotoBackgroundManager = null; // static utility class, no instance needed
-        mEmojiKitchenProvider = new EmojiKitchenProvider(this);
         mSwipeTypingHandler = new SwipeTypingHandler(this);
 """
 
@@ -497,35 +670,15 @@ if 'mSpacebarTrackpad = new' not in content:
         content = content.replace(marker, marker + ONCREATE_INIT)
         changes += 1
 
-# --- Patch onStartInputView to start OTP listener ---
-# Must target the OUTER LatinIME.onStartInputView (not UIHandler inner class)
-OTP_START = """
-        // CircleOne: start OTP detection on input view start
-        if (mOtpProvider != null) mOtpProvider.startListening();
-"""
-
-if 'mOtpProvider.startListening' not in content:
-    # Find the LAST (outer class) onStartInputView — skip the UIHandler one
-    marker = 'public void onStartInputView('
-    last_idx = content.rfind(marker)
-    if last_idx > 0:
-        brace = content.index('{', last_idx)
-        content = content[:brace+1] + OTP_START + content[brace+1:]
-        changes += 1
-
 # --- Patch onDestroy to clean up ---
 ONDESTROY_CLEANUP = """
         // CircleOne: cleanup
         if (mSpacebarTrackpad != null) mSpacebarTrackpad.reset();
-        if (mOtpProvider != null) mOtpProvider.destroy();
-        if (mGifSearchView != null) mGifSearchView.cleanup();
-        if (mInlineTranslator != null) mInlineTranslator.clearCache();
         if (mNeuralProvider != null) mNeuralProvider.unloadModel();
-        if (mEmojiKitchenProvider != null) mEmojiKitchenProvider.shutdown();
         if (mSwipeTypingHandler != null) mSwipeTypingHandler.setEnabled(false);
 """
 
-if 'mOtpProvider.destroy' not in content:
+if 'mSpacebarTrackpad.reset' not in content:
     marker = 'public void onDestroy() {'
     if marker in content:
         content = content.replace(marker, marker + ONDESTROY_CLEANUP)
@@ -572,56 +725,10 @@ METHODS = '''
     }
 
     /**
-     * Shows the GIF search panel, replacing the keyboard view temporarily.
-     */
-    public void showGifPanel() {
-        if (mGifSearchView == null) {
-            mGifSearchView = new GifSearchView(this);
-            mGifSearchView.attach(this);
-            mGifSearchView.setDismissListener(() -> hideGifPanel());
-        }
-        setInputView(mGifSearchView);
-    }
-
-    /**
-     * Hides the GIF search panel and restores the keyboard.
-     */
-    public void hideGifPanel() {
-        if (mGifSearchView != null) {
-            mGifSearchView.cleanup();
-            mGifSearchView = null;
-        }
-        // Restore main keyboard view
-        setInputView(onCreateInputView());
-    }
-
-    /**
-     * Returns the OTP provider for suggestion strip integration.
-     */
-    public OtpSuggestionProvider getOtpProvider() {
-        return mOtpProvider;
-    }
-
-    /**
      * Returns the clipboard pin manager for clipboard view integration.
      */
     public ClipboardPinManager getClipboardPinManager() {
         return mClipboardPinManager;
-    }
-
-    /**
-     * Inserts the current OTP code at the cursor and clears it.
-     */
-    public void insertOtpCode() {
-        if (mOtpProvider == null) return;
-        String otp = mOtpProvider.getCurrentOtp();
-        if (otp == null || otp.isEmpty()) return;
-
-        android.view.inputmethod.InputConnection ic = getCurrentInputConnection();
-        if (ic != null) {
-            ic.commitText(otp, 1);
-        }
-        mOtpProvider.consumeOtp();
     }
 
     // ========================================================================
@@ -642,34 +749,6 @@ METHODS = '''
         if (mMultilingualDetector != null && word != null) {
             mMultilingualDetector.addWord(word);
         }
-    }
-
-    /**
-     * Returns the inline translator for keyboard translation features.
-     */
-    public InlineTranslator getInlineTranslator() {
-        return mInlineTranslator;
-    }
-
-    /**
-     * Translate the currently selected text using inline translator.
-     */
-    public void translateSelectedText(String targetLang) {
-        android.view.inputmethod.InputConnection ic = getCurrentInputConnection();
-        if (ic == null || mInlineTranslator == null) return;
-        CharSequence selected = ic.getSelectedText(0);
-        if (selected == null || selected.length() == 0) return;
-        String sourceLang = mMultilingualDetector != null ? mMultilingualDetector.getActiveLanguage() : "en";
-        mInlineTranslator.translate(selected.toString(), sourceLang, targetLang,
-            new InlineTranslator.TranslationCallback() {
-                @Override public void onTranslated(String result) {
-                    android.view.inputmethod.InputConnection conn = getCurrentInputConnection();
-                    if (conn != null) conn.commitText(result, 1);
-                }
-                @Override public void onError(String message) {
-                    // Silently fail — user keeps original text
-                }
-            });
     }
 
     // ========================================================================
@@ -716,13 +795,6 @@ METHODS = '''
     }
 
     /**
-     * Returns the emoji kitchen provider for emoji mashups.
-     */
-    public EmojiKitchenProvider getEmojiKitchenProvider() {
-        return mEmojiKitchenProvider;
-    }
-
-    /**
      * Returns the swipe/gesture typing handler (Open Gesture Decoder).
      */
     public SwipeTypingHandler getSwipeTypingHandler() {
@@ -750,7 +822,7 @@ PYEOF
 ###############################################################################
 # 7. Patch MainKeyboardView.java (spacebar trackpad gesture)
 ###############################################################################
-echo "  [7/8] Patching MainKeyboardView.java for spacebar trackpad..."
+echo "  [7/9] Patching MainKeyboardView.java for spacebar trackpad..."
 
 if [[ -f "$MAIN_KBD_VIEW" ]] && ! grep -q "SpacebarTrackpadListener" "$MAIN_KBD_VIEW"; then
     python - "$MAIN_KBD_VIEW" << 'PYEOF'
@@ -845,57 +917,42 @@ else
 fi
 
 ###############################################################################
-# 8. Patch build.gradle for Google Play Services (SmsRetriever)
+# 8. REFUSE Google Play Services
 ###############################################################################
-echo "  [8/8] Patching build.gradle for SmsRetriever dependency..."
+# This step used to ADD com.google.android.gms:play-services-auth-api-phone
+# for SMS OTP auto-fill. Circle OS is de-Googled: GMS is not present on the
+# device, so that code could never run there, and shipping a Google client
+# library inside a keyboard sold on "You're NOT the product" is a headline
+# waiting to happen.
+#
+# Inverted rather than deleted. Deleting the step would let an upstream bump
+# or a reinstated feature put the dependency back with nothing to notice.
+echo "  [8/9] Checking for Google Play Services..."
 
-# Check for Kotlin DSL or Groovy DSL
 if [[ -f "$APP_GRADLE" ]]; then
     GRADLE_FILE="$APP_GRADLE"
 elif [[ -f "${BUILD_DIR}/app/build.gradle" ]]; then
     GRADLE_FILE="${BUILD_DIR}/app/build.gradle"
 else
-    echo "       WARNING: Could not find build.gradle"
     GRADLE_FILE=""
 fi
 
-if [[ -n "$GRADLE_FILE" ]] && ! grep -q "play-services-auth-api-phone" "$GRADLE_FILE"; then
-    python - "$GRADLE_FILE" << 'PYEOF'
-import sys
-
-filepath = sys.argv[1]
-with open(filepath, 'r', encoding='utf-8') as f:
-    content = f.read()
-
-# Add Google Play Services SmsRetriever dependency
-# Works for both Kotlin DSL and Groovy DSL
-SMS_DEP_KTS = '    implementation("com.google.android.gms:play-services-auth-api-phone:18.1.0")\n'
-SMS_DEP_GROOVY = "    implementation 'com.google.android.gms:play-services-auth-api-phone:18.1.0'\n"
-
-if 'dependencies {' in content or 'dependencies{' in content:
-    marker = 'dependencies {'
-    alt = 'dependencies{'
-    target = marker if marker in content else alt
-    idx = content.index(target)
-    brace = content.index('{', idx)
-
-    # Determine DSL style from existing deps
-    if 'implementation("' in content:
-        dep = SMS_DEP_KTS
-    else:
-        dep = SMS_DEP_GROOVY
-
-    content = content[:brace+1] + '\n' + dep + content[brace+1:]
-
-    with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print("       Added play-services-auth-api-phone dependency for OTP SmsRetriever")
-else:
-    print("       WARNING: Could not find dependencies block")
-PYEOF
+if [[ -n "$GRADLE_FILE" ]] && grep -q "com.google.android.gms" "$GRADLE_FILE"; then
+    echo "       REFUSED: $GRADLE_FILE declares a com.google.android.gms"
+    echo "       dependency. Circle OS is de-Googled; remove it."
+    grep -n "com.google.android.gms" "$GRADLE_FILE" | sed 's/^/         /'
+    exit 1
 else
-    echo "       build.gradle: already has SmsRetriever or not found"
+    echo "       no Google Play Services dependency - good"
 fi
+
+###############################################################################
+# 9. South African languages
+###############################################################################
+# Four of the eleven were offered and none was on by default; isiBheqe was
+# not a choice but a takeover of every language. See sa-languages/apply.py.
+echo "  [9/9] South African languages..."
+python "${SCRIPT_DIR}/sa-languages/apply.py" "${BUILD_DIR}"
 
 echo "[patch] All CircleOne patches applied successfully."
 echo ""

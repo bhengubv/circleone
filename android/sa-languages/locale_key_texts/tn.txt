@@ -1,0 +1,7 @@
+[popup_keys]
+s š
+e ê
+o ô
+
+[tlds]
+za
